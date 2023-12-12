@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &105179010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4636479281443313340, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+  m_PrefabInstance: {fileID: 5787999559009805299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &128450911
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +420,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1697171749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1697171750}
+  m_Layer: 0
+  m_Name: Other
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1697171750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697171749}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 105179010}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2413735734866551070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -528,9 +564,29 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Drone
       objectReference: {fileID: 0}
+    - target: {fileID: 3695576928956598590, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_TargetAngularVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5231826094447645359, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_TargetAngularVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6130190654615948325, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_Drag
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147936974900792607, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_TargetAngularVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8548368779149190226, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_AngularYMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8548368779149190226, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_TargetAngularVelocity.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8821691786905180682, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: torqueFactor
@@ -538,7 +594,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4636479281443313340, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1697171750}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
 --- !u!1660057539 &9223372036854775807

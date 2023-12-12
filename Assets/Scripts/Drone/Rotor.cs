@@ -11,14 +11,9 @@ public class Rotor : MonoBehaviour
 
     public Rigidbody rb;
 
-
-    public void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
     public void Initialize()
     {
+        rb = GetComponent<Rigidbody>();
         localTorqueAxis = transform.parent.InverseTransformVector(-transform.up);
     }
 }
