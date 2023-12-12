@@ -10,9 +10,11 @@ public class Rotor : MonoBehaviour
     public Vector3 localTorqueAxis { get; private set; }
 
     public Rigidbody rb;
+    public Transform propeller { get; private set; }
 
     public void Initialize()
     {
+        propeller = transform;
         rb = GetComponent<Rigidbody>();
         localTorqueAxis = transform.parent.InverseTransformVector(-transform.up);
     }
