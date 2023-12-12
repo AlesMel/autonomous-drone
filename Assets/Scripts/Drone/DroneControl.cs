@@ -63,7 +63,7 @@ public class DroneControl : MonoBehaviour
         }
         Debug.Log("Rotors have been initialized!");
         //centerOfMass *= 0.25f; //?
-        centerOfMass = new Vector3(0f, 0f, 0f);
+        //centerOfMass = new Vector3(0f, 0f, 0f);
         Debug.Log("Center of mass: " + centerOfMass);
         droneRigidBody.centerOfMass = centerOfMass;
     }
@@ -86,7 +86,7 @@ public class DroneControl : MonoBehaviour
 
             // Flip direction for 2 of 4 rotors, torques need to cancel each other out.
             float actionWithDirection = actions[i] * rotorTurnDirections[i];
-            //Debug.Log("Actions: " + actionWithDirection);
+            //Debug.Log("Actions for rotor " + rotors[i].name + " action: " + actionWithDirection);
 
             droneRigidBody.AddRelativeTorque(actionWithDirection * torqueFactor * torqueAxis);
 
@@ -110,6 +110,8 @@ public class DroneControl : MonoBehaviour
                 Rotor rotor = rotors[i];
                 float speed = animationSpeeds[i] * maxSpeed;
                 rotor.rb.transform.Rotate(0, speed, 0);
+                //Debug.Log("Speed for rotor " + rotor.name + " speed: " + speed);
+                Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
             }
         }
     }
@@ -120,3 +122,4 @@ public class DroneControl : MonoBehaviour
         return transform.InverseTransformVector(vector);
     }
 }
+

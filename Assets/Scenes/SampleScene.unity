@@ -537,6 +537,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1729931766375433680, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_Name
+      value: FR
+      objectReference: {fileID: 0}
     - target: {fileID: 2410836526782535402, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.117
@@ -613,6 +617,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5222542428031484401, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_Name
+      value: RL
+      objectReference: {fileID: 0}
     - target: {fileID: 5231826094447645359, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: 0.4657893
@@ -631,11 +639,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6130190654615948325, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_ImplicitCom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6130190654615948325, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_ImplicitTensor
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767019598099556540, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_Name
+      value: FL
       objectReference: {fileID: 0}
     - target: {fileID: 7147936974900792607, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -644,6 +656,10 @@ PrefabInstance:
     - target: {fileID: 7147936974900792607, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_TargetAngularVelocity.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7193249678585323073, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: m_Name
+      value: RR
       objectReference: {fileID: 0}
     - target: {fileID: 7798503251328359963, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -675,7 +691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8821691786905180682, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: thrustFactor
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8821691786905180682, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: torqueFactor
@@ -683,7 +699,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8821691786905180682, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: animateRotors
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821691786905180682, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
+      propertyPath: animSpeedFactor
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8821691786905180682, guid: 747a2d693eec4ad46813bc6c6c671c3d, type: 3}
       propertyPath: rotors.Array.size
