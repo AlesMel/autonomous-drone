@@ -12,9 +12,12 @@ public class Rotor : MonoBehaviour
     public Rigidbody rb;
     public Transform propeller { get; private set; }
 
+    public float currentAngle;
+
     public void Initialize()
     {
         propeller = transform;
+        currentAngle = transform.rotation.eulerAngles.y;
         rb = GetComponent<Rigidbody>();
         localTorqueAxis = transform.parent.InverseTransformVector(-transform.up);
     }

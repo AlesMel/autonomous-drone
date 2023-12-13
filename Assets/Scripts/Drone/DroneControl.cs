@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using Color = UnityEngine.Color;
 
 public class DroneControl : MonoBehaviour
 {
@@ -17,8 +13,8 @@ public class DroneControl : MonoBehaviour
     public Vector3 worldVelocity => droneRigidBody.velocity;
     public Vector3 worldAngularVelocity => droneRigidBody.angularVelocity;
 
-    public Vector3 localVelocity => worldToLocal(droneRigidBody.velocity);
-    public Vector3 localAngularVelocity => worldToLocal(droneRigidBody.velocity);
+    public Vector3 localVelocity => WorldToLocal(droneRigidBody.velocity);
+    public Vector3 localAngularVelocity => WorldToLocal(droneRigidBody.velocity);
 
     public Vector3 inclination => new Vector3(transform.right.y, transform.up.y, transform.forward.y);
 
@@ -45,6 +41,9 @@ public class DroneControl : MonoBehaviour
 
     private Rotor[] rotors;
 
+    [SerializeField] private float[] velocityArray; // Array to hold velocity for each rotor
+    [SerializeField] public float smoothTime = 0.3f; // Example value, adjust based on your needs
+
     private void Start()
     {
         Initialize();
@@ -55,14 +54,26 @@ public class DroneControl : MonoBehaviour
         droneRigidBody = GetComponent<Rigidbody>();
 
         rotors = GetComponentsInChildren<Rotor>();
+/*        Debug.Log("Rotors: " + rotors.Length);
+        velocityArray = new float[rotors.Length];
+
+        for (int i = 0; i < rotors.Length; i++)
+        {
+            Debug.Log("Setting for rotor: " + i);
+            velocityArray[i] = 0f; // Start with a velocity of 0
+        }*/
 
         foreach (Rotor rotor in rotors)
         {
             rotor.Initialize();
             centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
+
         }
+
+
+
         Debug.Log("Rotors have been initialized!");
-        //centerOfMass *= 0.25f; //?
+        centerOfMass *= 0.25f; //?
         //centerOfMass = new Vector3(0f, 0f, 0f);
         Debug.Log("Center of mass: " + centerOfMass);
         droneRigidBody.centerOfMass = centerOfMass;
@@ -102,6 +113,13 @@ public class DroneControl : MonoBehaviour
         Debug.DrawRay(worldPosition, inclination.normalized * 5, Color.red);
 
         ApplyActions();
+        PropellerAnimation();
+ 
+    }
+
+ 
+    public void PropellerAnimation()
+    {
         if (animateRotors)
         {
             float maxSpeed = Time.fixedDeltaTime * animSpeedFactor;
@@ -109,15 +127,44 @@ public class DroneControl : MonoBehaviour
             {
                 Rotor rotor = rotors[i];
                 float speed = animationSpeeds[i] * maxSpeed;
-                rotor.rb.transform.Rotate(0, speed, 0);
+
+                rotor.rb.transform.Rotate(Vector3.up, speed);
+                /*   Vector3 rotationSpeed = new Vector3(0, speed, 0);
+
+                   Quaternion deltaRotation = Quaternion.Euler(rotationSpeed);
+                   rotor.rb.MoveRotation(deltaRotation * rotor.rb.rotation);*/
+
+                //rotor.rb.transform.Rotate(0, speed, 0, Space.Self);
+                //rotor.propeller.transform.Rotate(0, speed, 0);
                 //Debug.Log("Speed for rotor " + rotor.name + " speed: " + speed);
                 Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
             }
         }
+        /*        if (animateRotors)
+                {
+                    float maxSpeed = animSpeedFactor; // Assuming animSpeedFactor is your target speed
+                    for (int i = 0; i < rotors.Length; i++)
+                    {
+                        Rotor rotor = rotors[i];
+
+                        // Assume targetAngleArray and velocityArray are defined at class level
+                        float targetAngle = rotor.currentAngle + animationSpeeds[i] * maxSpeed * Time.deltaTime;
+                        Debug.Log("Velocity array" + velocityArray[i]);
+                        float newAngle = Mathf.SmoothDampAngle(rotor.currentAngle, targetAngle, ref velocityArray[i], smoothTime);
+
+                        rotor.rb.MoveRotation(Quaternion.Euler(0, newAngle, 0));
+
+                        // Update current angle
+                        rotor.currentAngle = newAngle;
+
+                        // Optional: Logging
+                        Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
+                    }
+                }*/
     }
 
     // World coordinates to drone's coordinates
-    public Vector3 worldToLocal(Vector3 vector)
+    public Vector3 WorldToLocal(Vector3 vector)
     {
         return transform.InverseTransformVector(vector);
     }
