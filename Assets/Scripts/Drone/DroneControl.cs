@@ -1,11 +1,23 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DroneControl : MonoBehaviour
 {
+
+    public event Action TipOverEvent;
+    public event Action<Collision> CollisionEvent;
+    public event Action CollisionTimeoutEvent;
+    public bool isColliding { get; private set; }
+
     private Vector3 centerOfMass;
     private Rigidbody droneRigidBody;
     private readonly float[] animationSpeeds = new float[4];
-    private readonly float[] rotorTurnDirections = { 1, 1, -1, -1 };
+    private readonly float[] rotorTurnDirections = { 1, -1, -1, 1 };
+    private const float tipOverThreshold = -0.5f;
+    private int collisionCount = 0;
+    // Timeout in secs for continuous collision.
+    private const float timeout = 2;
 
     public Vector3 worldPosition => transform.TransformPoint(centerOfMass);
 
@@ -37,7 +49,8 @@ public class DroneControl : MonoBehaviour
     [SerializeField, Tooltip("Whether to animate the rotors")]
     private bool animateRotors = true;
 
-    [SerializeField] public float[] actions;
+    //[SerializeField]
+    public float[] actions;
 
     private Rotor[] rotors;
 
@@ -79,8 +92,15 @@ public class DroneControl : MonoBehaviour
         droneRigidBody.centerOfMass = centerOfMass;
     }
 
-    public void ApplyActions()
+    public void ApplyActions(float[] actions)
     {
+        this.actions[0] = actions[0];
+        this.actions[1] = actions[1];
+        this.actions[2] = actions[2];
+        this.actions[3] = actions[3];
+
+        Debug.Log("Applying actions: " + actions[0] + ", " + actions[1] + ", " + actions[2] + ", " + actions[3]);
+
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
@@ -88,7 +108,7 @@ public class DroneControl : MonoBehaviour
         for (int i = 0; i < rotors.Length; i++)
         {
             // -1/+1 => 0/+1
-            //actions[i] = (actions[i] + 1) * 0.5f;
+            // actions[i] = (actions[i] + 1) * 0.5f;
 
             // Thrust per rotor but applied to drone's centre of mass
             Vector3 force = actions[i] * thrustFactor * thrustAxis;
@@ -103,16 +123,22 @@ public class DroneControl : MonoBehaviour
 
             // Buffer value for animation.
             animationSpeeds[i] = actionWithDirection;
+        }
 
+        if (transform.up.y < tipOverThreshold)
+        {
+            Debug.LogWarning("Drone has been tipped over");
+            TipOverEvent?.Invoke();
         }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.DrawRay(worldPosition, Vector3.up * transform.up.y, Color.green);
         Debug.DrawRay(worldPosition, inclination.normalized * 5, Color.red);
 
-        ApplyActions();
+        //ApplyActions();
         PropellerAnimation();
  
     }
@@ -137,9 +163,9 @@ public class DroneControl : MonoBehaviour
                 //rotor.rb.transform.Rotate(0, speed, 0, Space.Self);
                 //rotor.propeller.transform.Rotate(0, speed, 0);
                 //Debug.Log("Speed for rotor " + rotor.name + " speed: " + speed);
-                Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
+                //Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
             }
-        }
+        }   
         /*        if (animateRotors)
                 {
                     float maxSpeed = animSpeedFactor; // Assuming animSpeedFactor is your target speed
@@ -161,6 +187,51 @@ public class DroneControl : MonoBehaviour
                         Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
                     }
                 }*/
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.LogWarning("Drone has collided!");
+        collisionCount++;
+        UpdatecollisionStatus();
+        CollisionEvent?.Invoke(collision);
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        collisionCount--;
+        UpdatecollisionStatus();
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        CollisionEvent?.Invoke(collision);
+    }
+
+
+    private void UpdatecollisionStatus()
+    {
+        if (collisionCount < 0)
+        {
+            Debug.LogWarning("Collision count < 0");
+            collisionCount = 0;
+        }
+
+        bool tmp = isColliding;
+        isColliding = collisionCount > 0;
+        if (!isColliding)
+        {
+            CancelInvoke();
+        } else if (!tmp)
+        {
+            Invoke(nameof(NotifyTimeout), timeout);
+        }
+
+    }
+
+    private void NotifyTimeout()
+    {
+        CollisionTimeoutEvent?.Invoke();
     }
 
     // World coordinates to drone's coordinates
