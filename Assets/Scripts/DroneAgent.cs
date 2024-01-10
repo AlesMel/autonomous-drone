@@ -22,6 +22,13 @@ public class DroneAgent : Agent
     private Rigidbody droneRigidBody;
     EnvironmentParameters resetParams;
 
+    [Header("Penalties")]
+    [SerializeField, Tooltip("Penalty after coliding")]
+    private float collisionPenalty = 0.1f;
+    private int collisionCount = 0;
+ 
+    [SerializeField, Tooltip("Penalty after tipping over")]
+    private float tipOverPenalty = 1.0f;
 
     // Drone's initial coordinate system
     private Vector3 startingPosition;
@@ -55,6 +62,25 @@ public class DroneAgent : Agent
 
         resetParams = Academy.Instance.EnvironmentParameters;
         ResetEnv();
+        InitSubscribers();
+    }
+
+    private void InitSubscribers()
+    {
+        droneControl.TipOverEvent += OnTipOver;
+        droneControl.CollisionEvent += OnCollision;
+    }
+
+    private void OnCollision(Collision collision)
+    {
+        AddReward(-collisionPenalty);
+        collisionCount++;
+    }
+
+    private void OnTipOver()
+    {
+        AddReward(-tipOverPenalty);
+        EndEpisode();
     }
 
     private void ResetEnv()
@@ -86,7 +112,7 @@ public class DroneAgent : Agent
     {
         base.OnActionReceived(actions); 
        // droneControl.ApplyActions(actions.ContinuousActions.Array);
-
+       if (droneControl.)
 /*        if (triggerDetection.IsDronePresent()) 
         {
             SetReward(-10f / Academy.Instance.StepCount);
