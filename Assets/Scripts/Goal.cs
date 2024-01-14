@@ -19,6 +19,8 @@ public class Goal : MonoBehaviour
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
     [SerializeField] private float zOffset;
+    [SerializeField] private string collisionTag;
+    [SerializeField] private bool randomSpawn = false;
 
     [Header("Settings for agent reward system")]
     [SerializeField] private float requiredSeconds;
@@ -67,21 +69,25 @@ public class Goal : MonoBehaviour
 
     public void SpawnObject()
     {
-        ResetPositionControlParameters();
-        Debug.Log("Parent size: " + parentSize.ToString());
-        float spawnX = Random.Range(-parentSize.x / 2 + xOffset, parentSize.x / 2 - xOffset);
-        float spawnY = Random.Range(0 + yOffset, parentSize.y / 2 - yOffset);
-        float spawnZ = Random.Range(-parentSize.z / 2 + zOffset, parentSize.z / 2 - zOffset);
-        Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-        Debug.Log("Spawning position " + spawnPosition.ToString());
-        transform.position = spawnPosition;
+        if (randomSpawn)
+        {
+            ResetPositionControlParameters();
+            Debug.Log("Parent size: " + parentSize.ToString());
+            float spawnX = Random.Range(-parentSize.x / 2 + xOffset, parentSize.x / 2 - xOffset);
+            float spawnY = Random.Range(0 + yOffset, parentSize.y / 2 - yOffset);
+            float spawnZ = Random.Range(-parentSize.z / 2 + zOffset, parentSize.z / 2 - zOffset);
+            Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
+            Debug.Log("Spawning position " + spawnPosition.ToString());
+            transform.position = spawnPosition;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         GameObject collisionObject = other.gameObject;
+
         Debug.Log("Triggered!");
-        if (collisionObject.tag == "Drone")
+        if (collisionObject.tag == collisionTag)
         {
             goalMesh.material = goalReached;
             triggerEnterTime = Time.time;
@@ -91,8 +97,12 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        goalMesh.material = goalUnreached;
-        isInTrigger = false;
+        GameObject collisionObject = other.gameObject;
+        if (collisionObject.tag == collisionTag)
+        {
+            goalMesh.material = goalUnreached;
+            isInTrigger = false;
+        }
     }
 
 }

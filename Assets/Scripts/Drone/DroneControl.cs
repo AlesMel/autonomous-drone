@@ -8,6 +8,8 @@ public class DroneControl : MonoBehaviour
     public event Action TipOverEvent;
     public event Action<Collision> CollisionEvent;
     public event Action CollisionTimeoutEvent;
+    public event Action ReachedGoalEvent;
+
     public bool isColliding { get; private set; }
 
     private Vector3 centerOfMass;
@@ -56,6 +58,8 @@ public class DroneControl : MonoBehaviour
 
     [SerializeField] private float[] velocityArray; // Array to hold velocity for each rotor
     [SerializeField] public float smoothTime = 0.3f; // Example value, adjust based on your needs
+
+    private bool reachedGoal = false;
 
     private void Start()
     {
@@ -195,6 +199,25 @@ public class DroneControl : MonoBehaviour
         collisionCount++;
         UpdatecollisionStatus();
         CollisionEvent?.Invoke(collision);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Goal" && reachedGoal == false)
+        {
+            Debug.LogError("Drone has reached goal!");
+            ReachedGoalEvent?.Invoke();
+            reachedGoal = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Goal" && reachedGoal != false)
+        {
+            Debug.LogError("Drone has moved from the goal!");
+            reachedGoal = false;
+        }
     }
 
     private void OnCollisionExit(Collision collision)

@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204136155634834454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.669, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
@@ -99,6 +99,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalReached: {fileID: 2100000, guid: 639b0666ea0b9534c9081b1c4a351d53, type: 2}
   goalUnreached: {fileID: 2100000, guid: dc0ecfb4b33ed4c4380c69258a06ace3, type: 2}
+  shouldContinue: 0
+  xOffset: 0
+  yOffset: 2
+  zOffset: 0
+  requiredSeconds: 1
 --- !u!65 &2217224933631178226
 BoxCollider:
   m_ObjectHideFlags: 0
