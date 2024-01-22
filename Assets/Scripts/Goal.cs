@@ -24,6 +24,12 @@ public class Goal : MonoBehaviour
 
     [Header("Settings for agent reward system")]
     [SerializeField] private float requiredSeconds;
+
+    public Vector3 worldVelocity = Vector3.zero;
+    public Vector3 worldLookDirection => Vector3.ProjectOnPlane(
+    -transform.position, Vector3.up).normalized;
+
+
     private void Start()
     {
         goalMesh = GetComponent<MeshRenderer>();

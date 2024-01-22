@@ -16,4 +16,10 @@ public static class HelperFunctions
         vector.z = Sigmoid(vector.z, coefficient);
         return vector;
     }
+
+    /// Calculates a normalized reward falling off from 1 as error increases.
+    public static float Reward(float error, float coefficient = 1)
+    {
+        return Mathf.Min(1, -2 / (1 + Mathf.Exp(-error * coefficient)) + 2);
+    }
 }
