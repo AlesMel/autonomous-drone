@@ -16,18 +16,24 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 
 # Params
-is_training = False
+is_training = True
 
 env_path = "./Builds/autonomous-drone.exe"
+test_env_path = "./Builds/single-agent-env/autonomous-drone.exe"
+explorer_env_path = "./Builds/explorer/MappingDrone.exe"
 save_nn_destination = 'NEAT/result/best.pkl'
 engine_config_channel = EngineConfigurationChannel()
-#engine_config_channel.set_configuration_parameters(width=2048 , height=1080, quality_level=1, time_scale=10)
+engine_config_channel.set_configuration_parameters(width=2048 , height=1080, quality_level=1, time_scale=1)
 
-env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=False, side_channels=[engine_config_channel])
+if is_training:
+    env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=False, side_channels=[engine_config_channel])
+else:
+    env = UnityEnvironment(file_name=test_env_path, seed=0)
+
 env.reset()
 
 num_actions = 4
-num_inputs = 6
+num_inputs = 17
 
 behavior_specs = env.behavior_specs
 print(f"Behaviour specs {behavior_specs}")
@@ -85,8 +91,8 @@ def process_agent_actions(agent_count, neat_to_unity_map, decision_steps, polici
     Returns:
         Updated actions array for each agent.
     """
-    actions = np.ones(shape=(agent_count, num_inputs))
-    # actions = np.zeros(shape=(agent_count, len(policies[0].activate(nn_input[0]))))  # Assuming actions is a NumPy array
+    #actions = np.ones(shape=(agent_count, num_inputs))
+    actions = np.zeros(shape=(agent_count, len(policies[0].activate(nn_input[0]))))  # Assuming actions is a NumPy array
     for agent in range(agent_count):
         if neat_to_unity_map[agent] in decision_steps:
             actions[agent] = policies[agent].activate(nn_input[agent])
@@ -108,8 +114,8 @@ def process_agent_inputs(agent_count, neat_to_unity_map, decision_steps):
     for agent in range(agent_count):
         if neat_to_unity_map[agent] in decision_steps:
             nn_input[agent] = np.asarray(decision_steps[neat_to_unity_map[agent]].obs[:])
-            # if agent == 0:
-            #     print(f"Input for Agent{agent}: ", nn_input[agent])
+            if agent == 0 and not is_training:
+                print(f"Input for Agent{agent}: ", nn_input[agent])
     return nn_input
 
 def process_and_set_agent_actions(agent_count, neat_to_unity_map, decision_steps, policies, nn_input):
@@ -132,13 +138,16 @@ def process_and_set_agent_actions(agent_count, neat_to_unity_map, decision_steps
     actions = np.zeros(shape=(agent_count, len(policies[0].activate(nn_input[0]))))  # Adjust shape as necessary
     actions = np.ones(shape=(agent_count, num_actions))
 
-    for agent in range(agent_count):
-            
+    for agent in range(agent_count):  
         if neat_to_unity_map[agent] in decision_steps:
-            actions[agent] = policies[agent].activate(nn_input[agent])
+            try:
+                actions[agent] = policies[agent].activate(nn_input[agent])
+            except:
+                print("Exception occured!")
+                print(f"Agent count: {agent_count}, policies length: {len(policies)}")
             continuous_actions = np.array([actions[agent, :]])
-            # if agent == 0:
-            #     print(f"Action for Agent{agent}: ", continuous_actions)
+            #if agent == 0:
+             # print(f"Action for Agent{agent}: ", continuous_actions)
             action_tuple = ActionTuple(discrete=None, continuous=continuous_actions)
             env.set_action_for_agent(behavior_name=behavior_name, 
                                      agent_id=neat_to_unity_map[agent], 
@@ -165,6 +174,7 @@ def collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, d
             elif local_agent in decision_steps:
                 reward += decision_steps[local_agent].reward
             genomes[agent][1].fitness += reward
+    return genomes
 
 def eval_agent(genomes, cfg):
     '''
@@ -195,7 +205,7 @@ def eval_agent(genomes, cfg):
         for agent in terminal_steps:
             done[neat_to_unity_map[agent]] = True
         # Collect reward
-        collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, decision_steps, genomes)
+        genomes = collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, decision_steps, genomes)
 
     print("--- [All agents are terminal!] ---")
     env.reset()
@@ -230,7 +240,7 @@ def sim_agent(genome, cfg):
 
 
 def run(config_file):
-    max_generations = 100
+    max_generations = 10
 
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -241,8 +251,9 @@ def run(config_file):
     stats = neat.StatisticsReporter()
 
     pop.add_reporter(stats)
-    pop.add_reporter(neat.TBReporter(True, 1, 1, path="D:\\Projects\\autonomous-drone\\NEAT\\logs\\tensorboard\\"))
-    
+    #pop.add_reporter(neat.Checkpointer(generation_interval=25, time_interval_seconds=1200, filename_prefix='NEAT/checkpoints/NEAT-checkpoint-'))
+    #pop.add_reporter(neat.TBReporter(True, 1, 1, path="D:\\Projects\\autonomous-drone\\NEAT\\logs\\tensorboard\\"))
+    pop.add_reporter(neat.StdOutReporter(True))
     pe = neat.ThreadedEvaluator(4, eval_agent)
     best = pop.run(eval_agent, max_generations)
     pe.stop()
