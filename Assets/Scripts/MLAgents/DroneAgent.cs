@@ -30,9 +30,9 @@ public class DroneAgent : Agent
     [SerializeField, Tooltip("Penalty after coliding")]
     private float collisionPenalty = 0.1f;
     private int collisionCount = 0;
- 
-    [SerializeField, Tooltip("Penalty after tipping over")]
-    private float tipOverPenalty = 1.0f;
+
+    // [SerializeField, Tooltip("Penalty after tipping over")]
+    private float tipOverPenalty = 10.0f;
 
     // Drone's initial coordinate system
     private Vector3 startingPosition;
@@ -216,9 +216,9 @@ public class DroneAgent : Agent
 
     private void AddRewards()
     {
-        var distance = VectorToNextCheckpoint().magnitude;
+        var distance = VectorToNextCheckpoint().magnitude/8;
         float stabilityError = droneControl.worldAngularVelocity.magnitude;
-        AddReward(distance);
+        AddReward(-distance);
 
     }
 

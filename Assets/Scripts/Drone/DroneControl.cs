@@ -9,6 +9,7 @@ public class DroneControl : MonoBehaviour
     public event Action<Collision> CollisionEvent;
     public event Action CollisionTimeoutEvent;
     public event Action ReachedGoalEvent;
+    public event Action LeftEnviromentEvent;
 
     public bool isColliding { get; private set; }
 
@@ -106,11 +107,13 @@ public class DroneControl : MonoBehaviour
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
+        Debug.Log("Pre actions: " + string.Join(", ", actions));
 
         for (int i = 0; i < rotors.Length; i++)
         {
-            // -1/+1 => 0/+1
-            // actions[i] = (actions[i] + 1) * 0.5f;
+            // 0.5 is precisely needed for drone to hover, since the thrust was calculated the way that it would
+            // convert actions range: -1/+1 to 0/+1
+            actions[i] = (actions[i] + 1) * 0.5f;
 
             // Thrust per rotor but applied to drone's centre of mass
             Vector3 force = actions[i] * thrustFactor * thrustAxis;
@@ -126,6 +129,7 @@ public class DroneControl : MonoBehaviour
             // Buffer value for animation.
             animationSpeeds[i] = actionWithDirection;
         }
+        Debug.Log("Post actions: " + string.Join(", ", actions));
 
         if (transform.up.y < tipOverThreshold)
         {
@@ -192,21 +196,21 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-            Debug.LogWarning("Drone has collided!");
-            collisionCount++;
-            UpdatecollisionStatus();
-            CollisionEvent?.Invoke(collision);
-        
+        Debug.LogWarning("Drone has collided!");
+        collisionCount++;
+        UpdatecollisionStatus();
+        CollisionEvent?.Invoke(collision);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.tag == "Goal" && !reachedGoal)
         {
             Debug.LogError("Drone has reached goal!");
             ReachedGoalEvent?.Invoke();
             reachedGoal = true;
-        }
+        }  
     }
 
     private void OnTriggerExit(Collider other)
@@ -215,6 +219,10 @@ public class DroneControl : MonoBehaviour
         {
             Debug.LogError("Drone has moved from the goal!");
             reachedGoal = false;
+        }
+        if (other.tag == "Enviroment")
+        {
+            LeftEnviromentEvent?.Invoke();
         }
     }
 

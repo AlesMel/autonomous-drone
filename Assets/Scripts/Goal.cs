@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Goal : MonoBehaviour
 {
+
+    public Action ReachedGoalEvent;
     public Material goalReached;
     public Material goalUnreached;
 
@@ -29,15 +33,18 @@ public class Goal : MonoBehaviour
     public Vector3 worldLookDirection => Vector3.ProjectOnPlane(
     -transform.position, Vector3.up).normalized;
 
+    private GameObject parentObject;
 
     private void Start()
     {
         goalMesh = GetComponent<MeshRenderer>();
         parentTransform = transform.parent;
+        parentObject = transform.parent.gameObject;
         if (parentTransform != null)
         {
-            parentSize = GetObjectSize(parentTransform);
-            SpawnObject();
+            //parentSize = GetObjectSize(parentTransform);
+            parentSize = GetParentSize(transform.parent.gameObject);
+            SpawnObjectInSphere();
         }
         else
         {
@@ -49,8 +56,9 @@ public class Goal : MonoBehaviour
     {
         if (isInTrigger && Time.time - triggerEnterTime >= requiredSeconds)
         {
+            ReachedGoalEvent.Invoke();
             shouldContinue = true;
-            SpawnObject();
+            SpawnObjectInSphere();
         }
     }
 
@@ -75,6 +83,7 @@ public class Goal : MonoBehaviour
 
     public void SpawnObject()
     {
+
         if (randomSpawn)
         {
             ResetPositionControlParameters();
@@ -91,10 +100,11 @@ public class Goal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject collisionObject = other.gameObject;
+        Debug.Log("Triggered by tag: " + collisionObject.tag);
 
-        Debug.Log("Triggered!");
         if (collisionObject.tag == collisionTag)
         {
+            Debug.Log("Triggered!");
             goalMesh.material = goalReached;
             triggerEnterTime = Time.time;
             isInTrigger = true;
@@ -110,5 +120,61 @@ public class Goal : MonoBehaviour
             isInTrigger = false;
         }
     }
+    public Vector3 GetParentSize(GameObject parentObject)
+    {
+        Renderer parentRenderer = parentObject.GetComponent<Renderer>();
+        Collider parentCollider = parentObject.GetComponent<Collider>();
 
+        if (parentRenderer != null)
+        {
+            return parentRenderer.bounds.size;
+        }
+        else if (parentCollider != null)
+        {
+            return parentCollider.bounds.size;
+        }
+        else
+        {
+            // Handle the case where the parent does not have a Renderer or Collider
+            Debug.LogWarning("Parent object does not have a Renderer or Collider to determine size.");
+            return Vector3.one; // Default size, you may handle this case differently.
+        }
+    }
+
+    #region (Crosses) Spehere spawning
+
+    public float GetSphereDiameter(GameObject sphereObject)
+    {
+        MeshFilter meshFilter = sphereObject.GetComponent<MeshFilter>();
+        if (meshFilter != null)
+        {
+            Vector3 boundsSize = meshFilter.mesh.bounds.size;
+            // Assuming the object is a perfect sphere, so we can take any dimension
+            return boundsSize.x * sphereObject.transform.localScale.x; // Scale factor considered
+        }
+        else
+        {
+            Debug.LogWarning("Object does not have a MeshFilter.");
+            return 0f;
+        }
+    }
+
+    public void SpawnObjectInSphere()
+    {
+        if (randomSpawn)
+        {
+            float diameter = GetSphereDiameter(parentObject);
+            Debug.Log("Diameter " + diameter);
+            float radius = diameter / 2;
+            Vector3 center = parentObject.transform.position;
+
+            Vector3 randomPointInsideSphere = Random.insideUnitSphere * radius;
+            Vector3 spawnPosition = center + randomPointInsideSphere;
+
+            Debug.Log("Spawning position: " + spawnPosition);
+            transform.position = spawnPosition;
+        }
+    }
+
+    #endregion
 }

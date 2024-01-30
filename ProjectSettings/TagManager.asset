@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Goal
   - DronePart
+  - Enviroment
   layers:
   - Default
   - TransparentFX
