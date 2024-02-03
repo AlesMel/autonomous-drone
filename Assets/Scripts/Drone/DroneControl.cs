@@ -36,10 +36,9 @@ public class DroneControl : MonoBehaviour
     // Drone's rotation around y-axis
     public Quaternion rotationY => Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-    [Space]
     // Multipliers.
     [SerializeField, Tooltip("Action multiplier")]
-    private float thrustFactor = 25;
+    public float thrustFactor { get; private set; } = 4; // defaulted to: 6.38f;
 
     [SerializeField, Tooltip("Action multiplier")]
     private float torqueFactor = 5;
@@ -52,6 +51,7 @@ public class DroneControl : MonoBehaviour
 
     //[SerializeField]
     public float[] actions;
+    public float[] thrusts { get; private set; } = new float[4];
 
     private Rotor[] rotors;
 
@@ -60,7 +60,6 @@ public class DroneControl : MonoBehaviour
 
     private bool reachedGoal = false;
     private bool hasCollided = false;
-
     private void Start()
     {
         Initialize();
@@ -88,35 +87,33 @@ public class DroneControl : MonoBehaviour
 
         }
 
-        Debug.Log("Rotors have been initialized!");
-        centerOfMass *= 0.25f; //?
+        Logger.LogMessage("Rotors have been initialized!");
+        //centerOfMass *= 0.25f; //?
         //centerOfMass = new Vector3(0f, 0f, 0f);
-        Debug.Log("Center of mass: " + centerOfMass);
+        Logger.LogMessage("Center of mass: " + centerOfMass);
         droneRigidBody.centerOfMass = centerOfMass;
     }
 
     public void ApplyActions(float[] actions)
     {
-        this.actions[0] = actions[0];
-        this.actions[1] = actions[1];
-        this.actions[2] = actions[2];
-        this.actions[3] = actions[3];
+        Array.Copy(actions, this.actions, actions.Length);
 
         // Debug.Log("Applying actions: " + actions[0] + ", " + actions[1] + ", " + actions[2] + ", " + actions[3]);
 
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
-        Debug.Log("Pre actions: " + string.Join(", ", actions));
+        // Debug.Log("Pre actions: " + string.Join(", ", actions));
 
         for (int i = 0; i < rotors.Length; i++)
         {
             // 0.5 is precisely needed for drone to hover, since the thrust was calculated the way that it would
             // convert actions range: -1/+1 to 0/+1
-            actions[i] = (actions[i] + 1) * 0.5f;
+            // actions[i] = (actions[i] + 1) * 0.5f; // This is not needed in NEAT since we adjust output by activation
+            thrusts[i] = actions[i] * thrustFactor;
 
             // Thrust per rotor but applied to drone's centre of mass
-            Vector3 force = actions[i] * thrustFactor * thrustAxis;
+            Vector3 force = thrusts[i] * thrustAxis;
             droneRigidBody.AddForceAtPosition(force, rotors[i].worldPosition);
             Debug.DrawRay(rotors[i].worldPosition, force.normalized * 5, Color.green);
 
@@ -129,11 +126,11 @@ public class DroneControl : MonoBehaviour
             // Buffer value for animation.
             animationSpeeds[i] = actionWithDirection;
         }
-        Debug.Log("Post actions: " + string.Join(", ", actions));
+        // Debug.Log("Post actions: " + string.Join(", ", actions));
 
         if (transform.up.y < tipOverThreshold)
         {
-            Debug.LogWarning("Drone has been tipped over");
+            // Debug.LogWarning("Drone has been tipped over");
             TipOverEvent?.Invoke();
         }
     }
@@ -144,7 +141,6 @@ public class DroneControl : MonoBehaviour
         Debug.DrawRay(worldPosition, Vector3.up * transform.up.y, Color.green);
         Debug.DrawRay(worldPosition, inclination.normalized * 5, Color.red);
 
-        //ApplyActions(actions);
         PropellerAnimation();
     }
 
@@ -196,7 +192,7 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.LogWarning("Drone has collided!");
+        Logger.LogMessage("Drone has collided!", true);
         collisionCount++;
         UpdatecollisionStatus();
         CollisionEvent?.Invoke(collision);
@@ -207,7 +203,7 @@ public class DroneControl : MonoBehaviour
 
         if (other.tag == "Goal" && !reachedGoal)
         {
-            Debug.LogError("Drone has reached goal!");
+            // Debug.LogError("Drone has reached goal!");
             ReachedGoalEvent?.Invoke();
             reachedGoal = true;
         }  
@@ -217,7 +213,7 @@ public class DroneControl : MonoBehaviour
     {
         if (other.tag == "Goal" && reachedGoal)
         {
-            Debug.LogError("Drone has moved from the goal!");
+            // Debug.LogError("Drone has moved from the goal!");
             reachedGoal = false;
         }
         if (other.tag == "Enviroment")
@@ -229,7 +225,7 @@ public class DroneControl : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
 
-        Debug.LogWarning("Not colliding anymore!");
+        // Debug.LogWarning("Not colliding anymore!");
         collisionCount--;
         UpdatecollisionStatus();
         
@@ -237,32 +233,32 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("Colliding stay");
+        // Debug.Log("Colliding stay");
         CollisionEvent?.Invoke(collision);
     }
 
 
     private void UpdatecollisionStatus()
     {
-        Debug.Log("Collision status update");
+        // Debug.Log("Collision status update");
         if (collisionCount < 0)
         {
-            Debug.LogWarning("Collision count < 0");
+            // Debug.LogWarning("Collision count < 0");
             collisionCount = 0;
         }
-        Debug.LogWarning("Collision count: " + collisionCount);
+        // Debug.LogWarning("Collision count: " + collisionCount);
 
         bool tmp = isColliding;
         isColliding = collisionCount > 0;
         if (!isColliding)
         {
             hasCollided = false;
-            Debug.Log("Canceling all invokes!");
+            // Debug.Log("Canceling all invokes!");
             CancelInvoke();
         } else if (!tmp)
         {
             hasCollided = true;
-            Debug.Log("Invoking collision stay!");
+            // Debug.Log("Invoking collision stay!");
             Invoke(nameof(NotifyTimeout), timeout);
         }
 
@@ -270,7 +266,7 @@ public class DroneControl : MonoBehaviour
 
     private void NotifyTimeout()
     {
-        Debug.Log("Notify Timout invoked!");
+        // Debug.Log("Notify Timout invoked!");
         CollisionTimeoutEvent?.Invoke();
     }
 
@@ -283,6 +279,7 @@ public class DroneControl : MonoBehaviour
     public void ResetDrone(Vector3 resetPosition)
     {
         BaseReset();
+
         droneRigidBody.position = resetPosition;
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
     }
@@ -290,13 +287,14 @@ public class DroneControl : MonoBehaviour
 
     private void BaseReset()
     {
-        CancelInvoke();
 
         isColliding = false;
         collisionCount = 0;
 
-        droneRigidBody.velocity = Vector3.zero;
+        Array.Clear(thrusts, 0, thrusts.Length);
+        Array.Clear(actions, 0, thrusts.Length);
         droneRigidBody.angularVelocity = Vector3.zero;
+        droneRigidBody.velocity = Vector3.zero;
     }
 }
 

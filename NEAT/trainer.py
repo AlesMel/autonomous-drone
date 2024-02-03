@@ -1,6 +1,6 @@
 import neat
 
-class NEATTrainer:
+class NeatTrainer:
     def __init__(self, config_path):
         config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
                                 neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
@@ -10,7 +10,7 @@ class NEATTrainer:
     def __set_reporters(self):
         self.pop.add_reporter(neat.Checkpointer(generation_interval=25, time_interval_seconds=1200, filename_prefix='NEAT/checkpoints/NEAT-checkpoint-'))
         self.pop.add_reporter(neat.StdOutReporter(True))
-        self.pop.add_reporter(neat.TBReporter(False, 0, 0, path="D:\\Projects\\autonomous-drone\\NEAT\\logs\\tensorboard\\"))
+        #self.pop.add_reporter(neat.TBReporter(False, 0, 0, path="D:\\Projects\\autonomous-drone\\NEAT\\logs\\tensorboard\\"))
         stats = neat.StatisticsReporter()
         self.pop.add_reporter(stats)
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class HelperFunctions
 {
+
     public static float Sigmoid(float value, float coefficient = 1)
     {
         return 2 / (1 + Mathf.Exp(-value * coefficient)) - 1;
@@ -22,4 +23,16 @@ public static class HelperFunctions
     {
         return Mathf.Min(1, -2 / (1 + Mathf.Exp(-error * coefficient)) + 2);
     }
+
+    public static void LogMessage(bool isWarning, string message)
+    {
+        if (isWarning)
+        {
+            Debug.LogWarning(message);
+        } else
+        {
+            Debug.Log(message);
+        }
+    }
 }
+

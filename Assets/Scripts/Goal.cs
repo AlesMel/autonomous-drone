@@ -8,8 +8,11 @@ public class Goal : MonoBehaviour
 {
 
     public Action ReachedGoalEvent;
+    public Action GoalTouchedEvent;
+
     public Material goalReached;
     public Material goalUnreached;
+    public Material goalStayed;
 
     private MeshRenderer goalMesh;
     private Transform parentTransform;
@@ -17,13 +20,12 @@ public class Goal : MonoBehaviour
 
     private float triggerEnterTime;
     private bool isInTrigger = false;
-    // Result for check if drone was in the position for required time 
-    public bool shouldContinue = false;
 
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
     [SerializeField] private float zOffset;
-    [SerializeField] private string collisionTag;
+    //[SerializeField] 
+    private string collisionTag = "DronePart";
     [SerializeField] private bool randomSpawn = false;
 
     [Header("Settings for agent reward system")]
@@ -40,7 +42,7 @@ public class Goal : MonoBehaviour
         goalMesh = GetComponent<MeshRenderer>();
         parentTransform = transform.parent;
         parentObject = transform.parent.gameObject;
-        if (parentTransform != null)
+/*        if (parentTransform != null)
         {
             //parentSize = GetObjectSize(parentTransform);
             parentSize = GetParentSize(transform.parent.gameObject);
@@ -49,17 +51,23 @@ public class Goal : MonoBehaviour
         else
         {
             Debug.LogError("Parent transform not found!");  
-        }
+        }*/
     }
 
     private void FixedUpdate()
     {
-        if (isInTrigger && Time.time - triggerEnterTime >= requiredSeconds)
+        if (isInTrigger)
         {
-            ReachedGoalEvent.Invoke();
-            shouldContinue = true;
-            SpawnObjectInSphere();
-        }
+            if (Time.time - triggerEnterTime >= requiredSeconds/2)
+            {
+                goalMesh.material = goalStayed;
+            }
+            if (Time.time - triggerEnterTime >= requiredSeconds) 
+            {
+                ReachedGoalEvent.Invoke();
+
+            }
+        } 
     }
 
     private Vector3 GetObjectSize(Transform transform)
@@ -77,7 +85,6 @@ public class Goal : MonoBehaviour
 
     private void ResetPositionControlParameters()
     {
-        shouldContinue= false;
         isInTrigger= false;
     }
 
@@ -100,11 +107,11 @@ public class Goal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject collisionObject = other.gameObject;
-        Debug.Log("Triggered by tag: " + collisionObject.tag);
-
+        Logger.LogMessage("Triggered by tag: " + collisionObject.tag);
+        GoalTouchedEvent?.Invoke();
         if (collisionObject.tag == collisionTag)
         {
-            Debug.Log("Triggered!");
+            Logger.LogMessage("Triggered!" + collisionObject.tag);
             goalMesh.material = goalReached;
             triggerEnterTime = Time.time;
             isInTrigger = true;
@@ -120,6 +127,13 @@ public class Goal : MonoBehaviour
             isInTrigger = false;
         }
     }
+
+    public void ResetGoal()
+    {
+        goalMesh.material = goalUnreached;
+        isInTrigger = false;
+    }
+
     public Vector3 GetParentSize(GameObject parentObject)
     {
         Renderer parentRenderer = parentObject.GetComponent<Renderer>();

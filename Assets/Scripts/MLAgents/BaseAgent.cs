@@ -20,22 +20,28 @@ public class BaseAgent : Agent
     private Vector3 droneDefaultPosition;
 
     protected float lookAngle;
+    [Space, SerializeField, Tooltip("The maximum distance between checkpoint and drone")]
+    private float checkpointDistanceThreshold = 101;
 
-    [SerializeField, Tooltip("Penalty is applied at collision enter")]
-    private float collisionPenalty = 1.0f;
-    [SerializeField, Tooltip("Penalty is applied at collision stay")]
-    private float collisionStayPenalty = 100.0f;
-    [SerializeField, Tooltip("Penalty is applied at tip over event")]
-    private float tipOverPenalty = 5000.0f;
-    [SerializeField, Tooltip("Penalty is applied at tip over event")]
-    private float leftEnviromentPenalty = 100000.0f;
-    [Space, SerializeField, Tooltip("Reward is applied at tip over event")]
-    private float reachedGoalReward = 1000.0f;
+    // [SerializeField, Tooltip("Penalty is applied at collision enter")]
+    private float collisionPenalty = 10.0f;
+    //  [SerializeField, Tooltip("Penalty is applied at collision stay")]
+    private float collisionStayPenalty = 50.0f;
+    // [SerializeField, Tooltip("Penalty is applied at tip over event")]
+    private float tipOverPenalty = 50.0f;
+    // [SerializeField, Tooltip("Penalty is applied at tip over event")]
+    private float leftEnviromentPenalty = 100.0f;
+    // [Space, SerializeField, Tooltip("Reward is applied at tip over event")]
+    private float reachedGoalReward = 10000.0f;
+    private float touchedGoalReward = 100.0f;
+
+    protected float thresholdDistance;
 
     private int collisionCount;
 
     protected float localLookAngle;
     protected Vector3 localGoalVelocity;
+    
 
     public override void Initialize()
     {
@@ -48,6 +54,7 @@ public class BaseAgent : Agent
         {
             Debug.LogError("Goal is NULL");
         }
+        thresholdDistance = VectorToNextCheckpoint().magnitude;
         droneDefaultPosition = drone.transform.position;
 
         // Check if drone exists
@@ -65,7 +72,7 @@ public class BaseAgent : Agent
         drone.CollisionTimeoutEvent += OnCollisionTimeout;
         drone.LeftEnviromentEvent += OnLeftEnviromentEvent;
         goal.ReachedGoalEvent += OnReachedGoalEvent;
-        
+        goal.GoalTouchedEvent += OnGoalTouchedEvent;
     }
         
 
@@ -73,7 +80,7 @@ public class BaseAgent : Agent
     {
         // Make sure we remove any of the previous actions values
         Array.Clear(previousActions, 0, numberOfActions);
-        drone.transform.position = droneDefaultPosition;
+        goal.ResetGoal();
         drone.ResetDrone(droneDefaultPosition);
     }
 
@@ -82,26 +89,52 @@ public class BaseAgent : Agent
         base.CollectObservations(sensor);
         // direction to goal
         // distance to goal
-        float distanceToGoal =  Vector3.Distance(goal.transform.position, drone.worldPosition);
+        /*Vector3 vectorToNextCheckpoint = VectorToNextCheckpoint() / checkpointDistanceThreshold;
+        Vector3 goalPosition = goal.transform.position;
+
+        float distanceToGoal = vectorToNextCheckpoint.magnitude; // Vector3.Distance(goal.transform.position, drone.worldPosition);
         float dotToGoal = Vector3.Dot(drone.transform.forward, goal.transform.forward);
 
-        sensor.AddObservation(VectorToNextCheckpoint());
+        sensor.AddObservation(vectorToNextCheckpoint);
         sensor.AddObservation(distanceToGoal);
         // Smer k cielu (skalarny sucin)
         sensor.AddObservation(dotToGoal);
         // Pozicia ciela
-        sensor.AddObservation(goal.transform.position);
+        sensor.AddObservation(goal.transform.position / goalPosition.magnitude);
         // Natocenie drona okolo osi y
         sensor.AddObservation(drone.inclination);
-        sensor.AddObservation(drone.localAngularVelocity);
-        sensor.AddObservation(drone.localVelocity);
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.25f));
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity));
+        // Thrusts
+        for (int i = 0; i < numberOfActions; i++)
+        {
+            sensor.AddObservation(drone.thrusts[i] / drone.thrustFactor);
+        }*/
 
-        Debug.Log("Dot product: " + dotToGoal);
-        Debug.Log("Goal position: " + goal.transform.position);
+        Vector3 vectorToCheckpoint = VectorToNextCheckpoint();
+        float distanceToCheckpoint = vectorToCheckpoint.magnitude;
+        Vector3 normalizedVectorToCheckpoint = vectorToCheckpoint / distanceToCheckpoint; // Normalize the vector to have a magnitude of 1
+
+        float dotToGoal = Vector3.Dot(drone.transform.forward, vectorToCheckpoint); // Corrected to compare drone's forward direction with the direction towards the goal
+
+        sensor.AddObservation(normalizedVectorToCheckpoint); // Direction to next checkpoint, normalized
+        sensor.AddObservation(distanceToCheckpoint / checkpointDistanceThreshold); // Distance to checkpoint, scaled by threshold
+        sensor.AddObservation(dotToGoal); // Alignment towards goal
+        sensor.AddObservation(drone.inclination); // Drone's inclination
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity.magnitude, 0.25f)); // Sigmoid of drone's local velocity magnitude
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity.magnitude)); // Sigmoid of drone's local angular velocity magnitude
+
+        for (int i = 0; i < numberOfActions; i++)
+        {
+            sensor.AddObservation(drone.thrusts[i] / drone.thrustFactor); // Normalized thrusts
+        }
+
+        /*Debug.Log("Dot product: " + dotToGoal);
+        Debug.Log("Goal position: " + goalPosition/goalPosition.magnitude);
         Debug.Log("Distance: " + distanceToGoal);
         Debug.Log("Inclination" + drone.inclination.ToString());
         Debug.Log("Local velocity: " + drone.localVelocity.ToString());
-        Debug.Log("Local angular velocity: " + drone.localAngularVelocity.ToString());
+        Debug.Log("Local angular velocity: " + drone.localAngularVelocity.ToString());*/
 
 
         // Vizualizácia vektora forward pre drone
@@ -117,24 +150,27 @@ public class BaseAgent : Agent
         var actions = actionBuffers.ContinuousActions.Array;
         // Last cycle step
         int step = StepCount % decisionInterval;
-        if (step == 0)
+       // Logger.LogMessage("Pre lerp: " + string.Join(", ", actions));
+      /*  if (step == 0)
         {
             Array.Copy(actions, previousActions, numberOfActions);
-        } 
+        }
         else
         {
-            /*In a real - world scenario, a quadcopter's movements are typically smooth and gradual. 
-             * Interpolating actions can simulate this smooth transition by gradually changing from one action to the next, rather than making abrupt changes. 
-            This is especially useful in simulations where actions are discrete or updated at intervals.*/
+            *//*In a real - world scenario, a quadcopter's movements are typically smooth and gradual. 
+             * Interpolating actions can simulate this smooth transition by gradually changing from one action to the next, rather than making abrupt changes.
+            This is especially useful in simulations where actions are discrete or updated at intervals.*//*
             float t = step / (float)decisionInterval;
 
             for (int i = 0; i < numberOfActions; i++)
             {
                 actions[i] = Mathf.Lerp(previousActions[i], actions[i], t);
             }
-        }
+        }*/
+        Logger.LogMessage("After lerp: " + string.Join(", ", actions));
         drone.ApplyActions(actions);
     }
+
     protected Vector3 VectorToNextCheckpoint()
     {
         Vector3 checkpointDirection = goal.transform.position - drone.worldPosition;
@@ -155,7 +191,6 @@ public class BaseAgent : Agent
         // Draw the ray from the drone's current position to the goal
         Debug.DrawRay(drone.worldPosition, worldDirectionToGoal, Color.black);
         Debug.DrawLine(OrientationToCheckpoint(), drone.worldPosition, Color.blue);
-
     }
 
     #region Goal settings
@@ -212,6 +247,11 @@ public class BaseAgent : Agent
     {
         AddReward(-leftEnviromentPenalty);
         EndEpisode();
+    }
+
+    private void OnGoalTouchedEvent()
+    {
+        AddReward(touchedGoalReward);
     }
 
     #endregion

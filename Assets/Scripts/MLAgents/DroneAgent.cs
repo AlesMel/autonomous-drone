@@ -219,7 +219,6 @@ public class DroneAgent : Agent
         var distance = VectorToNextCheckpoint().magnitude/8;
         float stabilityError = droneControl.worldAngularVelocity.magnitude;
         AddReward(-distance);
-
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

@@ -2,12 +2,13 @@ import pickle
 import sys
 import numpy as np
 import time
-import atexit
+import atexit   
 import neat
 # import visualize
 import math
 import csv
 import os
+import datetime
 
 #from game_config import game_config
 # MLAGENTS stuff
@@ -18,22 +19,28 @@ from mlagents_envs.side_channel.engine_configuration_channel import EngineConfig
 # Params
 is_training = True
 
+
 env_path = "./Builds/autonomous-drone.exe"
+env_path2 = "./Builds/test-env/drone.exe"
 test_env_path = "./Builds/single-agent-env/autonomous-drone.exe"
-explorer_env_path = "./Builds/explorer/MappingDrone.exe"
+explorer_env_path = "./Builds/explorer/MappingDrone.exe"    
+test_explorer_env_path = "./Builds/explorer/single-env/MappingDrone.exe"    
+
 save_nn_destination = 'NEAT/result/best.pkl'
+
 engine_config_channel = EngineConfigurationChannel()
-engine_config_channel.set_configuration_parameters(width=2048 , height=1080, quality_level=1, time_scale=1)
+engine_config_channel.set_configuration_parameters(time_scale=10)
 
 if is_training:
-    env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=False, side_channels=[engine_config_channel])
+    env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=True, side_channels=[engine_config_channel])
 else:
     env = UnityEnvironment(file_name=test_env_path, seed=0)
 
 env.reset()
 
 num_actions = 4
-num_inputs = 17
+num_inputs = 14
+out_mult = 1
 
 behavior_specs = env.behavior_specs
 print(f"Behaviour specs {behavior_specs}")
@@ -73,7 +80,7 @@ def create_policies(genomes, cfg):
     policies = []
     for _, g in genomes:
         g.fitness = 0
-        policy = neat.nn.RecurrentNetwork.create(g, cfg)
+        policy = neat.nn.FeedForwardNetwork.create(g, cfg)
         policies.append(policy)
     return policies
 
@@ -114,8 +121,8 @@ def process_agent_inputs(agent_count, neat_to_unity_map, decision_steps):
     for agent in range(agent_count):
         if neat_to_unity_map[agent] in decision_steps:
             nn_input[agent] = np.asarray(decision_steps[neat_to_unity_map[agent]].obs[:])
-            if agent == 0 and not is_training:
-                print(f"Input for Agent{agent}: ", nn_input[agent])
+            # if agent == 0:
+            #     print(f"Input for Agent{agent}: ", nn_input[agent])
     return nn_input
 
 def process_and_set_agent_actions(agent_count, neat_to_unity_map, decision_steps, policies, nn_input):
@@ -136,24 +143,28 @@ def process_and_set_agent_actions(agent_count, neat_to_unity_map, decision_steps
         Time spent in activating policies.
     """
     actions = np.zeros(shape=(agent_count, len(policies[0].activate(nn_input[0]))))  # Adjust shape as necessary
-    actions = np.ones(shape=(agent_count, num_actions))
+    #actions = np.ones(shape=(agent_count, num_actions))
 
     for agent in range(agent_count):  
         if neat_to_unity_map[agent] in decision_steps:
-            try:
+            # try:
+            if agent + 1 > len(policies):
+                actions[agent] = policies[len(policies)].activate(nn_input[agent])
+            else:
                 actions[agent] = policies[agent].activate(nn_input[agent])
-            except:
-                print("Exception occured!")
-                print(f"Agent count: {agent_count}, policies length: {len(policies)}")
+            # except:       
+            #     print("Exception occured!")
+                            #     print(f"Agent count: {agent_count}, policies length: {len(policies)}")
             continuous_actions = np.array([actions[agent, :]])
-            #if agent == 0:
-             # print(f"Action for Agent{agent}: ", continuous_actions)
+            continuous_actions *= out_mult
+            # if agent == 0:
+            #     print(f"Action for Agent{agent}: ", continuous_actions)
             action_tuple = ActionTuple(discrete=None, continuous=continuous_actions)
             env.set_action_for_agent(behavior_name=behavior_name, 
                                      agent_id=neat_to_unity_map[agent], 
                                      action=action_tuple)
 
-def collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, decision_steps, genomes):
+def collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, decision_steps, genomes, done):
     """
     Collect rewards for each agent and update the fitness of each genome.
 
@@ -164,16 +175,24 @@ def collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, d
         decision_steps: A collection containing the decision steps for each agent.
         genomes: A list of genomes corresponding to each agent.
     """
+    fitness = 0
     for agent in range(agent_count):
         if agent in neat_to_unity_map:
+            
             local_agent = neat_to_unity_map[agent]
-            reward = 0
+            if local_agent not in done:
+                reward = 0
 
-            if local_agent in terminal_steps:
-                reward += terminal_steps[local_agent].reward
-            elif local_agent in decision_steps:
-                reward += decision_steps[local_agent].reward
-            genomes[agent][1].fitness += reward
+                if local_agent in terminal_steps:
+                    reward += terminal_steps[local_agent].reward
+                elif local_agent in decision_steps:
+                    reward += decision_steps[local_agent].reward
+                if agent > len(genomes):
+                    fitness+=reward
+                else:
+                    genomes[agent][1].fitness += reward
+    if agent_count > len(genomes):
+        genomes[len(genomes)] = fitness / (agent-len(genomes))
     return genomes
 
 def eval_agent(genomes, cfg):
@@ -201,21 +220,21 @@ def eval_agent(genomes, cfg):
         process_and_set_agent_actions(agent_count, neat_to_unity_map, decision_steps, policies, nn_input)
         env.step()
         decision_steps, terminal_steps = env.get_steps(behavior_name)
+        
+        # Collect reward
+        genomes = collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, decision_steps, genomes, done)
         # Terminal agents
         for agent in terminal_steps:
             done[neat_to_unity_map[agent]] = True
-        # Collect reward
-        genomes = collect_and_update_rewards(agent_count, neat_to_unity_map, terminal_steps, decision_steps, genomes)
-
     print("--- [All agents are terminal!] ---")
     env.reset()
 # TODO: do this on single agent env
 def sim_agent(genome, cfg):
     decision_steps, terminal_steps = env.get_steps(behavior_name)
     unity_to_neat_map, neat_to_unity_map = map_agent_ids(decision_steps)
+    policy = neat.nn.FeedForwardNetwork.create(genome, cfg)
     for gen in range(100):
         decision_steps, terminal_steps = env.get_steps(behavior_name)
-        policy = neat.nn.RecurrentNetwork.create(genome, cfg)
         done = False  # For the tracked_agent
         agent_count = len(decision_steps.agent_id)
         agent_id = neat_to_unity_map[0]
@@ -225,6 +244,7 @@ def sim_agent(genome, cfg):
                 action = policy.activate(nn_input)  # FPass for purple action
                 # Check if agent requests action:
                 continuous_actions = np.array([action[:]])
+                continuous_actions *= out_mult
                 print(f"Action for Agent{agent_id}: ", action)
                 action_tuple = ActionTuple(discrete=None, continuous=continuous_actions)
                 env.set_action_for_agent(behavior_name=behavior_name, agent_id=agent_id, action=action_tuple)
@@ -239,8 +259,8 @@ def sim_agent(genome, cfg):
         env.reset()
 
 
-def run(config_file):
-    max_generations = 10
+def run(config_file, run):
+    max_generations = 500
 
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -252,27 +272,30 @@ def run(config_file):
 
     pop.add_reporter(stats)
     #pop.add_reporter(neat.Checkpointer(generation_interval=25, time_interval_seconds=1200, filename_prefix='NEAT/checkpoints/NEAT-checkpoint-'))
-    #pop.add_reporter(neat.TBReporter(True, 1, 1, path="D:\\Projects\\autonomous-drone\\NEAT\\logs\\tensorboard\\"))
-    pop.add_reporter(neat.StdOutReporter(True))
-    pe = neat.ThreadedEvaluator(4, eval_agent)
+    pop.add_reporter(neat.TBReporter(True, 0, run, datte))
+    #pop.add_reporter(neat.StdOutReporter(True))
+    env.reset()
     best = pop.run(eval_agent, max_generations)
-    pe.stop()
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(best))
     print("Finished running!")
-    print("Closing environment!")
-    env.close()
     
     # Save best genome
-    with open(save_nn_destination, 'wb') as f:
+    with open(f'logs/{datte}/{run}/best.pkl', 'wb') as f:
         pickle.dump(best, f)
 
 if __name__ == "__main__":
     #atexit.register(exit_handler)
+    datte = datetime.datetime.now().strftime("%d-%m-%Y--%H_%M")
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, 'config_ctrnn')
+    config_path = os.path.join(local_dir, 'config')
+    runs = 2
     if is_training:
-        run(config_path)
+        for r in range(runs):
+            run(config_path, r)
+        print("Closing environment!")
+        env.close()
+
     else:
         with open(save_nn_destination, "rb") as f:
             genome = pickle.load(f)
