@@ -62,6 +62,6 @@ public class RotorControlAgent : BaseAgent
         var alignmentReward = velocityDotGoal * (0.15f / MaxStep);
         var distanceReward = (thresholdDistance - VectorToNextCheckpoint().magnitude);
         var angularPenalty = drone.localAngularVelocity.magnitude * (-1);
-        AddReward(alignmentReward * 0.5f + distanceReward + angularPenalty * 0.2f);
+        AddReward(alignmentReward * 0.0f + distanceReward + angularPenalty * 0);
     }
 }

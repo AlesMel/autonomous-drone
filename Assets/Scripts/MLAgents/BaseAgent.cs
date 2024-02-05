@@ -26,7 +26,7 @@ public class BaseAgent : Agent
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
     private float collisionPenalty = 10.0f;
     //  [SerializeField, Tooltip("Penalty is applied at collision stay")]
-    private float collisionStayPenalty = 50.0f;
+    private float collisionStayPenalty = 1000.0f;
     // [SerializeField, Tooltip("Penalty is applied at tip over event")]
     private float tipOverPenalty = 50.0f;
     // [SerializeField, Tooltip("Penalty is applied at tip over event")]

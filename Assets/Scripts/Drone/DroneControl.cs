@@ -38,7 +38,7 @@ public class DroneControl : MonoBehaviour
 
     // Multipliers.
     [SerializeField, Tooltip("Action multiplier")]
-    public float thrustFactor { get; private set; } = 4; // defaulted to: 6.38f;
+    public float thrustFactor { get; private set; } = 4f; // defaulted to: 6.38f;
 
     [SerializeField, Tooltip("Action multiplier")]
     private float torqueFactor = 5;
@@ -79,19 +79,16 @@ public class DroneControl : MonoBehaviour
             Debug.Log("Setting for rotor: " + i);
             velocityArray[i] = 0f; // Start with a velocity of 0
         }*/
-
-        foreach (Rotor rotor in rotors)
+        // uncomment for better center of mass
+       foreach (Rotor rotor in rotors)
         {
             rotor.Initialize();
-            centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
-
+            //centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
         }
-
-        Logger.LogMessage("Rotors have been initialized!");
-        //centerOfMass *= 0.25f; //?
-        //centerOfMass = new Vector3(0f, 0f, 0f);
-        Logger.LogMessage("Center of mass: " + centerOfMass);
-        droneRigidBody.centerOfMass = centerOfMass;
+        /* 
+         Logger.LogMessage("Rotors have been initialized!");
+         Logger.LogMessage("Center of mass: " + centerOfMass);
+         droneRigidBody.centerOfMass = centerOfMass;*/
     }
 
     public void ApplyActions(float[] actions)
