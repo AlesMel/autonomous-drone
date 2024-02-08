@@ -17,7 +17,7 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 
 is_training = False
-env_path = "./Builds/test-env/autonomous-drone.exe"
+env_path = "./Builds/train-env/autonomous-drone.exe"
 save_nn_destination = 'NEAT/result/best.pkl'
 
 engine_config_channel = EngineConfigurationChannel()
@@ -65,10 +65,15 @@ def eval_agent(genome, cfg):
             for agent in decision_steps:
                 if done[agent] is False:
                     #print(f"Agent requesting decision step: {agent}")
+                    
                     nn_input = np.asarray(decision_steps[agent].obs[:])
-                    #print(nn_input[0])
+
                     actions = policies[agent].activate(nn_input[0])
                     continous_actions = np.asarray([actions])
+                    if agent == 0:
+                        print(nn_input[0])
+                        print(continous_actions)
+                    continous_actions *= out_mult
                     action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
                     env.set_action_for_agent(behavior_name=behavior_name, 
                                             agent_id=agent, 

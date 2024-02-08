@@ -1399,7 +1399,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 0
+  m_ImplicitCom: 1
   m_ImplicitTensor: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1418,14 +1418,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151e11d1e1f673044b8f1e547f0201ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torqueFactor: 5
+  torqueFactor: 0
   animSpeedFactor: 4000
   animateRotors: 1
   actions:
-  - 1
-  - 1
-  - 1
-  - -1
+  - 0
+  - 0
+  - 0
+  - 0
   velocityArray: []
   smoothTime: 0.3
 --- !u!1 &2896967113499158397

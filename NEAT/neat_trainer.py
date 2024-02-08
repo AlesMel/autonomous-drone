@@ -16,9 +16,7 @@ from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 
-is_training = False
-env_path = "./Builds/test-env/autonomous-drone.exe"
-env_path = "./Builds/autonomous-drone.exe"
+env_path = "./Builds/train-env/autonomous-drone.exe"
 save_nn_destination = 'NEAT/result/best.pkl'
 
 engine_config_channel = EngineConfigurationChannel()
@@ -69,6 +67,7 @@ def eval_agent(genomes, cfg):
                 #print(nn_input[0])
                 actions = policies[agent].activate(nn_input[0])
                 continous_actions = np.asarray([actions])
+                continous_actions *= out_mult
                 action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
                 env.set_action_for_agent(behavior_name=behavior_name, 
                                         agent_id=agent, 
@@ -95,7 +94,8 @@ def eval_agent(genomes, cfg):
     #input("Press Enter to continue...")
 
 def run(config_file, run):
-    max_generations = 100
+    print(f"Running {run}")
+    max_generations = 1000
 
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -124,20 +124,8 @@ if __name__ == "__main__":
     datte = datetime.datetime.now().strftime("%d-%m-%Y--%H_%M")
     local_dir = os.path.dirname(__file__)
     config_path = os.path.join(local_dir, 'config')
-    runs = 2
-    if is_training:
-        for r in range(runs):
-            run(config_path, r)
-        print("Closing environment!")
-        env.close()
-
-    else:
-        with open(save_nn_destination, "rb") as f:
-            genome = pickle.load(f)
-            print(genome)
-        print(genome.fitness)
-        config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                         neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                         config_path)
-    
-        sim_agent(genome, config)
+    runs = 3
+    for r in range(runs):
+        run(config_path, r)
+    print("Closing environment!")
+    env.close()

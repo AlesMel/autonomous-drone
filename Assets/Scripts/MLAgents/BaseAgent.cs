@@ -21,7 +21,7 @@ public class BaseAgent : Agent
 
     protected float lookAngle;
     [Space, SerializeField, Tooltip("The maximum distance between checkpoint and drone")]
-    private float checkpointDistanceThreshold = 101;
+    private float checkpointDistanceThreshold = 11;
 
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
     private float collisionPenalty = 10.0f;
@@ -112,22 +112,19 @@ public class BaseAgent : Agent
         }*/
 
         Vector3 vectorToCheckpoint = VectorToNextCheckpoint();
-        float distanceToCheckpoint = vectorToCheckpoint.magnitude;
-        Vector3 normalizedVectorToCheckpoint = vectorToCheckpoint / distanceToCheckpoint; // Normalize the vector to have a magnitude of 1
+        float distanceToCheckpoint = vectorToCheckpoint.magnitude / checkpointDistanceThreshold;
+        Vector3 normalizedVectorToCheckpoint = vectorToCheckpoint / checkpointDistanceThreshold; // Normalize the vector to have a magnitude of 1
 
         float dotToGoal = Vector3.Dot(drone.transform.forward, vectorToCheckpoint); // Corrected to compare drone's forward direction with the direction towards the goal
 
         sensor.AddObservation(normalizedVectorToCheckpoint); // Direction to next checkpoint, normalized
-        sensor.AddObservation(distanceToCheckpoint / checkpointDistanceThreshold); // Distance to checkpoint, scaled by threshold
+        sensor.AddObservation(distanceToCheckpoint); // Distance to checkpoint, scaled by threshold
         sensor.AddObservation(dotToGoal); // Alignment towards goal
+        /*    sensor.AddObservation(drone.localVelocity.normalized); // Sigmoid of drone's local velocity magnitude
+            sensor.AddObservation(drone.localAngularVelocity.normalized); // Sigmoid of drone's local angular velocity magnitude */
         sensor.AddObservation(drone.inclination); // Drone's inclination
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity.magnitude, 0.25f)); // Sigmoid of drone's local velocity magnitude
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity.magnitude)); // Sigmoid of drone's local angular velocity magnitude
-
-        for (int i = 0; i < numberOfActions; i++)
-        {
-            sensor.AddObservation(drone.thrusts[i] / drone.thrustFactor); // Normalized thrusts
-        }
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f)); // Sigmoid of drone's local velocity magnitude
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity)); // Sigmoid of drone's local angular velocity magnitude
 
         /*Debug.Log("Dot product: " + dotToGoal);
         Debug.Log("Goal position: " + goalPosition/goalPosition.magnitude);

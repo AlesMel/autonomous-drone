@@ -38,10 +38,10 @@ public class DroneControl : MonoBehaviour
 
     // Multipliers.
     [SerializeField, Tooltip("Action multiplier")]
-    public float thrustFactor { get; private set; } = 4f; // defaulted to: 6.38f;
+    public float thrustFactor { get; private set; } = 6.38f; // defaulted to: 6.38f;
 
-    [SerializeField, Tooltip("Action multiplier")]
-    private float torqueFactor = 5;
+    // [SerializeField, Tooltip("Action multiplier")]
+    private float torqueFactor = 1.27f;
 
     [SerializeField, Tooltip("Action multiplier")]
     private float animSpeedFactor = 4000;
