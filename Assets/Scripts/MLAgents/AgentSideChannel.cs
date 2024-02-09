@@ -7,26 +7,33 @@ using System;
 public class AgentSideChannel : SideChannel
 {
 
-    private AgentManager agentManager;
+    public delegate void MessageReceivedEventHandler(int populationSize);
+    public event MessageReceivedEventHandler OnCustomMessageReceived;
 
     public AgentSideChannel()
     {
-        agentManager = new AgentManager();
-        agentManager.Initialize();
-        ChannelId = new Guid("621f0a70-4f87-11ea-a6bf-784f4387d1f7");
+        ChannelId = new Guid("58caf6d4-08f6-4996-8aba-72ed74670acd");
+        Debug.LogError("Side channel Initialized!");
     }
 
     protected override void OnMessageReceived(IncomingMessage msg)
     {
         var populationSize = msg.ReadInt32();
-        Debug.Log("From Python : " + populationSize);
-
-        agentManager.AdjustPopulationSize(populationSize);
+        Debug.LogError("From Python : " + populationSize);
+        OnCustomMessageReceived?.Invoke(populationSize);
     }
 
+    public void SendBoolToPython(bool value)
+    {
+        using (var msgOut = new OutgoingMessage())
+        {
+            msgOut.WriteBoolean(value);
+            QueueMessageToSend(msgOut);
+        }
+    }
     public void SendDebugStatementToPython(string logString, string stackTrace, LogType type)
     {
-        if (type == LogType.Error)
+       /* if (type != LogType.Error)
         {
             var stringToSend = type.ToString() + ": " + logString + "\n" + stackTrace;
             using (var msgOut = new OutgoingMessage())
@@ -34,6 +41,6 @@ public class AgentSideChannel : SideChannel
                 msgOut.WriteString(stringToSend);
                 QueueMessageToSend(msgOut);
             }
-        }
+        }*/
     }
 }

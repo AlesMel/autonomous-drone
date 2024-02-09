@@ -141,6 +141,11 @@ public class BaseAgent : Agent
         // Debug.DrawLine(goal.transform.position, goal.transform.position + goal.transform.forward * 2, Color.blue);
     }
 
+    public void OnDestroy()
+    {
+        
+    }
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         base.OnActionReceived(actionBuffers);

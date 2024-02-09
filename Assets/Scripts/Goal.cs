@@ -130,8 +130,11 @@ public class Goal : MonoBehaviour
 
     public void ResetGoal()
     {
-        goalMesh.material = goalUnreached;
-        isInTrigger = false;
+        if (goalMesh!= null)
+        {
+            goalMesh.material = goalUnreached;
+            isInTrigger = false;
+        }
     }
 
     public Vector3 GetParentSize(GameObject parentObject)

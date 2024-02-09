@@ -23,7 +23,7 @@ engine_config_channel = EngineConfigurationChannel()
 engine_config_channel.set_configuration_parameters(time_scale=1)
 agent_count_channel = AgentLogChannel()
 
-env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=False, side_channels=[engine_config_channel, agent_count_channel])
+env = UnityEnvironment(file_name=env_path, no_graphics=False, side_channels=[engine_config_channel, agent_count_channel])
 env.reset()
 
 num_actions = 4
@@ -52,23 +52,59 @@ def create_policies(genomes, cfg):
         policies.append(policy)
     return policies
 
+def map_agent_ids(decision_steps):
+    """
+    Map agent ids between NEAT and UNITY.
+
+    Args:
+        decision_steps: An iterable containing decision steps.
+
+    Returns:
+        A tuple of two dictionaries: (unity_to_neat_map, neat_to_unity_map)
+    """
+    unity_to_neat_map = {}
+    neat_to_unity_map = {}
+    id_count = 0
+    for step in decision_steps:
+        unity_to_neat_map[step] = id_count
+        neat_to_unity_map[id_count] = step
+        id_count += 1
+    return unity_to_neat_map, neat_to_unity_map
+
 def eval_agent(genomes, cfg):
     policies = create_policies(genomes, cfg)
     agent_count_channel.send_int(data=len(policies))    
-
+    # while not agent_count_channel.received_true_message:
+    #     print("Waiting for signal!")
     env.reset()
+    # while input("Enter") != '3':
+    #     print("Wating")
     decision_steps, terminal_steps = env.get_steps(behavior_name)
     agent_count = len(decision_steps.agent_id)
-    done = [False for i in range(agent_count)]
-    episode_rewards = [0 for i in range(agent_count)]
+    # this is here because when dynamically removing agents, the env.reset() and decision_steps don't cautgh up nicely (probably a timing issue)
+    while agent_count == 0:
+        env.reset()
+        decision_steps, terminal_steps = env.get_steps(behavior_name)
+        agent_count = len(decision_steps.agent_id)
+        
+    unity_to_neat_map, neat_to_unity_map = map_agent_ids(decision_steps)
+
+    done = [False for _ in range(agent_count)]
+    episode_rewards = [0 for _ in range(agent_count)]
     print(f"Agent count: {agent_count}")
+
     while not all(done):
         for agent in decision_steps:
-            if done[agent] is False:
+            # print(f"Current agent IDs in decision steps: {list(decision_steps.agent_id)}")
+            # print(f"Agent IDs in NEAT to Unity map: {list(neat_to_unity_map.keys())}")
+            # print(f"Agent values in NEAT to Unity map: {neat_to_unity_map}")
+            # print(f"Agent IDs in Unity to NEAT map: {list(unity_to_neat_map.keys())}")
+
+            if done[unity_to_neat_map[agent]] is False:
                 #print(f"Agent requesting decision step: {agent}")
                 nn_input = np.asarray(decision_steps[agent].obs[:])
                 #print(nn_input[0])
-                actions = policies[agent].activate(nn_input[0])
+                actions = policies[unity_to_neat_map[agent]].activate(nn_input[0])
                 continous_actions = np.asarray([actions])
                 continous_actions *= out_mult
                 action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
@@ -79,17 +115,25 @@ def eval_agent(genomes, cfg):
         decision_steps, terminal_steps = env.get_steps(behavior_name)
         
         for agent in decision_steps: # The agent requested a decision
-            if done[agent] is False:
-                episode_rewards[agent] += decision_steps[agent].reward
+            if done[unity_to_neat_map[agent]] is False:
+                episode_rewards[unity_to_neat_map[agent]] += decision_steps[agent].reward
+            else:
+                print(f"Agent: {unity_to_neat_map[agent]} is not getting reward!")
+
         for agent in terminal_steps: # The agent terminated its episode
-            if done[agent] is False:
-                #print(f"Agent: {agent} is terminal!")
+            print(f"TAgent: {agent} is terminal!")
+            if done[unity_to_neat_map[agent]] is False:
+
                 #input("Press Enter to continue...")
-                episode_rewards[agent] += terminal_steps[agent].reward
+                episode_rewards[unity_to_neat_map[agent]] += terminal_steps[agent].reward
                 #print(f"Agent {agent} reward throught episode: {episode_rewards[agent]}")
-                done[agent] = True
+                done[unity_to_neat_map[agent]] = True
+                not_done_count = len([d for d in done if not d])
+
+                print(f"Agent: {unity_to_neat_map[agent]} is terminal!, left agents {not_done_count}")
+
     agent_id = 0
-    for genome_id, genome in genomes:
+    for _, genome in genomes:
         genome.fitness = episode_rewards[agent_id]
         agent_id+=1
     

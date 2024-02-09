@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - DronePart
   - Enviroment
+  - TrainingField
   layers:
   - Default
   - TransparentFX
