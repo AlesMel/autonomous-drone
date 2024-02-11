@@ -1,4 +1,6 @@
+using DroneProject;
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ public class DroneControl : MonoBehaviour
     public event Action CollisionTimeoutEvent;
     public event Action ReachedGoalEvent;
     public event Action LeftEnviromentEvent;
+    public event Action LowAltitudeEvent;
 
     public bool isColliding { get; private set; }
 
@@ -20,9 +23,11 @@ public class DroneControl : MonoBehaviour
     private const float tipOverThreshold = -0.5f;
     private int collisionCount = 0;
     // Timeout in secs for continuous collision.
-    private const float timeout = 2;
-    private float defaultTilt;
+    private const float timeout = 5f;
 
+    private float defaultTilt;
+    
+    [SerializeField] private Vector3 defaultPosition;
     public Vector3 worldPosition => transform.TransformPoint(centerOfMass);
 
     // Velocities
@@ -38,7 +43,7 @@ public class DroneControl : MonoBehaviour
 
     // Multipliers.
     [SerializeField, Tooltip("Action multiplier")]
-    public float thrustFactor { get; private set; } = 6.38f; // defaulted to: 6.38f;
+    public float thrustFactor { get; private set; } = 5.38f; // defaulted to: 6.38f;
 
     // [SerializeField, Tooltip("Action multiplier")]
     private float torqueFactor = 1.27f;
@@ -48,6 +53,9 @@ public class DroneControl : MonoBehaviour
 
     [SerializeField, Tooltip("Whether to animate the rotors")]
     private bool animateRotors = true;
+
+    [SerializeField]
+    private bool printIsColliding = false;
 
     //[SerializeField]
     public float[] actions;
@@ -60,7 +68,16 @@ public class DroneControl : MonoBehaviour
 
     private bool reachedGoal = false;
     private bool hasCollided = false;
-    private void Start()
+
+    private int numCollided = 0;
+    private int colisionThreshold = 5; // Maximum number of collisions
+
+    // altitude
+    private bool isBelowThreshold = false;
+    private Coroutine altitudeCheckCoroutine;
+    private float collisionTime = 0f;
+
+    private void Awake()
     {
         Initialize();
     }
@@ -69,6 +86,7 @@ public class DroneControl : MonoBehaviour
     {
         defaultTilt = transform.localEulerAngles.x;
         droneRigidBody = GetComponent<Rigidbody>();
+        defaultPosition = droneRigidBody.position;
 
         rotors = GetComponentsInChildren<Rotor>();
 /*        Debug.Log("Rotors: " + rotors.Length);
@@ -100,7 +118,6 @@ public class DroneControl : MonoBehaviour
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
-        // Debug.Log("Pre actions: " + string.Join(", ", actions));
 
         for (int i = 0; i < rotors.Length; i++)
         {
@@ -123,13 +140,14 @@ public class DroneControl : MonoBehaviour
             // Buffer value for animation.
             animationSpeeds[i] = actionWithDirection;
         }
-        // Debug.Log("Post actions: " + string.Join(", ", actions));
 
         if (transform.up.y < tipOverThreshold)
         {
-            // Debug.LogWarning("Drone has been tipped over");
             TipOverEvent?.Invoke();
         }
+
+        CheckAltitudeLevel();
+
     }
 
     // Update is called once per frame
@@ -141,7 +159,46 @@ public class DroneControl : MonoBehaviour
         PropellerAnimation();
     }
 
- 
+    #region Altitude checking
+    private void CheckAltitudeLevel()
+    {
+        if (transform.position.y < 1.0f && !isBelowThreshold)
+        {
+            // If it's not already below the threshold, start checking
+            altitudeCheckCoroutine = StartCoroutine(CheckAltitudeCoroutine());
+        }
+        else if (transform.position.y >= 1.0f && isBelowThreshold)
+        {
+            // If it goes back above the threshold, stop the coroutine and reset
+            if (altitudeCheckCoroutine != null)
+            {
+                StopCoroutine(altitudeCheckCoroutine);
+                isBelowThreshold = false;
+            }
+        }
+    }
+
+    private IEnumerator CheckAltitudeCoroutine()
+    {
+        // Mark as below threshold and start the timer
+        isBelowThreshold = true;
+
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(2);
+
+        // Check the altitude again after waiting
+        if (transform.position.y < 1.0f)
+        {
+            // Still below threshold after 2 seconds, invoke the event
+            LowAltitudeEvent?.Invoke();
+        }
+
+        // Reset the flag
+        isBelowThreshold = false;
+    }
+
+    #endregion
+
     public void PropellerAnimation()
     {
         if (animateRotors)
@@ -189,10 +246,17 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (printIsColliding)
+        {
+            Debug.LogError("Collided!");
+        }
         Logger.LogMessage("Drone has collided!", true);
         collisionCount++;
-        UpdatecollisionStatus();
+        // when crashed too many times, invoke action to end episode and give penalty
+
+        //UpdatecollisionStatus();
         CollisionEvent?.Invoke(collision);
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -200,7 +264,7 @@ public class DroneControl : MonoBehaviour
 
         if (other.tag == "Goal" && !reachedGoal)
         {
-            // Debug.LogError("Drone has reached goal!");
+            Debug.LogError("Drone has reached goal!");
             ReachedGoalEvent?.Invoke();
             reachedGoal = true;
         }  
@@ -215,6 +279,7 @@ public class DroneControl : MonoBehaviour
         }
         if (other.tag == "Enviroment")
         {
+            Debug.Log("What what");
             LeftEnviromentEvent?.Invoke();
         }
     }
@@ -225,16 +290,23 @@ public class DroneControl : MonoBehaviour
         // Debug.LogWarning("Not colliding anymore!");
         collisionCount--;
         UpdatecollisionStatus();
-        
+        collisionTime = 0.0f;
     }
 
     private void OnCollisionStay(Collision collision)
     {
         // Debug.Log("Colliding stay");
         CollisionEvent?.Invoke(collision);
+        collisionTime += Time.deltaTime;
+        if (collisionTime > timeout)
+        {
+            CollisionTimeoutEvent?.Invoke();
+        }
     }
-
-
+    public void CancelAllInvokes()
+    {
+        CancelInvoke();
+    }
     private void UpdatecollisionStatus()
     {
         // Debug.Log("Collision status update");
@@ -275,23 +347,24 @@ public class DroneControl : MonoBehaviour
 
     public void ResetDrone(Vector3 resetPosition)
     {
-        BaseReset();
-
-        droneRigidBody.position = resetPosition;
-        droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
+        BaseReset();    
     }
 
 
     private void BaseReset()
     {
-
+        CancelInvoke();
+        
         isColliding = false;
         collisionCount = 0;
-
-        Array.Clear(thrusts, 0, thrusts.Length);
-        Array.Clear(actions, 0, thrusts.Length);
-        droneRigidBody.angularVelocity = Vector3.zero;
+        collisionTime = 0.0f;
+        //Array.Clear(thrusts, 0, thrusts.Length);
+        //Array.Clear(actions, 0, thrusts.Length);
         droneRigidBody.velocity = Vector3.zero;
+        droneRigidBody.angularVelocity = Vector3.zero;
+        droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(Vector3.zero);
+
+        droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
     }
 }
 
