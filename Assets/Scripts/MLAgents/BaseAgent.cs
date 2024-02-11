@@ -26,7 +26,7 @@ public class BaseAgent : Agent
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
     private float collisionPenalty = 10.0f;
     //  [SerializeField, Tooltip("Penalty is applied at collision stay")]
-    private float collisionStayPenalty = 1000.0f;
+    private float collisionStayPenalty = 3000.0f;
     // [SerializeField, Tooltip("Penalty is applied at tip over event")]
     private float tipOverPenalty = 50.0f;
     // [SerializeField, Tooltip("Penalty is applied at tip over event")]
@@ -71,17 +71,40 @@ public class BaseAgent : Agent
         drone.CollisionEvent += OnCollision;
         drone.CollisionTimeoutEvent += OnCollisionTimeout;
         drone.LeftEnviromentEvent += OnLeftEnviromentEvent;
+        //drone.LowAltitudeEvent += OnLowAltitudeEvent;
         goal.ReachedGoalEvent += OnReachedGoalEvent;
         goal.GoalTouchedEvent += OnGoalTouchedEvent;
     }
-        
+
+    private void EndCurrentEpisode(string message)
+    {
+        Debug.Log("Ended because: " + message);
+
+        EndEpisode();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        SetReward(0.0f);
+        EndCurrentEpisode("Disabled");
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Initialize();
+    }
 
     public override void OnEpisodeBegin()
     {
         // Make sure we remove any of the previous actions values
         Array.Clear(previousActions, 0, numberOfActions);
+        // Debug.Log("Reward should be: " + GetCumulativeReward());
+
         goal.ResetGoal();
         drone.ResetDrone(droneDefaultPosition);
+        drone.CancelAllInvokes();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -139,11 +162,6 @@ public class BaseAgent : Agent
 
         // Vizualizácia vektora forward pre goal
         // Debug.DrawLine(goal.transform.position, goal.transform.position + goal.transform.forward * 2, Color.blue);
-    }
-
-    public void OnDestroy()
-    {
-        
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -223,37 +241,45 @@ public class BaseAgent : Agent
 
     private void OnTipOverEvent()
     {
-        AddReward(-tipOverPenalty);
-        EndEpisode();
+        AddReward(-tipOverPenalty / (StepCount + 1));
+        EndCurrentEpisode("TipOver");
     }
 
     private void OnCollisionTimeout()
     {
-        AddReward(-collisionStayPenalty);
-        EndEpisode();
+        AddReward(-collisionStayPenalty / (StepCount + 1));
+        EndCurrentEpisode("Collision Timeout");
     }
 
     private void OnCollision(Collision collision)
     {
-        AddReward(-collisionPenalty);
+        AddReward(-collisionPenalty); //  / (StepCount + 1)
         collisionCount++;
     }
 
     private void OnReachedGoalEvent()
     {
         AddReward(reachedGoalReward);
-        EndEpisode();
+        EndCurrentEpisode("Reached Goal");
     }
 
     private void OnLeftEnviromentEvent()
     {
-        AddReward(-leftEnviromentPenalty);
-        EndEpisode();
+        AddReward(-leftEnviromentPenalty / (StepCount + 1));
+        EndCurrentEpisode("Left Enviroment");
     }
 
     private void OnGoalTouchedEvent()
     {
         AddReward(touchedGoalReward);
+        //Debug.Log("Touched goal!");
+    }
+
+    // Probably bugged trigger, so we need to check it like this
+    private void OnLowAltitudeEvent()
+    {
+        AddReward(-collisionStayPenalty);
+        EndCurrentEpisode("Low Altitutde");
     }
 
     #endregion

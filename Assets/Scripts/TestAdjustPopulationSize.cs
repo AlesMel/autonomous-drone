@@ -5,14 +5,13 @@ using UnityEngine;
 public class TestAdjustPopulationSize : MonoBehaviour
 {
 
-    [SerializeField] AgentManager agentManager;
-    [SerializeField] int numberOfAgents = 10;
+    private AgentManager agentManager;
+    [SerializeField] int numberOfAgents = 100;
 
     // Start is called before the first frame update
     void Start()
     {
-        agentManager= GetComponent<AgentManager>();
-        agentManager.Initialize();
+        agentManager = GetComponent<AgentManager>();
     }
 
     // Update is called once per frame
