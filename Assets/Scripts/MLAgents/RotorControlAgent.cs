@@ -64,6 +64,7 @@ public class RotorControlAgent : BaseAgent
 
         float stabilityError = drone.worldAngularVelocity.magnitude * (-1.0f);
 
-        AddReward(alignmentReward * 0.0f + distanceReward + stabilityError * 0.4f);
+        // Debug.Log($"distance  reward: {distanceReward}, stabilityError: {stabilityError * 0.4f}");
+        AddReward(alignmentReward * 0.1f + distanceReward + stabilityError * 0.2f);
     }
 }

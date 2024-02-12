@@ -8,9 +8,9 @@ public static class Logger
 
     private static readonly bool shouldLog = false;
 
-    public static void LogMessage(string message, bool isWarning = false)
+    public static void LogMessage(string message, bool isWarning = false, bool forceMessage = false)
     {
-        if (shouldLog)
+        if (shouldLog || forceMessage)
         {
             if (isWarning)
             {

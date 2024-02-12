@@ -65,20 +65,11 @@ public class BaseAgent : Agent
         }
 
         previousActions = new float[numberOfActions];
-
-        // Actions
-        drone.TipOverEvent += OnTipOverEvent;
-        drone.CollisionEvent += OnCollision;
-        drone.CollisionTimeoutEvent += OnCollisionTimeout;
-        drone.LeftEnviromentEvent += OnLeftEnviromentEvent;
-        //drone.LowAltitudeEvent += OnLowAltitudeEvent;
-        goal.ReachedGoalEvent += OnReachedGoalEvent;
-        goal.GoalTouchedEvent += OnGoalTouchedEvent;
     }
 
     private void EndCurrentEpisode(string message)
     {
-        Debug.Log("Ended because: " + message);
+        // Debug.Log("Ended because: " + message);
 
         EndEpisode();
     }
@@ -86,14 +77,30 @@ public class BaseAgent : Agent
     protected override void OnDisable()
     {
         base.OnDisable();
-        SetReward(0.0f);
+        m_CumulativeReward = 0.0f;
         EndCurrentEpisode("Disabled");
+        // Actions
+        drone.TipOverEvent -= OnTipOverEvent;
+        drone.CollisionEvent -= OnCollision;
+        drone.CollisionTimeoutEvent -= OnCollisionTimeout;
+        drone.LeftEnviromentEvent -= OnLeftEnviromentEvent;
+        drone.ReachedGoalEvent -= OnGoalTouchedEvent;
+        //drone.LowAltitudeEvent += OnLowAltitudeEvent;
+        goal.ReachedGoalEvent -= OnReachedGoalEvent;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
         Initialize();
+        // Actions
+        drone.TipOverEvent += OnTipOverEvent;
+        drone.CollisionEvent += OnCollision;
+        drone.CollisionTimeoutEvent += OnCollisionTimeout;
+        drone.LeftEnviromentEvent += OnLeftEnviromentEvent;
+        drone.ReachedGoalEvent += OnGoalTouchedEvent;
+        //drone.LowAltitudeEvent += OnLowAltitudeEvent;
+        goal.ReachedGoalEvent += OnReachedGoalEvent;
     }
 
     public override void OnEpisodeBegin()
@@ -148,7 +155,7 @@ public class BaseAgent : Agent
         sensor.AddObservation(drone.inclination); // Drone's inclination
         sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f)); // Sigmoid of drone's local velocity magnitude
         sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity)); // Sigmoid of drone's local angular velocity magnitude
-
+        DrawRays();
         /*Debug.Log("Dot product: " + dotToGoal);
         Debug.Log("Goal position: " + goalPosition/goalPosition.magnitude);
         Debug.Log("Distance: " + distanceToGoal);
@@ -193,7 +200,7 @@ public class BaseAgent : Agent
 
     protected Vector3 VectorToNextCheckpoint()
     {
-        Vector3 checkpointDirection = goal.transform.position - drone.worldPosition;
+        Vector3 checkpointDirection = goal.transform.localPosition - drone.transform.localPosition;
         Vector3 localCheckpointDirection = transform.InverseTransformDirection(checkpointDirection);
         return localCheckpointDirection;
     }
@@ -209,8 +216,8 @@ public class BaseAgent : Agent
         Vector3 worldDirectionToGoal = VectorToNextCheckpoint();
 
         // Draw the ray from the drone's current position to the goal
-        Debug.DrawRay(drone.worldPosition, worldDirectionToGoal, Color.black);
-        Debug.DrawLine(OrientationToCheckpoint(), drone.worldPosition, Color.blue);
+        Debug.DrawRay(drone.worldPosition, worldDirectionToGoal, Color.cyan);
+        //Debug.DrawLine(OrientationToCheckpoint(), drone.worldPosition, Color.blue);
     }
 
     #region Goal settings
@@ -253,32 +260,32 @@ public class BaseAgent : Agent
 
     private void OnCollision(Collision collision)
     {
-        AddReward(-collisionPenalty); //  / (StepCount + 1)
+        // AddReward(-collisionPenalty); //  / (StepCount + 1)
         collisionCount++;
     }
 
     private void OnReachedGoalEvent()
     {
-        AddReward(reachedGoalReward);
-        EndCurrentEpisode("Reached Goal");
+        AddReward(touchedGoalReward);
+        // EndCurrentEpisode("Reached Goal");
     }
 
     private void OnLeftEnviromentEvent()
     {
-        AddReward(-leftEnviromentPenalty / (StepCount + 1));
+        AddReward(-leftEnviromentPenalty);
         EndCurrentEpisode("Left Enviroment");
     }
 
     private void OnGoalTouchedEvent()
     {
         AddReward(touchedGoalReward);
-        //Debug.Log("Touched goal!");
+        // Debug.Log("Touched goal!");
     }
 
     // Probably bugged trigger, so we need to check it like this
     private void OnLowAltitudeEvent()
     {
-        AddReward(-collisionStayPenalty);
+        //AddReward(-collisionStayPenalty);
         EndCurrentEpisode("Low Altitutde");
     }
 

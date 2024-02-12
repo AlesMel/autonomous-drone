@@ -10,6 +10,7 @@ TagManager:
   - DronePart
   - Enviroment
   - TrainingField
+  - Agent
   layers:
   - Default
   - TransparentFX

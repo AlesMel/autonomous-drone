@@ -37,7 +37,7 @@ public class Goal : MonoBehaviour
 
     private GameObject parentObject;
 
-    private void Start()
+    private void Awake()
     {
         goalMesh = GetComponent<MeshRenderer>();
         parentTransform = transform.parent;
@@ -58,16 +58,15 @@ public class Goal : MonoBehaviour
     {
         if (isInTrigger)
         {
-            if (Time.time - triggerEnterTime >= requiredSeconds/2)
+            if (Time.time - triggerEnterTime >= requiredSeconds / 2)
             {
                 goalMesh.material = goalStayed;
             }
-            if (Time.time - triggerEnterTime >= requiredSeconds) 
+            if (Time.time - triggerEnterTime >= requiredSeconds)
             {
                 ReachedGoalEvent.Invoke();
-
             }
-        } 
+        }
     }
 
     private Vector3 GetObjectSize(Transform transform)
@@ -108,9 +107,9 @@ public class Goal : MonoBehaviour
     {
         GameObject collisionObject = other.gameObject;
         Logger.LogMessage("Triggered by tag: " + collisionObject.tag);
-        GoalTouchedEvent?.Invoke();
         if (collisionObject.tag == collisionTag)
         {
+            //GoalTouchedEvent?.Invoke();
             Logger.LogMessage("Triggered!" + collisionObject.tag);
             goalMesh.material = goalReached;
             triggerEnterTime = Time.time;
@@ -123,6 +122,7 @@ public class Goal : MonoBehaviour
         GameObject collisionObject = other.gameObject;
         if (collisionObject.tag == collisionTag)
         {
+            CancelInvoke();
             goalMesh.material = goalUnreached;
             isInTrigger = false;
         }

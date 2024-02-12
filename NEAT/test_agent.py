@@ -17,13 +17,14 @@ from mlagents_envs.base_env import ActionTuple
 from mlagents_envs.side_channel.engine_configuration_channel import EngineConfigurationChannel
 
 is_training = False
-env_path = "./Builds/train-env/autonomous-drone.exe"
+env_path = "./Builds/test-side-channel-env/autonomous-drone.exe"
 save_nn_destination = 'NEAT/result/best.pkl'
 
 engine_config_channel = EngineConfigurationChannel()
 engine_config_channel.set_configuration_parameters(time_scale=1)
 
-env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=False, side_channels=[engine_config_channel])
+# file_name=env_path, seed=0, no_graphics=False, 
+env = UnityEnvironment(side_channels=[engine_config_channel])
 env.reset()
 
 num_actions = 4
@@ -52,44 +53,90 @@ def create_policies(genomes, cfg):
         policies.append(policy)
     return policies
 
-def eval_agent(genome, cfg):
-    for _ in range(10):
-        env.reset()
-        decision_steps, terminal_steps = env.get_steps(behavior_name)
-        agent_count = len(decision_steps.agent_id)
-        done = [False for i in range(agent_count)]
-        policy = neat.nn.FeedForwardNetwork.create(genome, cfg)
-        policies = [policy for agent in range(agent_count)]
-        #print(f"Agent count: {agent_count}")
-        while not all(done):
-            for agent in decision_steps:
-                if done[agent] is False:
-                    #print(f"Agent requesting decision step: {agent}")
+# def eval_agent(genome, cfg):
+#     for _ in range(10):
+#         env.reset()
+#         decision_steps, terminal_steps = env.get_steps(behavior_name)
+#         agent_count = len(decision_steps.agent_id)
+#         done = [False for i in range(agent_count)]
+#         policy = neat.nn.FeedForwardNetwork.create(genome, cfg)
+#         policies = [policy for agent in range(agent_count)]
+#         reward = [0 for agent in range(agent_count)]
+#         #print(f"Agent count: {agent_count}")
+#         while not all(done):
+#             for agent in decision_steps:
+#                 if done[agent] is False:
+#                     #print(f"Agent requesting decision step: {agent}")
                     
-                    nn_input = np.asarray(decision_steps[agent].obs[:])
+#                     nn_input = np.asarray(decision_steps[agent].obs[:])
 
-                    actions = policies[agent].activate(nn_input[0])
-                    continous_actions = np.asarray([actions])
-                    if agent == 0:
-                        print(nn_input[0])
-                        print(continous_actions)
-                    continous_actions *= out_mult
-                    action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
-                    env.set_action_for_agent(behavior_name=behavior_name, 
-                                            agent_id=agent, 
-                                            action=action_tuple)
+#                     actions = policies[agent].activate(nn_input[0])
+#                     continous_actions = np.asarray([actions])
+#                     if agent == 0:
+#                         print(nn_input[0])
+#                         print(continous_actions)
+#                     continous_actions *= out_mult
+#                     action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
+#                     env.set_action_for_agent(behavior_name=behavior_name, 
+#                                             agent_id=agent, 
+#                                             action=action_tuple)
                 
-            env.step()
-            decision_steps, terminal_steps = env.get_steps(behavior_name)
+#             env.step()
+#             decision_steps, terminal_steps = env.get_steps(behavior_name)
+        
+#             for agent in decision_steps:
+#                 reward[agent] += decision_steps[agent].reward
+#             for agent in terminal_steps: # The agent terminated its episode
+#                 if terminal_steps[agent].interrupted:
+#                     print(f"problematic {agent}")
+#                 if done[agent] is False:
+#                     reward[agent] += terminal_steps[agent].reward
+#                     done[agent] = True
+#                     print(f"agnet reward: {reward[agent]}")
+def eval_agent(genome, cfg):
+    for gen in range(100):
+        decision_steps, terminal_steps = env.get_steps(behavior_name=behavior_name)
+        policy = neat.nn.FeedForwardNetwork.create(genome, cfg)
+        done = False  # For the tracked_agent
+        agent_id = list(decision_steps)[0]
+        reward = 0
+        while not done:
+            nn_input = np.concatenate(decision_steps[agent_id].obs[:])
 
-            for agent in terminal_steps: # The agent terminated its episode
-                if done[agent] is False:
-                    done[agent] = True
+            # Checks if the
+            if len(decision_steps) > 0:  # More steps to take?
+                actions = policy.activate(nn_input)  # FPass for purple action
+                continuous_actions = np.asarray([actions])
+                discrete_actions = None
+                action_tuple = ActionTuple(discrete=discrete_actions, continuous=continuous_actions)
+
+                # Applying the action
+                env.set_action_for_agent(behavior_name=behavior_name, agent_id=agent_id,
+                                         action=action_tuple)
+
+            # Move the simulation forward
+            env.step()
+
+            decision_steps, terminal_steps = env.get_steps(behavior_name=behavior_name)
+            if agent_id in terminal_steps:
+                reward += terminal_steps[agent_id].reward
+            elif agent_id in decision_steps:
+                reward += decision_steps[agent_id].reward
+            if len(decision_steps) > 0:
+                agent_id = list(decision_steps)[0]
+
+            # When whole teams are eliminated, end the generation.
+            if len(decision_steps) == 0:
+                done = True
+
+        print(f"agnet reward: {reward}")
+        # Clean the environment for a new generation.
+        env.reset()
 
 
 if __name__ == "__main__":
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, 'config')
+    config_path = os.path.join(local_dir, 'test_config')
     with open(save_nn_destination, "rb") as f:
         genome = pickle.load(f)
         print(genome)

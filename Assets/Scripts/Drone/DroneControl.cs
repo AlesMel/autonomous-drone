@@ -246,10 +246,6 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (printIsColliding)
-        {
-            Debug.LogError("Collided!");
-        }
         Logger.LogMessage("Drone has collided!", true);
         collisionCount++;
         // when crashed too many times, invoke action to end episode and give penalty
@@ -261,10 +257,9 @@ public class DroneControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "Goal" && !reachedGoal)
         {
-            Debug.LogError("Drone has reached goal!");
+            Logger.LogMessage("Drone has reached goal!", true);
             ReachedGoalEvent?.Invoke();
             reachedGoal = true;
         }  
@@ -279,7 +274,6 @@ public class DroneControl : MonoBehaviour
         }
         if (other.tag == "Enviroment")
         {
-            Debug.Log("What what");
             LeftEnviromentEvent?.Invoke();
         }
     }
@@ -356,6 +350,7 @@ public class DroneControl : MonoBehaviour
         CancelInvoke();
         
         isColliding = false;
+        reachedGoal= false;
         collisionCount = 0;
         collisionTime = 0.0f;
         //Array.Clear(thrusts, 0, thrusts.Length);

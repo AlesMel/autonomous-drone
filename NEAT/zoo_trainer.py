@@ -60,18 +60,19 @@ def eval_genomes(genomes, cfg):
         if done:
             action = None
         else:
-            rewards[map[current_agent]] = reward
             action = np.asarray(policies[map[current_agent]].activate(obs))
-            env.step(action)
+        rewards[map[current_agent]] += reward
+        env.step(action)
     for i, (_, genome) in enumerate(genomes):
+        if rewards[i] > 4000:
+            print("Bullshit!")  
         genome.fitness = rewards[i]
-        print(rewards[i])
     env.reset()
     print("\nFinished generation")
 
 def run(config_file, run, datte):
     print(f"Running {run}")
-    max_generations = 50
+    max_generations = 1000
 
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -83,7 +84,7 @@ def run(config_file, run, datte):
 
     pop.add_reporter(stats)
     #pop.add_reporter(neat.Checkpointer(generation_interval=25, time_interval_seconds=1200, filename_prefix='NEAT/checkpoints/NEAT-checkpoint-'))
-    pop.add_reporter(neat.TBReporter(True, 0, run, datte))
+    pop.add_reporter(neat.TBReporter(False, 0, run, datte))
     #pop.add_reporter(neat.StdOutReporter(True))
     env.reset()
     best = pop.run(eval_genomes, max_generations)
