@@ -11,6 +11,7 @@ TagManager:
   - Enviroment
   - TrainingField
   - Agent
+  - Ground
   layers:
   - Default
   - TransparentFX

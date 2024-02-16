@@ -1,6 +1,8 @@
 using DroneProject;
 using System;
 using System.Collections;
+using Unity.MLAgents;
+using Unity.Sentis.Layers;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,12 +22,7 @@ public class DroneControl : MonoBehaviour
     private Rigidbody droneRigidBody;
     private readonly float[] animationSpeeds = new float[4];
     private readonly float[] rotorTurnDirections = { 1, -1, -1, 1 };
-    private const float tipOverThreshold = -0.5f;
-    private int collisionCount = 0;
-    // Timeout in secs for continuous collision.
-    private const float timeout = 5f;
-
-    private float defaultTilt;
+    public float tipOverThreshold = -0.5f;
     
     [SerializeField] private Vector3 defaultPosition;
     public Vector3 worldPosition => transform.TransformPoint(centerOfMass);
@@ -42,11 +39,11 @@ public class DroneControl : MonoBehaviour
     public Quaternion rotationY => Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
     // Multipliers.
-    [SerializeField, Tooltip("Action multiplier")]
-    public float thrustFactor { get; private set; } = 5.38f; // defaulted to: 6.38f;
+    // [SerializeField, Tooltip("Action multiplier")]
+    public float thrustFactor { get; private set; } = 6.38f; // defaulted to: 6.38f;
 
     // [SerializeField, Tooltip("Action multiplier")]
-    private float torqueFactor = 1.27f;
+    private float torqueFactor = 1.27f;  // defaulted to: 1.27f;
 
     [SerializeField, Tooltip("Action multiplier")]
     private float animSpeedFactor = 4000;
@@ -57,8 +54,7 @@ public class DroneControl : MonoBehaviour
     [SerializeField]
     private bool printIsColliding = false;
 
-    //[SerializeField]
-    public float[] actions;
+    [SerializeField] public float[] actions;
     public float[] thrusts { get; private set; } = new float[4];
 
     private Rotor[] rotors;
@@ -66,54 +62,39 @@ public class DroneControl : MonoBehaviour
     [SerializeField] private float[] velocityArray; // Array to hold velocity for each rotor
     [SerializeField] public float smoothTime = 0.3f; // Example value, adjust based on your needs
 
-    private bool reachedGoal = false;
-    private bool hasCollided = false;
+    private bool isCoroutineRunning = false; // To ensure the coroutine runs only once per collision
 
-    private int numCollided = 0;
-    private int colisionThreshold = 5; // Maximum number of collisions
-
-    // altitude
-    private bool isBelowThreshold = false;
-    private Coroutine altitudeCheckCoroutine;
-    private float collisionTime = 0f;
+    // for rewards and penalties
+    public bool isInGoal = false;
+    public bool isInEnviroment = true;
+    public bool hasCrashed = true;
 
     private void Awake()
     {
         Initialize();
+        Academy.Instance.OnEnvironmentReset += EnvironmentReset;
     }
 
     public void Initialize()
     {
-        defaultTilt = transform.localEulerAngles.x;
         droneRigidBody = GetComponent<Rigidbody>();
         defaultPosition = droneRigidBody.position;
 
         rotors = GetComponentsInChildren<Rotor>();
-/*        Debug.Log("Rotors: " + rotors.Length);
-        velocityArray = new float[rotors.Length];
 
-        for (int i = 0; i < rotors.Length; i++)
-        {
-            Debug.Log("Setting for rotor: " + i);
-            velocityArray[i] = 0f; // Start with a velocity of 0
-        }*/
-        // uncomment for better center of mass
-       foreach (Rotor rotor in rotors)
+        foreach (Rotor rotor in rotors)
         {
             rotor.Initialize();
-            //centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
+            centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
         }
-        /* 
-         Logger.LogMessage("Rotors have been initialized!");
-         Logger.LogMessage("Center of mass: " + centerOfMass);
-         droneRigidBody.centerOfMass = centerOfMass;*/
+
+        droneRigidBody.centerOfMass = centerOfMass;
+        BaseReset();
     }
 
     public void ApplyActions(float[] actions)
     {
         Array.Copy(actions, this.actions, actions.Length);
-
-        // Debug.Log("Applying actions: " + actions[0] + ", " + actions[1] + ", " + actions[2] + ", " + actions[3]);
 
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
@@ -133,7 +114,6 @@ public class DroneControl : MonoBehaviour
 
             // Flip direction for 2 of 4 rotors, torques need to cancel each other out.
             float actionWithDirection = actions[i] * rotorTurnDirections[i];
-            //Debug.Log("Actions for rotor " + rotors[i].name + " action: " + actionWithDirection);
 
             droneRigidBody.AddRelativeTorque(actionWithDirection * torqueFactor * torqueAxis);
 
@@ -141,13 +121,10 @@ public class DroneControl : MonoBehaviour
             animationSpeeds[i] = actionWithDirection;
         }
 
-        if (transform.up.y < tipOverThreshold)
+/*        if (transform.up.y < tipOverThreshold)
         {
             TipOverEvent?.Invoke();
-        }
-
-        CheckAltitudeLevel();
-
+        }*/
     }
 
     // Update is called once per frame
@@ -158,46 +135,6 @@ public class DroneControl : MonoBehaviour
 
         PropellerAnimation();
     }
-
-    #region Altitude checking
-    private void CheckAltitudeLevel()
-    {
-        if (transform.position.y < 1.0f && !isBelowThreshold)
-        {
-            // If it's not already below the threshold, start checking
-            altitudeCheckCoroutine = StartCoroutine(CheckAltitudeCoroutine());
-        }
-        else if (transform.position.y >= 1.0f && isBelowThreshold)
-        {
-            // If it goes back above the threshold, stop the coroutine and reset
-            if (altitudeCheckCoroutine != null)
-            {
-                StopCoroutine(altitudeCheckCoroutine);
-                isBelowThreshold = false;
-            }
-        }
-    }
-
-    private IEnumerator CheckAltitudeCoroutine()
-    {
-        // Mark as below threshold and start the timer
-        isBelowThreshold = true;
-
-        // Wait for 2 seconds
-        yield return new WaitForSeconds(2);
-
-        // Check the altitude again after waiting
-        if (transform.position.y < 1.0f)
-        {
-            // Still below threshold after 2 seconds, invoke the event
-            LowAltitudeEvent?.Invoke();
-        }
-
-        // Reset the flag
-        isBelowThreshold = false;
-    }
-
-    #endregion
 
     public void PropellerAnimation()
     {
@@ -210,127 +147,79 @@ public class DroneControl : MonoBehaviour
                 float speed = animationSpeeds[i] * maxSpeed;
 
                 rotor.rb.transform.Rotate(Vector3.up, speed);
-                /*   Vector3 rotationSpeed = new Vector3(0, speed, 0);
-
-                   Quaternion deltaRotation = Quaternion.Euler(rotationSpeed);
-                   rotor.rb.MoveRotation(deltaRotation * rotor.rb.rotation);*/
-
-                //rotor.rb.transform.Rotate(0, speed, 0, Space.Self);
-                //rotor.propeller.transform.Rotate(0, speed, 0);
-                //Debug.Log("Speed for rotor " + rotor.name + " speed: " + speed);
-                //Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
             }
-        }   
-        /*        if (animateRotors)
-                {
-                    float maxSpeed = animSpeedFactor; // Assuming animSpeedFactor is your target speed
-                    for (int i = 0; i < rotors.Length; i++)
-                    {
-                        Rotor rotor = rotors[i];
-
-                        // Assume targetAngleArray and velocityArray are defined at class level
-                        float targetAngle = rotor.currentAngle + animationSpeeds[i] * maxSpeed * Time.deltaTime;
-                        Debug.Log("Velocity array" + velocityArray[i]);
-                        float newAngle = Mathf.SmoothDampAngle(rotor.currentAngle, targetAngle, ref velocityArray[i], smoothTime);
-
-                        rotor.rb.MoveRotation(Quaternion.Euler(0, newAngle, 0));
-
-                        // Update current angle
-                        rotor.currentAngle = newAngle;
-
-                        // Optional: Logging
-                        Debug.Log("RigidBody: " + droneRigidBody.transform.position.ToString());
-                    }
-                }*/
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Logger.LogMessage("Drone has collided!", true);
-        collisionCount++;
-        // when crashed too many times, invoke action to end episode and give penalty
-
-        //UpdatecollisionStatus();
-        CollisionEvent?.Invoke(collision);
-        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Goal" && !reachedGoal)
+        if (other.CompareTag("Goal"))
         {
-            Logger.LogMessage("Drone has reached goal!", true);
-            ReachedGoalEvent?.Invoke();
-            reachedGoal = true;
-        }  
+            Logger.LogMessage("Drone has touched the goal!", true);
+            // ReachedGoalEvent?.Invoke();
+            isInGoal = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Goal" && reachedGoal)
+        if (other.CompareTag("Goal"))
         {
-            // Debug.LogError("Drone has moved from the goal!");
-            reachedGoal = false;
+            isInGoal = false;
         }
-        if (other.tag == "Enviroment")
+        if (other.CompareTag("Enviroment"))
         {
-            LeftEnviromentEvent?.Invoke();
+            isInEnviroment = false;
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
     }
 
     private void OnCollisionExit(Collision collision)
     {
-
-        // Debug.LogWarning("Not colliding anymore!");
-        collisionCount--;
-        UpdatecollisionStatus();
-        collisionTime = 0.0f;
+        isCoroutineRunning = false;
+        StopAllCoroutines();
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        // Debug.Log("Colliding stay");
-        CollisionEvent?.Invoke(collision);
-        collisionTime += Time.deltaTime;
-        if (collisionTime > timeout)
+        if (collision.gameObject.tag == "Ground")
         {
-            CollisionTimeoutEvent?.Invoke();
+            if (!isCoroutineRunning)
+            {
+                // Start the coroutine
+                StartCoroutine(CheckCollisionDuration());
+            }
         }
     }
+    IEnumerator CheckCollisionDuration()
+    {
+        isCoroutineRunning = true; // Mark the coroutine as running
+
+        // Wait for 1 second
+        yield return new WaitForSeconds(1f);
+
+        // After 1 second, check if still colliding
+        if (isCoroutineRunning)
+        {
+            // Flip the variable here
+            hasCrashed = true;
+        }
+
+        // Mark the coroutine as not running
+        isCoroutineRunning = false;
+    }
+
     public void CancelAllInvokes()
     {
         CancelInvoke();
-    }
-    private void UpdatecollisionStatus()
-    {
-        // Debug.Log("Collision status update");
-        if (collisionCount < 0)
-        {
-            // Debug.LogWarning("Collision count < 0");
-            collisionCount = 0;
-        }
-        // Debug.LogWarning("Collision count: " + collisionCount);
-
-        bool tmp = isColliding;
-        isColliding = collisionCount > 0;
-        if (!isColliding)
-        {
-            hasCollided = false;
-            // Debug.Log("Canceling all invokes!");
-            CancelInvoke();
-        } else if (!tmp)
-        {
-            hasCollided = true;
-            // Debug.Log("Invoking collision stay!");
-            Invoke(nameof(NotifyTimeout), timeout);
-        }
-
-    }
-
-    private void NotifyTimeout()
-    {
-        // Debug.Log("Notify Timout invoked!");
-        CollisionTimeoutEvent?.Invoke();
     }
 
     // World coordinates to drone's coordinates
@@ -339,27 +228,32 @@ public class DroneControl : MonoBehaviour
         return transform.InverseTransformVector(vector);
     }
 
-    public void ResetDrone(Vector3 resetPosition)
+    void EnvironmentReset()
     {
-        BaseReset();    
+        BaseReset();
     }
 
-
-    private void BaseReset()
+    void ResetCheckingParameters()
     {
-        CancelInvoke();
-        
-        isColliding = false;
-        reachedGoal= false;
-        collisionCount = 0;
-        collisionTime = 0.0f;
-        //Array.Clear(thrusts, 0, thrusts.Length);
-        //Array.Clear(actions, 0, thrusts.Length);
+        isInGoal = false;
+        isInEnviroment = true;
+        hasCrashed = false;
+    }
+
+    void ResetPhysicalProperties()
+    {
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
         droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(Vector3.zero);
-
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void BaseReset()
+    {
+        ResetPhysicalProperties();
+        ResetCheckingParameters();
+        Array.Clear(actions, 0, actions.Length);
+
     }
 }
 

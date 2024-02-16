@@ -25,7 +25,9 @@ print(f"There is total of {num_actions} actions in enviroment")
 num_inputs = env.observation_space(env.possible_agents[0]).shape[0]
 print(f"There is total of {num_inputs} inputs in enviroment")
 
-MAX_STEPS = 1000
+MAX_STEPS = 1500
+NUM_RUNS = 5
+MAX_GENS = 2500
 
 def map_agents():
     map = {}
@@ -72,7 +74,6 @@ def eval_genomes(genomes, cfg):
 
 def run(config_file, run, datte):
     print(f"Running {run}")
-    max_generations = 1000
 
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -87,7 +88,7 @@ def run(config_file, run, datte):
     pop.add_reporter(neat.TBReporter(False, 0, run, datte))
     #pop.add_reporter(neat.StdOutReporter(True))
     env.reset()
-    best = pop.run(eval_genomes, max_generations)
+    best = pop.run(eval_genomes, MAX_GENS)
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(best))
     print("Finished running!")
@@ -100,6 +101,6 @@ if __name__ == "__main__":
     datte = datetime.datetime.now().strftime("%d-%m-%Y--%H_%M")
     local_dir = os.path.dirname(__file__)
     config_path = os.path.join(local_dir, 'test_config')
-    runs = 1
-    for r in range(runs):
+    for r in range(NUM_RUNS):
         run(config_path, r, datte)
+    env.close()

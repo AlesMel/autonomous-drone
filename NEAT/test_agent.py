@@ -1,14 +1,8 @@
 import pickle
-import sys
 import numpy as np
-import time
-import atexit   
 import neat
-# import visualize
-import math
-import csv
 import os
-import datetime
+import keyboard
 
 #from game_config import game_config
 # MLAGENTS stuff
@@ -53,84 +47,70 @@ def create_policies(genomes, cfg):
         policies.append(policy)
     return policies
 
-# def eval_agent(genome, cfg):
-#     for _ in range(10):
-#         env.reset()
-#         decision_steps, terminal_steps = env.get_steps(behavior_name)
-#         agent_count = len(decision_steps.agent_id)
-#         done = [False for i in range(agent_count)]
-#         policy = neat.nn.FeedForwardNetwork.create(genome, cfg)
-#         policies = [policy for agent in range(agent_count)]
-#         reward = [0 for agent in range(agent_count)]
-#         #print(f"Agent count: {agent_count}")
-#         while not all(done):
-#             for agent in decision_steps:
-#                 if done[agent] is False:
-#                     #print(f"Agent requesting decision step: {agent}")
-                    
-#                     nn_input = np.asarray(decision_steps[agent].obs[:])
+def map_agent_ids(decision_steps):
+    """
+    Map agent ids between NEAT and UNITY.
 
-#                     actions = policies[agent].activate(nn_input[0])
-#                     continous_actions = np.asarray([actions])
-#                     if agent == 0:
-#                         print(nn_input[0])
-#                         print(continous_actions)
-#                     continous_actions *= out_mult
-#                     action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
-#                     env.set_action_for_agent(behavior_name=behavior_name, 
-#                                             agent_id=agent, 
-#                                             action=action_tuple)
-                
-#             env.step()
-#             decision_steps, terminal_steps = env.get_steps(behavior_name)
-        
-#             for agent in decision_steps:
-#                 reward[agent] += decision_steps[agent].reward
-#             for agent in terminal_steps: # The agent terminated its episode
-#                 if terminal_steps[agent].interrupted:
-#                     print(f"problematic {agent}")
-#                 if done[agent] is False:
-#                     reward[agent] += terminal_steps[agent].reward
-#                     done[agent] = True
-#                     print(f"agnet reward: {reward[agent]}")
+    Args:
+        decision_steps: An iterable containing decision steps.
+
+    Returns:
+        A tuple of two dictionaries: (unity_to_neat_map, neat_to_unity_map)
+    """
+    unity_to_neat_map = {}
+    neat_to_unity_map = {}
+    id_count = 0
+    for step in decision_steps:
+        unity_to_neat_map[step] = id_count
+        neat_to_unity_map[id_count] = step
+        id_count += 1
+    return unity_to_neat_map, neat_to_unity_map
+
 def eval_agent(genome, cfg):
-    for gen in range(100):
-        decision_steps, terminal_steps = env.get_steps(behavior_name=behavior_name)
+    while True:
+        env.reset()
         policy = neat.nn.FeedForwardNetwork.create(genome, cfg)
-        done = False  # For the tracked_agent
-        agent_id = list(decision_steps)[0]
-        reward = 0
+        decision_steps, terminal_steps = env.get_steps(behavior_name)
+        agent_count = len(decision_steps.agent_id)
+        policies = [policy] * agent_count
+
+        unity_to_neat_map, neat_to_unity_map = map_agent_ids(decision_steps)
+
+        done = False  # Vectorized initialization
+        removed_agents = []
+
+        episode_rewards = [0] * agent_count
+        print(f"Agent count: {agent_count}")
         while not done:
-            nn_input = np.concatenate(decision_steps[agent_id].obs[:])
-
-            # Checks if the
-            if len(decision_steps) > 0:  # More steps to take?
-                actions = policy.activate(nn_input)  # FPass for purple action
-                continuous_actions = np.asarray([actions])
-                discrete_actions = None
-                action_tuple = ActionTuple(discrete=discrete_actions, continuous=continuous_actions)
-
-                # Applying the action
-                env.set_action_for_agent(behavior_name=behavior_name, agent_id=agent_id,
-                                         action=action_tuple)
-
-            # Move the simulation forward
+            if keyboard.is_pressed('q'):  # Check if 'q' is pressed
+                env.close()
+                return
+            for agent in decision_steps:
+                if agent not in removed_agents:
+                    nn_input = np.asarray(decision_steps[agent].obs[:])
+                    actions = policies[unity_to_neat_map[agent]].activate(nn_input[0])
+                    continous_actions = np.asarray([actions])
+                    action_tuple = ActionTuple(discrete=None, continuous=continous_actions)
+                    env.set_action_for_agent(behavior_name=behavior_name, 
+                                            agent_id=agent, 
+                                            action=action_tuple)
             env.step()
+            decision_steps, terminal_steps = env.get_steps(behavior_name)
+            for agent in range(agent_count):
+                if agent not in removed_agents:
+                    local_agent = neat_to_unity_map[agent]
 
-            decision_steps, terminal_steps = env.get_steps(behavior_name=behavior_name)
-            if agent_id in terminal_steps:
-                reward += terminal_steps[agent_id].reward
-            elif agent_id in decision_steps:
-                reward += decision_steps[agent_id].reward
-            if len(decision_steps) > 0:
-                agent_id = list(decision_steps)[0]
+                    if local_agent in terminal_steps:
+                        episode_rewards[agent] += terminal_steps[local_agent].reward
+                        removed_agents.append(agent)
+                    elif local_agent in decision_steps:
+                        episode_rewards[agent] += decision_steps[local_agent].reward
+                    
 
-            # When whole teams are eliminated, end the generation.
-            if len(decision_steps) == 0:
+            if len(removed_agents) >= agent_count:
+                print(".") 
                 done = True
-
-        print(f"agnet reward: {reward}")
-        # Clean the environment for a new generation.
+        print(episode_rewards[0])
         env.reset()
 
 

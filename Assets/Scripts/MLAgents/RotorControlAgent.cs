@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class RotorControlAgent : BaseAgent
 {
-    [SerializeField]
-    public float diameter = 101.0f;
-
     public override void CollectObservations(VectorSensor sensor)
     {
         base.CollectObservations(sensor);
@@ -34,28 +31,7 @@ public class RotorControlAgent : BaseAgent
     public override void AddRewards()
     {
         base.AddRewards();
-        /*        // Dot product between velocity and goal position
-                var velocityDotGoal = Vector3.Dot(drone.localVelocity, VectorToNextCheckpoint());
-                // Calculate the reward based on alignment with goal direction
-                var alignmentReward = velocityDotGoal * (0.15f / MaxStep);
-                // Calculate the reward based on proximity to the goal
-                var distanceReward = Mathf.Clamp01(1f - Vector3.Distance(goal.transform.position, drone.worldPosition) / thresholdDistance);
-                distanceReward *= 0.1f / MaxStep; // Adjust the reward factor as needed
 
-                // Combine alignment, distance, velocity, and direction rewards
-                var totalReward = alignmentReward + distanceReward;
-
-                // Calculate the dot product between the agent's forward direction and the direction to the checkpoint
-                float dotProduct = Vector3.Dot(Vector3.forward, VectorToNextCheckpoint());
-                if (dotProduct > 0.91f && velocityDotGoal > 1.5f)
-                {
-                    totalReward += (1.0f / MaxStep);
-                }
-                else
-                {
-                    totalReward -= (1.0f / MaxStep);
-                }
-        */
         // Dot product between velocity and goal position
         var velocityDotGoal = Vector3.Dot(drone.localVelocity, VectorToNextCheckpoint());
         // Calculate the reward based on alignment with goal direction
@@ -65,6 +41,31 @@ public class RotorControlAgent : BaseAgent
         float stabilityError = drone.worldAngularVelocity.magnitude * (-1.0f);
 
         // Debug.Log($"distance  reward: {distanceReward}, stabilityError: {stabilityError * 0.4f}");
-        AddReward(alignmentReward * 0.1f + distanceReward + stabilityError * 0.2f);
+
+
+        AddReward(alignmentReward * 0.1f + distanceReward + stabilityError * 0.7f);
+
+        if (drone.isInGoal)
+        {
+            AddReward(touchedGoalReward);
+        }
+
+        if (drone.transform.up.y < drone.tipOverThreshold)
+        {
+            SetReward(-tipOverPenalty);
+            EndEpisode();
+        }
+
+        if (drone.hasCrashed)
+        {
+            SetReward(-crashedPenalty);
+            EndCurrentEpisode("Crashed");
+        }
+
+        if (!drone.isInEnviroment)
+        {
+            SetReward(-leftEnviromentPenalty);
+            EndCurrentEpisode("Left enviroment");
+        }
     }
 }

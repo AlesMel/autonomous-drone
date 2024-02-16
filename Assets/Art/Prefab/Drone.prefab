@@ -1366,7 +1366,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2883033016525516991}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.20885047, y: 0, z: 0, w: 0.9779476}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -1378,7 +1378,7 @@ Transform:
   - {fileID: 3044372911656311547}
   - {fileID: 3436807062927722590}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -24.11, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6130190654615948325
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1399,8 +1399,8 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1418,6 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151e11d1e1f673044b8f1e547f0201ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tipOverThreshold: -0.5
   defaultPosition: {x: 0, y: 0, z: 0}
   animSpeedFactor: 4000
   animateRotors: 1
@@ -1429,6 +1430,9 @@ MonoBehaviour:
   - 0
   velocityArray: []
   smoothTime: 0.3
+  isInGoal: 0
+  isInEnviroment: 1
+  hasCrashed: 1
 --- !u!1 &2896967113499158397
 GameObject:
   m_ObjectHideFlags: 0

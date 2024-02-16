@@ -39,9 +39,7 @@ public class Goal : MonoBehaviour
 
     private void Awake()
     {
-        goalMesh = GetComponent<MeshRenderer>();
-        parentTransform = transform.parent;
-        parentObject = transform.parent.gameObject;
+        Initialize();
 /*        if (parentTransform != null)
         {
             //parentSize = GetObjectSize(parentTransform);
@@ -54,9 +52,16 @@ public class Goal : MonoBehaviour
         }*/
     }
 
+    public void Initialize()
+    {
+        goalMesh = GetComponent<MeshRenderer>();
+        parentTransform = transform.parent;
+        parentObject = transform.parent.gameObject;
+    }
+
     private void FixedUpdate()
     {
-        if (isInTrigger)
+/*        if (isInTrigger)
         {
             if (Time.time - triggerEnterTime >= requiredSeconds / 2)
             {
@@ -66,7 +71,7 @@ public class Goal : MonoBehaviour
             {
                 ReachedGoalEvent.Invoke();
             }
-        }
+        }*/
     }
 
     private Vector3 GetObjectSize(Transform transform)
@@ -84,7 +89,7 @@ public class Goal : MonoBehaviour
 
     private void ResetPositionControlParameters()
     {
-        isInTrigger= false;
+        isInTrigger = false;
     }
 
     public void SpawnObject()
@@ -137,6 +142,8 @@ public class Goal : MonoBehaviour
         }
     }
 
+
+    #region (Crosses) Spehere spawning
     public Vector3 GetParentSize(GameObject parentObject)
     {
         Renderer parentRenderer = parentObject.GetComponent<Renderer>();
@@ -157,8 +164,6 @@ public class Goal : MonoBehaviour
             return Vector3.one; // Default size, you may handle this case differently.
         }
     }
-
-    #region (Crosses) Spehere spawning
 
     public float GetSphereDiameter(GameObject sphereObject)
     {
