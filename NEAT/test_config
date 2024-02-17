@@ -1,7 +1,7 @@
 [NEAT]
 fitness_criterion     = max
 fitness_threshold     = 1000000
-pop_size              = 100
+pop_size              = 50
 reset_on_extinction   = False
 
 [DefaultGenome]
@@ -36,7 +36,7 @@ node_delete_prob        = 0.1
 
 # network parameters
 num_hidden              = 1
-num_inputs              = 14
+num_inputs              = 18
 num_outputs             = 4
 
 # node response options
@@ -67,7 +67,7 @@ bias_mutate_rate        = 0.2
 bias_replace_rate       = 0.1
 
 [DefaultSpeciesSet]
-compatibility_threshold = 1.7
+compatibility_threshold = 1.75
 
 [DefaultStagnation]
 species_fitness_func = mean

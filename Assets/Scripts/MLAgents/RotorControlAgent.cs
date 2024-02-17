@@ -35,15 +35,17 @@ public class RotorControlAgent : BaseAgent
         // Dot product between velocity and goal position
         var velocityDotGoal = Vector3.Dot(drone.localVelocity, VectorToNextCheckpoint());
         // Calculate the reward based on alignment with goal direction
-        var alignmentReward = velocityDotGoal * (0.15f / MaxStep);
+        var alignmentReward = velocityDotGoal;
         var distanceReward = (thresholdDistance - VectorToNextCheckpoint().magnitude);
 
         float stabilityError = drone.worldAngularVelocity.magnitude * (-1.0f);
 
-        // Debug.Log($"distance  reward: {distanceReward}, stabilityError: {stabilityError * 0.4f}");
-
-
-        AddReward(alignmentReward * 0.1f + distanceReward + stabilityError * 0.7f);
+        AddReward(alignmentReward * 0.1f + distanceReward + stabilityError * 1f);   
+        if (drone.collisionStay)
+        {
+            Logger.LogMessage("Incrementing collision!", true, false);
+            drone.collisionCount++;
+        }
 
         if (drone.isInGoal)
         {
@@ -53,13 +55,12 @@ public class RotorControlAgent : BaseAgent
         if (drone.transform.up.y < drone.tipOverThreshold)
         {
             SetReward(-tipOverPenalty);
-            EndEpisode();
         }
 
-        if (drone.hasCrashed)
+        if (drone.collisionCount >= 150) 
         {
             SetReward(-crashedPenalty);
-            EndCurrentEpisode("Crashed");
+            EndCurrentEpisode("Crashed" + drone.collisionCount);
         }
 
         if (!drone.isInEnviroment)

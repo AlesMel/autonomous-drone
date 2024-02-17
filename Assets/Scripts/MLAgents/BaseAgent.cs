@@ -2,6 +2,7 @@ using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UIElements;
@@ -15,9 +16,6 @@ public class BaseAgent : Agent
 
     public float[] previousActions;
     private const int numberOfActions = 4;
-    
-    private Vector3 localVelocity;
-    private Vector3 droneDefaultPosition;
 
     protected float lookAngle;
     [Space, SerializeField, Tooltip("The maximum distance between checkpoint and drone")]
@@ -35,7 +33,19 @@ public class BaseAgent : Agent
     protected Vector3 localGoalVelocity;
 
     public bool isInGoal = false;
-    
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        UnsubscribeFromInvokes();
+        EndCurrentEpisode("Disabled");
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Initialize();
+    }
 
     public override void Initialize()
     {
@@ -51,7 +61,6 @@ public class BaseAgent : Agent
         goal.ResetGoal();
 
         thresholdDistance = VectorToNextCheckpoint().magnitude;
-        droneDefaultPosition = drone.transform.position;
 
         // Check if drone exists
         if (drone == null)
@@ -63,7 +72,7 @@ public class BaseAgent : Agent
         previousActions = new float[numberOfActions];
         SubsribeToInvokes();
     }
-
+    #region Subscribers
     private void SubsribeToInvokes()
     {
         // Actions
@@ -87,31 +96,19 @@ public class BaseAgent : Agent
         // drone.LowAltitudeEvent += OnLowAltitudeEvent;
         // goal.ReachedGoalEvent -= OnReachedGoalEvent;
     }
+    #endregion
 
     protected void EndCurrentEpisode(string message)
     {
-        // Debug.Log("Ended because: " + message + " : STEP : " + StepCount);
+       // Debug.Log("Ended because: " + message + " : STEP : " + StepCount);
         EndEpisode();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        UnsubscribeFromInvokes();
-        EndCurrentEpisode("Disabled");
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        Initialize();
+        drone.BaseReset();
     }
 
     public override void OnEpisodeBegin()
     {
         // Make sure we remove any of the previous actions values
         Array.Clear(previousActions, 0, numberOfActions);
-        // Debug.Log("Reward should be: " + GetCumulativeReward());
         goal.ResetGoal();
     }
 
@@ -130,6 +127,9 @@ public class BaseAgent : Agent
         sensor.AddObservation(drone.inclination); // Drone's inclination
         sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f)); // Sigmoid of drone's local velocity magnitude
         sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity)); // Sigmoid of drone's local angular velocity magnitude
+
+        // rotor's current actions
+        sensor.AddObservation(drone.actions); // 4 actions (4 rotors)
         DrawRays();
     }
 
@@ -139,7 +139,28 @@ public class BaseAgent : Agent
         var actions = actionBuffers.ContinuousActions.Array;
         // Last cycle step
         int step = StepCount % decisionInterval;
-        Logger.LogMessage("After lerp: " + string.Join(", ", actions));
+        Logger.LogMessage("Before lerp: " + string.Join(", ", actions), forceMessage: false);
+
+        /*       
+          if (step == 0)
+        {
+            Logger.LogMessage("Into lerping step 0", forceMessage: true);
+            Array.Copy(actions, previousActions, actions.Length);
+        }
+        else
+        {
+
+
+        }*/
+        float t = step / (float) decisionInterval;
+
+        for (int i = 0; i < actions.Length; i++)
+        {
+            actions[i] = Mathf.Lerp(previousActions[i], actions[i], 0.33f);
+        }
+        Array.Copy(actions, previousActions, actions.Length);
+
+        Logger.LogMessage("After lerp: " + string.Join(", ", actions), forceMessage: false);
         drone.ApplyActions(actions);
     }
 

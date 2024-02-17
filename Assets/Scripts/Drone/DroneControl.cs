@@ -69,6 +69,10 @@ public class DroneControl : MonoBehaviour
     public bool isInEnviroment = true;
     public bool hasCrashed = true;
 
+    public float collisionTimeout = 3.5f;
+    public bool collisionStay = false;
+    public int collisionCount = 0;
+
     private void Awake()
     {
         Initialize();
@@ -153,7 +157,12 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Logger.LogMessage("Drone has collided!", true);
+        Logger.LogMessage("Drone has collided!", true, false);
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Logger.LogMessage("Drone ground collided!", true, false);
+            collisionStay = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -184,27 +193,39 @@ public class DroneControl : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            collisionStay = false;
+            collisionCount = 0;
+        }
         isCoroutineRunning = false;
         StopAllCoroutines();
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            if (!isCoroutineRunning)
+            collisionStay = true;
+        }
+
+/*        if (collision.gameObject.CompareTag("Ground"))
+        {
+            collisionCount++;
+       *//*     if (!isCoroutineRunning)
             {
                 // Start the coroutine
                 StartCoroutine(CheckCollisionDuration());
-            }
-        }
+            }*//*
+        }*/
     }
+
     IEnumerator CheckCollisionDuration()
     {
         isCoroutineRunning = true; // Mark the coroutine as running
 
         // Wait for 1 second
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(collisionTimeout);
 
         // After 1 second, check if still colliding
         if (isCoroutineRunning)
@@ -215,11 +236,6 @@ public class DroneControl : MonoBehaviour
 
         // Mark the coroutine as not running
         isCoroutineRunning = false;
-    }
-
-    public void CancelAllInvokes()
-    {
-        CancelInvoke();
     }
 
     // World coordinates to drone's coordinates
@@ -237,7 +253,10 @@ public class DroneControl : MonoBehaviour
     {
         isInGoal = false;
         isInEnviroment = true;
+        isCoroutineRunning = false;
         hasCrashed = false;
+        collisionCount = 0;
+        collisionStay = false;
     }
 
     void ResetPhysicalProperties()
@@ -248,12 +267,11 @@ public class DroneControl : MonoBehaviour
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    private void BaseReset()
+    public void BaseReset()
     {
         ResetPhysicalProperties();
         ResetCheckingParameters();
         Array.Clear(actions, 0, actions.Length);
-
     }
 }
 

@@ -19,7 +19,7 @@ public class AgentSideChannel : SideChannel
     protected override void OnMessageReceived(IncomingMessage msg)
     {
         var populationSize = msg.ReadInt32();
-        Debug.LogError("From Python : " + populationSize);
+        // Debug.LogError("From Python : " + populationSize);
         OnCustomMessageReceived?.Invoke(populationSize);
     }
 
