@@ -6,7 +6,6 @@ using System;
 
 public class AgentSideChannel : SideChannel
 {
-
     public delegate void MessageReceivedEventHandler(int populationSize);
     public event MessageReceivedEventHandler OnCustomMessageReceived;
 

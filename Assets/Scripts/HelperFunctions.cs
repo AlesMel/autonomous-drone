@@ -34,5 +34,20 @@ public static class HelperFunctions
             Debug.Log(message);
         }
     }
+
+    public static float QuantizeValue(float value, float stepSize = 0.001f)
+    {
+        return Mathf.Round(value / stepSize) * stepSize;
+    }
+
+    public static Vector3 QuantizeVector3(Vector3 vector, float stepSize = 0.0001f)
+    {
+        return new Vector3(
+            QuantizeValue(vector.x, stepSize),
+            QuantizeValue(vector.y, stepSize),
+            QuantizeValue(vector.z, stepSize)
+        );
+    }
+
 }
 

@@ -18,9 +18,6 @@ public class Goal : MonoBehaviour
     private Transform parentTransform;
     private Vector3 parentSize;
 
-    private float triggerEnterTime;
-    private bool isInTrigger = false;
-
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
     [SerializeField] private float zOffset;
@@ -87,17 +84,11 @@ public class Goal : MonoBehaviour
         }
     }
 
-    private void ResetPositionControlParameters()
-    {
-        isInTrigger = false;
-    }
-
     public void SpawnObject()
     {
 
         if (randomSpawn)
         {
-            ResetPositionControlParameters();
             Debug.Log("Parent size: " + parentSize.ToString());
             float spawnX = Random.Range(-parentSize.x / 2 + xOffset, parentSize.x / 2 - xOffset);
             float spawnY = Random.Range(0 + yOffset, parentSize.y / 2 - yOffset);
@@ -117,8 +108,6 @@ public class Goal : MonoBehaviour
             //GoalTouchedEvent?.Invoke();
             Logger.LogMessage("Triggered!" + collisionObject.tag);
             goalMesh.material = goalReached;
-            triggerEnterTime = Time.time;
-            isInTrigger = true;
         }
     }
 
@@ -129,7 +118,6 @@ public class Goal : MonoBehaviour
         {
             CancelInvoke();
             goalMesh.material = goalUnreached;
-            isInTrigger = false;
         }
     }
 
@@ -138,7 +126,6 @@ public class Goal : MonoBehaviour
         if (goalMesh!= null)
         {
             goalMesh.material = goalUnreached;
-            isInTrigger = false;
         }
     }
 

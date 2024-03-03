@@ -70,7 +70,6 @@ public class DroneAgent : Agent
 
         resetParams = Academy.Instance.EnvironmentParameters;
         ResetEnv();
-        InitSubscribers();
     }
    
     private void SetWorldGoal(Vector3 worldVelocity, Vector3 worldLookDirection)
@@ -91,14 +90,6 @@ public class DroneAgent : Agent
         this.localGoalVelocity = localGoalVelocity;
         this.localLookAngle = localLookAngle;
         Debug.Log("Local look angle: " + localLookAngle);
-    }
-
-    private void InitSubscribers()
-    {
-        droneControl.TipOverEvent += OnTipOver;
-        droneControl.CollisionEvent += OnCollision;
-        droneControl.CollisionTimeoutEvent += EndEpisode;
-
     }
 
     private void OnCollision(Collision collision)

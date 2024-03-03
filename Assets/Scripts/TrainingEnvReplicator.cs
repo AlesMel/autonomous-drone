@@ -7,7 +7,6 @@ public class TrainingEnvReplicator : MonoBehaviour
 
     [SerializeField] private GameObject environment;
     [SerializeField] private int numberOfEnvironments;
-    [SerializeField] private float separation = 10.0f;
     private string trainingAreaName;
 
     private void Awake()

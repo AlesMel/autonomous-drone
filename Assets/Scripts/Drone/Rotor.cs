@@ -4,6 +4,7 @@ public class Rotor : MonoBehaviour
 {
 
     public Vector3 worldPosition => transform.position;
+    public Vector3 localPosition => transform.localPosition;
 
     public Vector3 worldThrustAxis => transform.up;
 
@@ -20,5 +21,6 @@ public class Rotor : MonoBehaviour
         currentAngle = transform.rotation.eulerAngles.y;
         rb = GetComponent<Rigidbody>();
         localTorqueAxis = transform.parent.InverseTransformVector(-transform.up);
+
     }
 }

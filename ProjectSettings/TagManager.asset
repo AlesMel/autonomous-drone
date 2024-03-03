@@ -12,6 +12,7 @@ TagManager:
   - TrainingField
   - Agent
   - Ground
+  - DroneAgent
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Water
   - UI
   - Platform
-  - 
+  - Drone
   - 
   - 
   - 
