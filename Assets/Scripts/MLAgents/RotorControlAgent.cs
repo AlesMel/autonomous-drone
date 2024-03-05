@@ -32,7 +32,7 @@ public class RotorControlAgent : BaseAgent
     }
 
     public override void OnEpisodeBegin()
-    {
+    {   
         base.OnEpisodeBegin();  
     }
 
@@ -44,12 +44,13 @@ public class RotorControlAgent : BaseAgent
         var velocityDotGoal = UnityEngine.Vector3.Dot(drone.localVelocity, VectorToNextCheckpoint());
         // Calculate the reward based on alignment with goal direction
         var alignmentReward = velocityDotGoal;
-        float distanceReward = (+1.0f) * thresholdDistance - VectorToNextCheckpoint().magnitude;
-        float stabilityError = (-1.0f) * drone.worldAngularVelocity.magnitude;
+        float distanceReward = 25.0f - VectorToNextCheckpoint().magnitude;
+        float stabilityError = drone.worldAngularVelocity.magnitude;
 
-        AddReward(distanceReward * 1f + stabilityError * 0.3f);
-       // Debug.Log($"{transform.name} - STEP: {StepCount} alignmentReward: {alignmentReward}, distanceReward: {distanceReward}, stabilityError: {stabilityError} tf: {transform.position}, ang vel: {drone.droneRigidBody.angularVelocity}, tsholdist: {thresholdDistance}");
-        //Debug.Log($"{transform.name} - STEP: {StepCount}, tf: {transform.position.x:F4}, {transform.position.y:F4}, {transform.position.z:F4}, ang vel: {drone.droneRigidBody.angularVelocity.x:F4}, {drone.droneRigidBody.angularVelocity.y:F4}, {drone.droneRigidBody.angularVelocity.z:F4}, tsholdist: {thresholdDistance}");
+        float wholeReward = distanceReward;
+        AddReward(wholeReward);
+        // Debug.Log($"{transform.name} - STEP: {StepCount} alignmentReward: {alignmentReward}, distanceReward: {distanceReward}, stabilityError: {stabilityError} tf: {transform.position}, ang vel: {drone.droneRigidBody.angularVelocity}, rew: {wholeReward}");
+        // Debug.Log($"{transform.name} - STEP: {StepCount}, tf: {transform.position.x:F4}, {transform.position.y:F4}, {transform.position.z:F4}, ang vel: {drone.droneRigidBody.angularVelocity.x:F4}, {drone.droneRigidBody.angularVelocity.y:F4}, {drone.droneRigidBody.angularVelocity.z:F4}, tsholdist: {thresholdDistance}");
 
     }
 }

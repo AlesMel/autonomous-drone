@@ -22,10 +22,10 @@ public class BaseAgent : Agent
 
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
     protected float crashedPenalty = 1.0f;
-    protected float tipOverPenalty = 500000.0f;
-    protected float leftEnviromentPenalty = 500000.0f;
-    protected float touchedGoalReward = 15.0f;
-    protected float collisionPenalty = 500000.0f;
+    protected float tipOverPenalty = 1000.0f;
+    protected float leftEnviromentPenalty = 0.0f;
+    protected float touchedGoalReward = 1.0f;
+    protected float collisionPenalty = 1000.0f;
     protected float stepPenalty = 1.0f;
     protected float thresholdDistance;
 
@@ -38,8 +38,25 @@ public class BaseAgent : Agent
 
     private new void Awake()
     {
-        decisionInterval = GetComponent<DecisionRequester>().DecisionPeriod;
+        /*        drone = GetComponent<DroneControl>();
+                decisionInterval = GetComponent<DecisionRequester>().DecisionPeriod;
+
+                if (goal == null)
+                {
+                    Debug.LogError("Goal is NULL");
+                }
+
+                goal.ResetGoal();
+
+                thresholdDistance = VectorToNextCheckpoint().magnitude;
+                // Check if drone exists
+                if (drone == null)
+                {
+                    Debug.LogError("Drone is NULL");
+                    return;
+                }*/
         drone = GetComponent<DroneControl>();
+        decisionInterval = GetComponent<DecisionRequester>().DecisionPeriod;
 
         if (goal == null)
         {
@@ -57,17 +74,6 @@ public class BaseAgent : Agent
         }
     }
 
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-    }
-
     public override void Initialize()
     {
 
@@ -76,7 +82,7 @@ public class BaseAgent : Agent
     protected void EndCurrentEpisode(string message)
     {
         AddReward(-(MaxStep - StepCount));
-        // Logger.LogMessage("AGENT: " + transform.name + "Ended because: " + message + " : STEP : " + StepCount + " REWARD: " + GetCumulativeReward(), forceMessage: true);
+        //Logger.LogMessage("AGENT: " + transform.name + "Ended because: " + message + " : STEP : " + StepCount + " REWARD: " + GetCumulativeReward(), forceMessage: true);
         EndEpisode();
     }
 
@@ -93,12 +99,12 @@ public class BaseAgent : Agent
         var (vectorToCheckpoint, orientation) = VectorAndOrientationToNextCheckpoint();
 
         //Observe drone velocity
-        sensor.AddObservation(HelperFunctions.QuantizeVector3(drone.localVelocity));
-        sensor.AddObservation(HelperFunctions.QuantizeVector3(drone.worldAngularVelocity));
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.worldAngularVelocity));
         //Where is the next checkpoint
-        sensor.AddObservation(HelperFunctions.QuantizeVector3(vectorToCheckpoint));
+        sensor.AddObservation(vectorToCheckpoint);
         //Orientation of the next checkpoint
-        sensor.AddObservation(HelperFunctions.QuantizeVector3(orientation));
+        //sensor.AddObservation(orientation);
         sensor.AddObservation(drone.inclination);
         /*Debug.Log($"VTNC: {drone.transform.parent.name}: {vectorToCheckpoint.sqrMagnitude}");
         Debug.Log($"ORIENTANTION: {drone.transform.parent.name}: {orientation}");
@@ -134,7 +140,7 @@ public class BaseAgent : Agent
         if (transform.up.y < drone.tipOverThreshold && !drone.isTippedOver) 
         {
             drone.isTippedOver = true;
-            AddReward(-tipOverPenalty / (StepCount + 1));
+            AddReward(-tipOverPenalty);
             EndCurrentEpisode("Ttipped over");
         }
         DrawRays();
@@ -170,7 +176,7 @@ public class BaseAgent : Agent
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            AddReward(-collisionPenalty / (StepCount + 1));
+            AddReward(-collisionPenalty);
             EndCurrentEpisode("Crashed!");
             //isColliding = true;
 
@@ -181,7 +187,7 @@ public class BaseAgent : Agent
     {
         if (other.CompareTag("Goal"))
         {
-           //AddReward(touchedGoalReward);
+           AddReward(touchedGoalReward);
         }
     }
 
@@ -196,12 +202,12 @@ public class BaseAgent : Agent
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enviroment") && drone.isInEnviroment)
+        /*if (other.CompareTag("Enviroment") && drone.isInEnviroment)
         {
             drone.isInEnviroment = false;
             AddReward(-leftEnviromentPenalty / (StepCount + 1));
             EndCurrentEpisode("Left enviroment!");
-        }
+        }*/
     }
 
     private void OnCollisionExit(Collision collision)

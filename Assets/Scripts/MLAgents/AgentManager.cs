@@ -12,7 +12,7 @@ public class AgentManager : MonoBehaviour
     AgentSideChannel agentSideChannel;
     [SerializeField] public string targetTag;
     [SerializeField] private bool enableSideChannel = true;
-
+    private bool firstMessage = false;
     public void Awake()
     {
         if (enableSideChannel)
@@ -23,12 +23,12 @@ public class AgentManager : MonoBehaviour
             SideChannelManager.RegisterSideChannel(agentSideChannel);
         }
         Initialize();
-       /* foreach(GameObject agent in agents)
+     /*   foreach (GameObject agent in agents)
         {
             agent.SetActive(true);
-        }*/
-        //GameObject dummyAgent = transform.Find("DummyDrone").gameObject;
-       // dummyAgent.SetActive(false);
+        }
+        GameObject dummyAgent = transform.Find("DummyDrone").gameObject;
+        dummyAgent.SetActive(false);*/
     }
 
     public void Initialize()
@@ -56,8 +56,14 @@ public class AgentManager : MonoBehaviour
 
     public void AdjustPopulationSize(int targetPopulationSize)
     {
-        // agentSideChannel.SendBoolToPython(false);
 
+        // agentSideChannel.SendBoolToPython(false);
+        if (!firstMessage)
+        {
+            firstMessage = true;
+            GameObject dummyAgent = transform.Find("DummyDrone").gameObject;
+            dummyAgent.SetActive(false);
+        }
 
         // Refresh the lists to ensure they're up to date with the current state
         var activeAgents = agents.Where(agent => agent.activeSelf).ToList();

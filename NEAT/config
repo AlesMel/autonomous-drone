@@ -6,9 +6,9 @@ reset_on_extinction   = False
 
 [DefaultGenome]
 # node activation options
-activation_default      = tanh
+activation_default      = swish
 activation_mutate_rate  = 0.00
-activation_options      = tanh
+activation_options      = swish
 
 # node aggregation options
 aggregation_default     = sum
@@ -44,8 +44,8 @@ node_add_prob           = 0.8
 node_delete_prob        = 0.5
 
 # network parameters
-num_hidden              = 0
-num_inputs              = 15
+num_hidden              = 6
+num_inputs              = 12
 num_outputs             = 4
 
 # node response options

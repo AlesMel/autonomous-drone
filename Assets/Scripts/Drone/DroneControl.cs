@@ -94,6 +94,7 @@ public class DroneControl : MonoBehaviour
 
     private void OnEnable()
     {
+        m_ResetFlag= false;
     }
 
     void EnvironmentReset()
@@ -170,15 +171,14 @@ public class DroneControl : MonoBehaviour
 
     void ResetPhysicalProperties()
     {
-        transform.position = defaultPosition;// Vector3.zero;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        /*droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
-        droneRigidBody.position = defaultPosition;*/
-
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
 
+        droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
+        droneRigidBody.position = defaultPosition;
 
+        transform.position = defaultPosition;// Vector3.zero;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         /*droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(defaultPosition);
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);*/
     }
