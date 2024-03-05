@@ -35,7 +35,7 @@ public class DroneControl : MonoBehaviour
     public float maxLinearVelocity = 16.0f;
     public float maxAngularVelocity = 2.26f;
     public float thrustFactor { get; private set; } = 6.38f; // defaulted to: 6.38f;
-
+        
     // [SerializeField, Tooltip("Action multiplier")]
     private float torqueFactor = 1.27f;  // defaulted to: 1.27f;
 
@@ -48,6 +48,7 @@ public class DroneControl : MonoBehaviour
     [SerializeField] public float[] actions;
     public float[] thrusts { get; private set; } = new float[4];
 
+    [SerializeField]
     private Rotor[] rotors;
 
     // for rewards and penalties
@@ -60,16 +61,18 @@ public class DroneControl : MonoBehaviour
     public bool m_ResetFlag;
     public bool justEnabled;
 
+    private float m_DefTilt;
+
     private void Awake()
     {
-        Initialize();
+       Initialize();
     }
 
     public void Initialize()
     {
         droneRigidBody = GetComponent<Rigidbody>();
         defaultPosition = transform.localPosition;
-        rotors = GetComponentsInChildren<Rotor>();
+        m_DefTilt = transform.localEulerAngles.x;
 
         foreach (Rotor rotor in rotors)
         {
@@ -79,7 +82,8 @@ public class DroneControl : MonoBehaviour
 
         //droneRigidBody.maxLinearVelocity = 15.0f;
         //droneRigidBody.maxAngularVelocity = 4.36f;
-        droneRigidBody.centerOfMass = centerOfMass;
+        //centerOfMass *= 0.25f;
+        //droneRigidBody.centerOfMass = centerOfMass;
         Academy.Instance.OnEnvironmentReset += EnvironmentReset;
     }
 
@@ -90,12 +94,10 @@ public class DroneControl : MonoBehaviour
 
     private void OnEnable()
     {
-
     }
 
     void EnvironmentReset()
     {
-
     }
 
     public void ApplyActions(float[] current_actions)
@@ -131,7 +133,8 @@ public class DroneControl : MonoBehaviour
     void FixedUpdate()
     {
         PropellerAnimation();
-        // ApplyActions(actions);
+        float[] daco = { 0, 0, 0, 0 };
+        //ApplyActions(daco);
     }
 
     public void PropellerAnimation()
@@ -141,10 +144,11 @@ public class DroneControl : MonoBehaviour
             float maxSpeed = Time.fixedDeltaTime * animSpeedFactor;
             for (int i = 0; i < rotors.Length; i++)
             {
-                Rotor rotor = rotors[i];
+                //Rotor rotor = rotors[i];
                 float speed = animationSpeeds[i] * maxSpeed;
-
-                rotor.rb.transform.Rotate(Vector3.up, speed);
+                rotors[i].propeller.Rotate(0, speed, 0);
+                /*
+                rotor.rb.transform.Rotate(Vector3.up, speed);*/
             }
         }
     }
@@ -166,13 +170,14 @@ public class DroneControl : MonoBehaviour
 
     void ResetPhysicalProperties()
     {
-        transform.position = Vector3.zero;
+        transform.position = defaultPosition;// Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        /*droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
+        droneRigidBody.position = defaultPosition;*/
 
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
-/*        droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
-        droneRigidBody.position = Vector3.zero;*/
+
 
         /*droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(defaultPosition);
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);*/
@@ -180,7 +185,6 @@ public class DroneControl : MonoBehaviour
 
     public void BaseReset()
     {
-        Array.Clear(actions, 0, actions.Length);
         ResetCheckingParameters();
         ResetPhysicalProperties();
         m_ResetFlag = true;

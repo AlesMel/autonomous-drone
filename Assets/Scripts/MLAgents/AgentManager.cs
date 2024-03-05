@@ -23,9 +23,12 @@ public class AgentManager : MonoBehaviour
             SideChannelManager.RegisterSideChannel(agentSideChannel);
         }
         Initialize();
-        // agents[0].SetActive(true);
-        GameObject dummyAgent = transform.Find("DummyDrone").gameObject;
-        dummyAgent.SetActive(false);
+       /* foreach(GameObject agent in agents)
+        {
+            agent.SetActive(true);
+        }*/
+        //GameObject dummyAgent = transform.Find("DummyDrone").gameObject;
+       // dummyAgent.SetActive(false);
     }
 
     public void Initialize()
