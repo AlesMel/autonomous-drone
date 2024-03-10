@@ -44,10 +44,14 @@ public class RotorControlAgent : BaseAgent
         var velocityDotGoal = UnityEngine.Vector3.Dot(drone.localVelocity, VectorToNextCheckpoint());
         // Calculate the reward based on alignment with goal direction
         var alignmentReward = velocityDotGoal;
-        float distanceReward = 25.0f - VectorToNextCheckpoint().magnitude;
-        float stabilityError = drone.worldAngularVelocity.magnitude;
 
-        float wholeReward = distanceReward;
+        float distanceReward = (VectorToNextCheckpoint().magnitude) / maxCheckpointDistance;
+        distanceReward = HelperFunctions.Reward(distanceReward);
+
+        float stabilityError = drone.worldAngularVelocity.magnitude;
+        stabilityError = HelperFunctions.Reward(stabilityError, 1);
+
+        float wholeReward = distanceReward * stabilityError;
         AddReward(wholeReward);
         // Debug.Log($"{transform.name} - STEP: {StepCount} alignmentReward: {alignmentReward}, distanceReward: {distanceReward}, stabilityError: {stabilityError} tf: {transform.position}, ang vel: {drone.droneRigidBody.angularVelocity}, rew: {wholeReward}");
         // Debug.Log($"{transform.name} - STEP: {StepCount}, tf: {transform.position.x:F4}, {transform.position.y:F4}, {transform.position.z:F4}, ang vel: {drone.droneRigidBody.angularVelocity.x:F4}, {drone.droneRigidBody.angularVelocity.y:F4}, {drone.droneRigidBody.angularVelocity.z:F4}, tsholdist: {thresholdDistance}");

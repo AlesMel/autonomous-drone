@@ -26,8 +26,9 @@ class AgentLogChannel(SideChannel):
         msg.write_string(data)
         super().queue_message_to_send(msg=msg)
         
-    def send_int(self, data: int):
-        print(f"Sending: {data}")
+    def send_int(self, data: int, verbose = 0):
+        if verbose == 1:
+            print(f"Sending: {data}")
         msg = OutgoingMessage()
         msg.write_int32(i=data)
         super().queue_message_to_send(msg=msg)

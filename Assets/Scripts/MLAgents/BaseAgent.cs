@@ -23,12 +23,15 @@ public class BaseAgent : Agent
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
     protected float crashedPenalty = 1.0f;
     protected float tipOverPenalty = 1000.0f;
-    protected float leftEnviromentPenalty = 0.0f;
-    protected float touchedGoalReward = 1.0f;
+    protected float leftEnviromentPenalty = 1000.0f;
     protected float collisionPenalty = 1000.0f;
     protected float stepPenalty = 1.0f;
-    protected float thresholdDistance;
 
+    protected float touchedGoalReward = 5.0f;
+
+    protected float thresholdDistance;
+    // 
+    protected float maxCheckpointDistance = 69.282032f;
     protected float localLookAngle;
     protected Vector3 localGoalVelocity;
     protected bool isFrozen = false;
@@ -81,8 +84,8 @@ public class BaseAgent : Agent
 
     protected void EndCurrentEpisode(string message)
     {
-        AddReward(-(MaxStep - StepCount));
-        //Logger.LogMessage("AGENT: " + transform.name + "Ended because: " + message + " : STEP : " + StepCount + " REWARD: " + GetCumulativeReward(), forceMessage: true);
+        // AddReward(-(MaxStep - StepCount));
+        // Logger.LogMessage("AGENT: " + transform.name + "Ended because: " + message + " : STEP : " + StepCount + " REWARD: " + GetCumulativeReward(), forceMessage: true);
         EndEpisode();
     }
 
@@ -99,10 +102,10 @@ public class BaseAgent : Agent
         var (vectorToCheckpoint, orientation) = VectorAndOrientationToNextCheckpoint();
 
         //Observe drone velocity
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.worldAngularVelocity));
+        sensor.AddObservation(drone.localVelocity / drone.maxLinearVelocity);
+        sensor.AddObservation(drone.worldAngularVelocity / drone.maxAngularVelocity);
         //Where is the next checkpoint
-        sensor.AddObservation(vectorToCheckpoint);
+        sensor.AddObservation(vectorToCheckpoint / maxCheckpointDistance);
         //Orientation of the next checkpoint
         //sensor.AddObservation(orientation);
         sensor.AddObservation(drone.inclination);
@@ -135,15 +138,13 @@ public class BaseAgent : Agent
 
         drone.ApplyActions(actions);
 
-        AddReward(-1.0f);
-
         if (transform.up.y < drone.tipOverThreshold && !drone.isTippedOver) 
         {
             drone.isTippedOver = true;
-            AddReward(-tipOverPenalty);
+            // AddTerminationPenalty(-tipOverPenalty);
             EndCurrentEpisode("Ttipped over");
         }
-        DrawRays();
+        //DrawRays();
     }
     protected (Vector3 localDirectionToGoal, Vector3 orientation) VectorAndOrientationToNextCheckpoint()
     {
@@ -176,11 +177,17 @@ public class BaseAgent : Agent
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            AddReward(-collisionPenalty);
+            // AddTerminationPenalty(-collisionPenalty);
             EndCurrentEpisode("Crashed!");
             //isColliding = true;
 
         }
+    }
+
+    // Give penalty based on steps, after which the episode is ended
+    private void AddTerminationPenalty(float penalty)
+    {
+        AddReward(penalty ); // * MaxStep / (StepCount + 1)
     }
 
     private void OnTriggerEnter(Collider other)
@@ -202,12 +209,12 @@ public class BaseAgent : Agent
 
     private void OnTriggerExit(Collider other)
     {
-        /*if (other.CompareTag("Enviroment") && drone.isInEnviroment)
+        if (other.CompareTag("Enviroment") && drone.isInEnviroment)
         {
             drone.isInEnviroment = false;
-            AddReward(-leftEnviromentPenalty / (StepCount + 1));
+            // AddTerminationPenalty(-leftEnviromentPenalty);
             EndCurrentEpisode("Left enviroment!");
-        }*/
+        }
     }
 
     private void OnCollisionExit(Collision collision)

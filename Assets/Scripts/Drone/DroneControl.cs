@@ -32,8 +32,6 @@ public class DroneControl : MonoBehaviour
     // Drone's rotation around y-axis
     public Quaternion rotationY => Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-    public float maxLinearVelocity = 16.0f;
-    public float maxAngularVelocity = 2.26f;
     public float thrustFactor { get; private set; } = 6.38f; // defaulted to: 6.38f;
         
     // [SerializeField, Tooltip("Action multiplier")]
@@ -63,6 +61,11 @@ public class DroneControl : MonoBehaviour
 
     private float m_DefTilt;
 
+    public float maxLinearVelocity = 15.0f;
+    public float maxAngularVelocity = 4.36f;
+    public float biggestVelocity;
+    public float biggestAngularVelocity;
+
     private void Awake()
     {
        Initialize();
@@ -71,6 +74,10 @@ public class DroneControl : MonoBehaviour
     public void Initialize()
     {
         droneRigidBody = GetComponent<Rigidbody>();
+
+        droneRigidBody.maxLinearVelocity = 15.0f;
+        droneRigidBody.maxAngularVelocity = 4.36f;
+
         defaultPosition = transform.localPosition;
         m_DefTilt = transform.localEulerAngles.x;
 
@@ -80,8 +87,7 @@ public class DroneControl : MonoBehaviour
             centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
         }
 
-        //droneRigidBody.maxLinearVelocity = 15.0f;
-        //droneRigidBody.maxAngularVelocity = 4.36f;
+
         //centerOfMass *= 0.25f;
         //droneRigidBody.centerOfMass = centerOfMass;
         Academy.Instance.OnEnvironmentReset += EnvironmentReset;
@@ -103,12 +109,24 @@ public class DroneControl : MonoBehaviour
 
     public void ApplyActions(float[] current_actions)
     {
+   /*     if (localVelocity.magnitude > biggestVelocity)
+        {
+            biggestVelocity = localVelocity.magnitude;
+            Debug.Log($"INFO: local: {localVelocity.magnitude}");
+
+        }
+
+        if (worldAngularVelocity.magnitude > biggestAngularVelocity)
+        {
+            biggestAngularVelocity= worldAngularVelocity.magnitude;
+            Debug.Log($"INFO: angular: {worldAngularVelocity.magnitude}");
+
+        }*/
         //Array.Copy(actions, this.actions, actions.Length);
 
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
-
         for (int i = 0; i < rotors.Length; i++)
         {
             // 0.5 is precisely needed for drone to hover, since the thrust was calculated the way that it would
@@ -179,6 +197,9 @@ public class DroneControl : MonoBehaviour
 
         transform.position = defaultPosition;// Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        droneRigidBody.maxLinearVelocity = 15.0f;
+        droneRigidBody.maxAngularVelocity = 4.36f;
         /*droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(defaultPosition);
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);*/
     }
