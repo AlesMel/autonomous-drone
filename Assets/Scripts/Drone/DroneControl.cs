@@ -61,7 +61,7 @@ public class DroneControl : MonoBehaviour
 
     private float m_DefTilt;
 
-    public float maxLinearVelocity = 15.0f;
+    public float maxLinearVelocity = 20.0f;
     public float maxAngularVelocity = 4.36f;
     public float biggestVelocity;
     public float biggestAngularVelocity;
@@ -75,8 +75,8 @@ public class DroneControl : MonoBehaviour
     {
         droneRigidBody = GetComponent<Rigidbody>();
 
-        droneRigidBody.maxLinearVelocity = 15.0f;
-        droneRigidBody.maxAngularVelocity = 4.36f;
+        droneRigidBody.maxLinearVelocity = maxLinearVelocity;
+        droneRigidBody.maxAngularVelocity = maxAngularVelocity;
 
         defaultPosition = transform.localPosition;
         m_DefTilt = transform.localEulerAngles.x;
@@ -95,7 +95,7 @@ public class DroneControl : MonoBehaviour
 
     private void OnDisable()
     {
-
+        BaseReset();
     }
 
     private void OnEnable()
@@ -109,21 +109,6 @@ public class DroneControl : MonoBehaviour
 
     public void ApplyActions(float[] current_actions)
     {
-   /*     if (localVelocity.magnitude > biggestVelocity)
-        {
-            biggestVelocity = localVelocity.magnitude;
-            Debug.Log($"INFO: local: {localVelocity.magnitude}");
-
-        }
-
-        if (worldAngularVelocity.magnitude > biggestAngularVelocity)
-        {
-            biggestAngularVelocity= worldAngularVelocity.magnitude;
-            Debug.Log($"INFO: angular: {worldAngularVelocity.magnitude}");
-
-        }*/
-        //Array.Copy(actions, this.actions, actions.Length);
-
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
@@ -191,15 +176,15 @@ public class DroneControl : MonoBehaviour
     {
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
-
+        
+        droneRigidBody.maxLinearVelocity = maxLinearVelocity;
+        droneRigidBody.maxAngularVelocity = maxAngularVelocity;
+        
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
         droneRigidBody.position = defaultPosition;
 
         transform.position = defaultPosition;// Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
-
-        droneRigidBody.maxLinearVelocity = 15.0f;
-        droneRigidBody.maxAngularVelocity = 4.36f;
         /*droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(defaultPosition);
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);*/
     }

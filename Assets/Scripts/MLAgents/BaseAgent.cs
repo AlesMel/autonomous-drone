@@ -22,13 +22,14 @@ public class BaseAgent : Agent
 
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
     protected float crashedPenalty = 1.0f;
-    protected float tipOverPenalty = 1000.0f;
-    protected float leftEnviromentPenalty = 1000.0f;
-    protected float collisionPenalty = 1000.0f;
+    protected float tipOverPenalty = 100;
+    protected float leftEnviromentPenalty = 0;
+    protected float collisionPenalty = 100;
     protected float stepPenalty = 1.0f;
-
-    protected float touchedGoalReward = 5.0f;
-
+    protected float terminationPenalty = 100000000;
+    protected float touchedGoalReward = 0.0f;
+    protected float stayGoalReward = 1.0f;
+    protected float leftGoalPenalty = 0.01f;
     protected float thresholdDistance;
     // 
     protected float maxCheckpointDistance = 69.282032f;
@@ -38,26 +39,10 @@ public class BaseAgent : Agent
 
     protected bool m_enableFlag;
     private bool isColliding = false;
+    protected bool isInGoal = false;
 
     private new void Awake()
     {
-        /*        drone = GetComponent<DroneControl>();
-                decisionInterval = GetComponent<DecisionRequester>().DecisionPeriod;
-
-                if (goal == null)
-                {
-                    Debug.LogError("Goal is NULL");
-                }
-
-                goal.ResetGoal();
-
-                thresholdDistance = VectorToNextCheckpoint().magnitude;
-                // Check if drone exists
-                if (drone == null)
-                {
-                    Debug.LogError("Drone is NULL");
-                    return;
-                }*/
         drone = GetComponent<DroneControl>();
         decisionInterval = GetComponent<DecisionRequester>().DecisionPeriod;
 
@@ -85,7 +70,10 @@ public class BaseAgent : Agent
     protected void EndCurrentEpisode(string message)
     {
         // AddReward(-(MaxStep - StepCount));
+        // AddReward(-terminationPenalty / (StepCount+1));
         // Logger.LogMessage("AGENT: " + transform.name + "Ended because: " + message + " : STEP : " + StepCount + " REWARD: " + GetCumulativeReward(), forceMessage: true);
+        // AddReward(-0.1f * (MaxStep-StepCount));
+
         EndEpisode();
     }
 
@@ -93,6 +81,13 @@ public class BaseAgent : Agent
     {
         base.OnEpisodeBegin();
         drone.BaseReset();
+        isInGoal = false;
+    }
+
+    public float AngleToGoal()
+    {
+        float rotation = Vector3.Angle(Vector3.ProjectOnPlane(drone.transform.forward, Vector3.up), Vector3.ProjectOnPlane(VectorToNextCheckpoint(), Vector3.up));
+        return rotation / 180.0f;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -101,7 +96,16 @@ public class BaseAgent : Agent
         float angularVelocity = HelperFunctions.QuantizeValue(drone.worldAngularVelocity.magnitude);
         var (vectorToCheckpoint, orientation) = VectorAndOrientationToNextCheckpoint();
 
-        //Observe drone velocity
+        /*Vector3 worldLookDirection = Vector3.ProjectOnPlane(-goal.transform.position, Vector3.up).normalized;
+        Vector3 localLookDirection = Vector3.ProjectOnPlane(drone.WorldToLocal(worldLookDirection), Vector3.up);
+        float signedAngle = Vector3.SignedAngle(Vector3.forward, localLookDirection, Vector3.up) / 180f;*/
+        sensor.AddObservation(AngleToGoal());
+        //Debug.Log(signedAngle);
+        //sensor.AddObservation(HelperFunctions.Sigmoid(goal.worldVelocity, 0.5f));
+        //sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
+        //sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity, 1f));
+        /*sensor.AddObservation(drone.localVelocity);
+        sensor.AddObservation(drone.localAngularVelocity);*/
         sensor.AddObservation(drone.localVelocity / drone.maxLinearVelocity);
         sensor.AddObservation(drone.worldAngularVelocity / drone.maxAngularVelocity);
         //Where is the next checkpoint
@@ -133,7 +137,8 @@ public class BaseAgent : Agent
         base.OnActionReceived(actionBuffers);
 
         // rigidBody issue
-
+        // small reward
+        // AddReward(0.1f / (MaxStep));
         var actions = actionBuffers.ContinuousActions.Array;
 
         drone.ApplyActions(actions);
@@ -141,10 +146,12 @@ public class BaseAgent : Agent
         if (transform.up.y < drone.tipOverThreshold && !drone.isTippedOver) 
         {
             drone.isTippedOver = true;
-            // AddTerminationPenalty(-tipOverPenalty);
+            AddReward(-tipOverPenalty);
             EndCurrentEpisode("Ttipped over");
         }
         //DrawRays();
+
+
     }
     protected (Vector3 localDirectionToGoal, Vector3 orientation) VectorAndOrientationToNextCheckpoint()
     {
@@ -177,7 +184,7 @@ public class BaseAgent : Agent
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            // AddTerminationPenalty(-collisionPenalty);
+            AddTerminationPenalty(-collisionPenalty);
             EndCurrentEpisode("Crashed!");
             //isColliding = true;
 
@@ -187,14 +194,14 @@ public class BaseAgent : Agent
     // Give penalty based on steps, after which the episode is ended
     private void AddTerminationPenalty(float penalty)
     {
-        AddReward(penalty ); // * MaxStep / (StepCount + 1)
+        //AddReward(penalty); // * MaxStep / (StepCount + 1)
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Goal"))
         {
-           AddReward(touchedGoalReward);
+            AddReward(touchedGoalReward);
         }
     }
 
@@ -202,18 +209,24 @@ public class BaseAgent : Agent
     {
         if (other.CompareTag("Goal"))
         {
-           AddReward(touchedGoalReward);
+           AddReward(stayGoalReward);
+           isInGoal = true;
         }
 
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("Goal"))
+        {
+            isInGoal = false;
+        }
+
         if (other.CompareTag("Enviroment") && drone.isInEnviroment)
         {
             drone.isInEnviroment = false;
             // AddTerminationPenalty(-leftEnviromentPenalty);
-            EndCurrentEpisode("Left enviroment!");
+            // EndCurrentEpisode("Left enviroment!");
         }
     }
 

@@ -4,11 +4,11 @@ fitness_threshold     = 25000.16
 pop_size              = 50
 reset_on_extinction   = True
 
-[DefaultGenome]
+[FixedStructureGenome]
 # node activation options
-activation_default      = tanh
+activation_default      = tanh3
 activation_mutate_rate  = 0.00
-activation_options      = tanh
+activation_options      = tanh3
 
 # node aggregation options
 aggregation_default     = sum
@@ -24,29 +24,23 @@ bias_mutate_power       = 0.2
 bias_mutate_rate        = 0.7
 bias_replace_rate       = 0.1
 
-# genome compatibility options
-compatibility_disjoint_coefficient = 1.0
-compatibility_weight_coefficient   = 0.5
-
-# connection add/remove rates
-conn_add_prob           = 0.8
-conn_delete_prob        = 0.5
-
 # connection enable options
 enabled_default         = True
-enabled_mutate_rate     = 0.01
+enabled_mutate_rate     = 0.00
 
 feed_forward            = True
-initial_connection      = partial_direct 0.5
+initial_connection      = full_direct
 
-# node add/remove rates
-node_add_prob           = 0.7
-node_delete_prob        = 0.3
+conn_add_prob           = 0.0
+conn_delete_prob        = 0.0
+node_add_prob           = 0.0
+node_delete_prob        = 0.0
 
 # network parameters
-num_hidden              = 5
+num_hidden              = 30
 num_inputs              = 13
 num_outputs             = 4
+num_hidden_layers       = 3
 
 # node response options
 response_init_mean      = 1.0
@@ -59,12 +53,12 @@ response_replace_rate   = 0.0
 
 # connection weight options
 weight_init_mean        = 0.0
-weight_init_stdev       = 1.0
-weight_max_value        = 30
-weight_min_value        = -30
-weight_mutate_power     = 0.2
-weight_mutate_rate      = 1.0
-weight_replace_rate     = 0.1
+weight_init_stdev       = 0.0
+weight_max_value        = 30.0
+weight_min_value        = -30.0
+weight_mutate_power     = 0.4
+weight_mutate_rate      = 0.8
+weight_replace_rate     = 0.02
 
 [DefaultSpeciesSet]
 compatibility_threshold = 3.0

@@ -2988,8 +2988,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droneRigidBody: {fileID: 2995716975708129206}
   tipOverThreshold: -0.5
-  maxLinearVelocity: 16
-  maxAngularVelocity: 2.26
   animSpeedFactor: 4000
   animateRotors: 1
   actions:
@@ -3008,6 +3006,10 @@ MonoBehaviour:
   isCrashed: 0
   m_ResetFlag: 0
   justEnabled: 0
+  maxLinearVelocity: 16
+  maxAngularVelocity: 2.26
+  biggestVelocity: 0
+  biggestAngularVelocity: 0
 --- !u!114 &6679169596705188114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3021,7 +3023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 13
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 4
@@ -3033,7 +3035,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorName: DroneControl
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -3054,7 +3056,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 500
   goal: {fileID: 0}
 --- !u!114 &7693842034168357681
 MonoBehaviour:
