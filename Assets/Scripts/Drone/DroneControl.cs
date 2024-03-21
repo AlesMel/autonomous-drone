@@ -137,8 +137,6 @@ public class DroneControl : MonoBehaviour
     void FixedUpdate()
     {
         PropellerAnimation();
-        float[] daco = { 0, 0, 0, 0 };
-        //ApplyActions(daco);
     }
 
     public void PropellerAnimation()
@@ -166,10 +164,7 @@ public class DroneControl : MonoBehaviour
     // treba lepsie vyriesit toto resetovanie a spustanie pretoze sa to nezhoduje v behoch!
     void ResetCheckingParameters()
     {
-        isInGoal = false;
-        isInEnviroment = true;
-        isTippedOver = false;
-        isCrashed = false;
+
     }
 
     void ResetPhysicalProperties()

@@ -1,78 +1,107 @@
 using DroneProject;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.Sentis.Layers;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Vector3 = UnityEngine.Vector3;
 
 public class RotorControlAgent : BaseAgent
 {
+    [HideInInspector] public GoalGenerator goalGenerator;
+
+    private Vector3[] velocityBuffer;
+    private int velocityBufferIndex;
+    private const int velocityBufferSize = 10;
+    private float velocityError;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        goalGenerator = GetComponent<GoalGenerator>();
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         base.CollectObservations(sensor);
+        SetDroneTarget(goalGenerator.worldVelocity, goalGenerator.worldLookDirection);
+
+        // Length of 3+1 = 4 + 9 (base) = 13 observations
+        // Debug.Log($"{StepCount} + tlv: {targetLocalVelocity} + tda: {targetDirectionAngle}");
+        sensor.AddObservation(targetLocalVelocity);
+        sensor.AddObservation(targetDirectionAngle);
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        velocityBuffer = new Vector3[velocityBufferSize];
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        // rigidBody issue
         if (drone.m_ResetFlag)
         {
             drone.m_ResetFlag = false;
-            //Debug.Log($"Skipped with {transform.name} tf: {transform.position.x:F4}, {transform.position.y:F4}, {transform.position.z:F4}, ang vel: {drone.droneRigidBody.angularVelocity.x:F4}, {drone.droneRigidBody.angularVelocity.y:F4}, {drone.droneRigidBody.angularVelocity.z:F4}");
             return;
         }
         base.OnActionReceived(actionBuffers);
+        goalGenerator.ManagedUpdate(Time.fixedDeltaTime);
+
         AddRewards();
     }
 
     public override void OnEpisodeBegin()
     {   
-        base.OnEpisodeBegin();  
+        base.OnEpisodeBegin();
+        goalGenerator.ResetGoal();
+        Array.Clear(velocityBuffer, 0, velocityBufferSize);
+        velocityBufferIndex = 0;
     }
 
     public override void AddRewards()
     {
         base.AddRewards();
+        velocityBuffer[velocityBufferIndex] = goalGenerator.worldVelocity;
+        // Circular buffer
+        velocityBufferIndex++;
+        velocityBufferIndex %= velocityBufferSize;
 
-        // Dot product between velocity and goal position
-        var velocityDotGoal = UnityEngine.Vector3.Dot(drone.localVelocity, VectorToNextCheckpoint());
-        // Calculate the reward based on alignment with goal direction
-        var alignmentReward = velocityDotGoal;
+        float velocityErrorMSQ = Mathf.Infinity;
+        Vector3 velocity = drone.worldVelocity;
 
-        float rewardMultiplier = 1.0f;
-        // float distanceReward = (-1.0f) * Mathf.InverseLerp(maxCheckpointDistance, 0.0f, VectorToNextCheckpoint().magnitude);
-        float distancePenalty = Mathf.Pow(VectorToNextCheckpoint().magnitude / maxCheckpointDistance, 2);  // Smoothed penalty
-
-        //float distanceReward = Unity.Mathematics.math.exp(-VectorToNextCheckpoint().magnitude);
-
-        // Debug.Log($"{VectorToNextCheckpoint()}");
-        // float stabilityError = (-1.0f) * Mathf.InverseLerp(drone.maxAngularVelocity, 0.0f, drone.worldAngularVelocity.magnitude);
-
-        /*if (drone.worldAngularVelocity.magnitude > 1.0f)
+        for (int i = 0; i < velocityBufferSize; i++)
         {
-            stabilityError = -0.1f;
-        }*/
-        /*float distanceError = HelperFunctions.Reward(VectorToNextCheckpoint().magnitude);
-        float stabilityError =  HelperFunctions.Reward(drone.worldAngularVelocity.magnitude, 2);
+            velocityErrorMSQ = Mathf.Min(velocityErrorMSQ, (velocityBuffer[i] - velocity).sqrMagnitude);
+        }
 
-        float wholeReward = distanceError * stabilityError;*/
-        // AddReward(wholeReward);
-        float positionError = VectorToNextCheckpoint().magnitude;
-        float positionReward = HelperFunctions.Reward(positionError, 3f);
-        float rotationError = AngleToGoal();
-        float rotationReward = HelperFunctions.Reward(rotationError, 1f);
-        float stabilityError = HelperFunctions.Reward(drone.worldAngularVelocity.magnitude, 1f);
+        velocityError = Mathf.Sqrt(velocityErrorMSQ);
+        //Debug.Log("ve: " + velocityError);
+        float velocityReward = HelperFunctions.Reward(velocityError, 1.0f);
 
-        AddReward(positionReward);
-        AddReward(isInGoal ? 0:-leftGoalPenalty );
-        // Debug.Log($"{transform.name} - STEP: {StepCount} alignmentReward: {alignmentReward}, distanceReward: {distanceReward}, stabilityError: {stabilityError} tf: {transform.position}, ang vel: {drone.droneRigidBody.angularVelocity}, rew: {wholeReward}");
-        // Debug.Log($"{transform.name} - STEP: {StepCount}, tf: {transform.position.x:F4}, {transform.position.y:F4}, {transform.position.z:F4}, ang vel: {drone.droneRigidBody.angularVelocity.x:F4}, {drone.droneRigidBody.angularVelocity.y:F4}, {drone.droneRigidBody.angularVelocity.z:F4}, tsholdist: {thresholdDistance}");
+        float orientationError = Mathf.Abs(localLookAngle);
+        float orientationReward = HelperFunctions.Reward(orientationError, 2.0f);
 
+        float stabilityError = drone.worldAngularVelocity.magnitude;
+        float stabilityReward = HelperFunctions.Reward(stabilityError, 2.0f);
+
+        AddReward(velocityReward * stabilityReward * orientationReward);
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        if (drone != null)
+        {
+            Vector3 position = drone.transform.position;
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(position, goalGenerator.worldVelocity);
+        }
     }
 }
