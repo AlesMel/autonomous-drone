@@ -185,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!114 &76068254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3189359151932352854, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
@@ -292,7 +292,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &90655146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &160782210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -484,7 +484,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &227530279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -580,7 +580,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &281489042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -676,7 +676,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &287595543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -772,7 +772,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &374881811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -868,7 +868,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &478491849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -964,7 +964,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &579073540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1060,7 +1060,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &598744185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1156,7 +1156,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &638261882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1252,7 +1252,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1285,7 +1285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &670122421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1348,7 +1348,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &692102607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1444,7 +1444,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1477,7 +1477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1 &713995807 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2995716975708129205, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
@@ -1545,7 +1545,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1578,7 +1578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &735623397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1641,7 +1641,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1674,7 +1674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &761955110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1737,7 +1737,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1 &811388993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1927,7 +1927,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1960,7 +1960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &960464450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2023,7 +2023,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2056,7 +2056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &990460292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2119,7 +2119,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2152,7 +2152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1025709872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2215,7 +2215,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2248,7 +2248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1057200820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2311,7 +2311,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2344,7 +2344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1064828183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2407,7 +2407,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2440,7 +2440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1076875986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2503,7 +2503,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2536,7 +2536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1164068827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2599,7 +2599,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2632,7 +2632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1198611890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2695,7 +2695,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2728,7 +2728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1204638801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2791,7 +2791,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2824,7 +2824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1290983295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2887,7 +2887,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2920,7 +2920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1370313258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2983,7 +2983,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3016,7 +3016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1 &1374306808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3141,7 +3141,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3174,7 +3174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!4 &1419346832 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2995716975708129207, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
@@ -3258,7 +3258,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3291,7 +3291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1453999691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3354,7 +3354,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3387,7 +3387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1 &1456619315
 GameObject:
   m_ObjectHideFlags: 0
@@ -3562,7 +3562,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3595,7 +3595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1540889778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3658,7 +3658,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3691,7 +3691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1550577046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3754,7 +3754,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3787,7 +3787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1556868362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3850,7 +3850,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3883,7 +3883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1566122699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3946,7 +3946,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3979,7 +3979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1570141279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4042,7 +4042,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4075,7 +4075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1608342038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4138,7 +4138,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4171,7 +4171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1625237985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4234,7 +4234,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4267,7 +4267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1649154771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4330,7 +4330,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4363,7 +4363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1703991152
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4426,7 +4426,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4459,7 +4459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1747881638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4522,7 +4522,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4555,7 +4555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &1846463257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4618,7 +4618,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4651,7 +4651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!4 &1910166312 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4268866810695493815, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
@@ -4719,7 +4719,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4752,7 +4752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &2020387493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4815,7 +4815,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4848,7 +4848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &2025280819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4911,7 +4911,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4944,7 +4944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &2056618689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5007,7 +5007,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5040,7 +5040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &2090365881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5103,7 +5103,7 @@ PrefabInstance:
       objectReference: {fileID: 4399570183794891040, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
     - target: {fileID: 4412779948050316471, guid: 771dbda0932acf440877dd51fa0432aa, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5136,7 +5136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1001 &2121337557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5252,7 +5252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1577896437392993187, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
       propertyPath: MaxStep
-      value: 3000
+      value: 1600
       objectReference: {fileID: 0}
     - target: {fileID: 2886018100125556173, guid: ece8fd4f7c0d580409a0e28258e9c0f3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5635,7 +5635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  directionChangeSteps: 100
+  directionChangeSteps: 400
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ public class RotorControlAgent : BaseAgent
     {
         base.Awake();
         goalGenerator = GetComponent<GoalGenerator>();
+        goalGenerator.Initialize();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -86,7 +87,7 @@ public class RotorControlAgent : BaseAgent
         float velocityReward = HelperFunctions.Reward(velocityError, 1.0f);
 
         float orientationError = Mathf.Abs(localLookAngle);
-        float orientationReward = HelperFunctions.Reward(orientationError, 2.0f);
+        float orientationReward = HelperFunctions.Reward(orientationError, 10.0f);
 
         float stabilityError = drone.worldAngularVelocity.magnitude;
         float stabilityReward = HelperFunctions.Reward(stabilityError, 2.0f);
