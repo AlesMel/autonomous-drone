@@ -12,6 +12,8 @@ public class AgentManager : MonoBehaviour
     AgentSideChannel agentSideChannel;
     [SerializeField] public string targetTag;
     [SerializeField] private bool enableSideChannel = true;
+    [SerializeField] private Goal goal;
+
     private bool firstMessage = false;
     public void Awake()
     {
@@ -105,6 +107,7 @@ public class AgentManager : MonoBehaviour
         }
 
         // agentSideChannel.SendBoolToPython(true);
+        // goal.ResetGoal();
     }
 
     void OnDestroy()

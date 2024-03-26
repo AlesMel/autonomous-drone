@@ -23,7 +23,7 @@ public class Goal : MonoBehaviour
     [SerializeField] private float zOffset;
     //[SerializeField] 
     private string collisionTag = "DronePart";
-    [SerializeField] private bool randomSpawn = false;
+    private bool randomSpawn = true;
 
     [Header("Settings for agent reward system")]
     [SerializeField] private float requiredSeconds;
@@ -33,20 +33,23 @@ public class Goal : MonoBehaviour
     -transform.position, Vector3.up).normalized;
 
     private GameObject parentObject;
+    protected Bounds bounds;
 
     private void Awake()
     {
         Initialize();
-/*        if (parentTransform != null)
-        {
-            //parentSize = GetObjectSize(parentTransform);
-            parentSize = GetParentSize(transform.parent.gameObject);
-            SpawnObjectInSphere();
-        }
-        else
-        {
-            Debug.LogError("Parent transform not found!");  
-        }*/
+        /*        if (parentTransform != null)
+                {
+                    //parentSize = GetObjectSize(parentTransform);
+                    parentSize = GetParentSize(transform.parent.gameObject);
+                    SpawnObjectInSphere();
+                }
+                else
+                {
+                    Debug.LogError("Parent transform not found!");  
+                }*/
+        bounds = new Bounds(transform.position, Vector3.one * 10);
+
     }
 
     public void Initialize()
@@ -86,15 +89,16 @@ public class Goal : MonoBehaviour
 
     public void SpawnObject()
     {
-
         if (randomSpawn)
         {
-            Debug.Log("Parent size: " + parentSize.ToString());
-            float spawnX = Random.Range(-parentSize.x / 2 + xOffset, parentSize.x / 2 - xOffset);
-            float spawnY = Random.Range(0 + yOffset, parentSize.y / 2 - yOffset);
-            float spawnZ = Random.Range(-parentSize.z / 2 + zOffset, parentSize.z / 2 - zOffset);
+            // Calculate the spawn positions based on the bounds argument
+            float spawnX = Random.Range(bounds.center.x - bounds.extents.x + xOffset, bounds.center.x + bounds.extents.x - xOffset);
+            float spawnY = Random.Range( yOffset, bounds.center.y + bounds.extents.y - yOffset);
+            float spawnZ = Random.Range(bounds.center.z - bounds.extents.z + zOffset, bounds.center.z + bounds.extents.z - zOffset);
+
+            // Construct the spawn position vector
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-            Debug.Log("Spawning position " + spawnPosition.ToString());
+            // Set the transform's position to the calculated spawn position
             transform.position = spawnPosition;
         }
     }
@@ -127,6 +131,7 @@ public class Goal : MonoBehaviour
         {
             goalMesh.material = goalUnreached;
         }
+        // SpawnObject();
     }
 
 
