@@ -27,6 +27,7 @@ public class BaseAgent : Agent
     protected bool isFrozen = false;
 
     protected bool m_enableFlag;
+    protected Bounds bounds;
 
     // Buffer storing recent target velocities to assess drone's tracking accuracy over time, compensating for response lag and smoothing erratic target movements.
 
@@ -43,13 +44,17 @@ public class BaseAgent : Agent
             Debug.LogError("Drone is NULL");
             return;
         }
+        bounds = new Bounds(transform.position, Vector3.one * 64);
+
     }
 
     protected void DefaultPhysicsObservations(VectorSensor sensor)
     {
         // Length of 3+3+3 = 9
-        sensor.AddObservation(drone.localVelocity / drone.maxLinearVelocity);
-        sensor.AddObservation(drone.worldAngularVelocity / drone.maxAngularVelocity);
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.worldAngularVelocity, 1f));
+        /*sensor.AddObservation(drone.localVelocity / drone.maxLinearVelocity);
+        sensor.AddObservation(drone.worldAngularVelocity / drone.maxAngularVelocity);*/
         sensor.AddObservation(drone.inclination);
     }
 
@@ -58,10 +63,10 @@ public class BaseAgent : Agent
 
     }
 
-    public void SetDroneTarget(Vector3 localVelocity, Vector3 localLookDirection)
+    public void SetDroneTarget(Vector3 worldTargetVelocity, Vector3 localLookDirection)
     {
-        targetLocalVelocity = localVelocity;
-        targetDirectionAngle = Vector3.SignedAngle(Vector3.forward, localLookDirection, Vector3.up) / 180.0f;
+        targetLocalVelocity = drone.WorldToLocal(worldTargetVelocity);
+        targetDirectionAngle = Vector3.SignedAngle(Vector3.forward, Vector3.ProjectOnPlane(drone.WorldToLocal(localLookDirection), Vector3.up), Vector3.up) / 180.0f;
     }
 
     protected void EndCurrentEpisode(string message)
@@ -83,7 +88,7 @@ public class BaseAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     { 
         base.CollectObservations(sensor);
-        DefaultPhysicsObservations(sensor);
+        //DefaultPhysicsObservations(sensor);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)

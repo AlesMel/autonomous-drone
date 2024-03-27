@@ -6,9 +6,9 @@ reset_on_extinction   = True
 
 [FixedStructureGenome]
 # node activation options
-activation_default      = swish
+activation_default      = tanh
 activation_mutate_rate  = 0.00
-activation_options      = swish
+activation_options      = tanh
 
 # node aggregation options
 aggregation_default     = sum
@@ -53,7 +53,7 @@ response_replace_rate   = 0.0
 
 # connection weight options
 weight_init_mean        = 0.0
-weight_init_stdev       = 0.0
+weight_init_stdev       = 1.0
 weight_max_value        = 30.0
 weight_min_value        = -30.0
 weight_mutate_power     = 0.4

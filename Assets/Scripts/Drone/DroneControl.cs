@@ -75,8 +75,8 @@ public class DroneControl : MonoBehaviour
     {
         droneRigidBody = GetComponent<Rigidbody>();
 
-        droneRigidBody.maxLinearVelocity = maxLinearVelocity;
-        droneRigidBody.maxAngularVelocity = maxAngularVelocity;
+        /*droneRigidBody.maxLinearVelocity = maxLinearVelocity;
+        droneRigidBody.maxAngularVelocity = maxAngularVelocity;*/
 
         defaultPosition = transform.localPosition;
         m_DefTilt = transform.localEulerAngles.x;
@@ -112,12 +112,13 @@ public class DroneControl : MonoBehaviour
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
+        actions = current_actions;
         for (int i = 0; i < rotors.Length; i++)
         {
             // 0.5 is precisely needed for drone to hover, since the thrust was calculated the way that it would
             // convert actions range: -1/+1 to 0/+1
-            actions[i] = (current_actions[i] + 1) * 0.5f; // This is not needed in NEAT since we adjust output by activation
-            thrusts[i] = actions[i] * thrustFactor;
+            //actions[i] = (current_actions[i] + 1) * 0.5f; // This is not needed in NEAT since we adjust output by activation
+            thrusts[i] = current_actions[i] * thrustFactor;
             // Thrust per rotor but applied to drone's centre of mass
             Vector3 force = thrusts[i] * thrustAxis;
             droneRigidBody.AddForceAtPosition(force, rotors[i].worldPosition);
@@ -172,8 +173,8 @@ public class DroneControl : MonoBehaviour
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
         
-        droneRigidBody.maxLinearVelocity = maxLinearVelocity;
-        droneRigidBody.maxAngularVelocity = maxAngularVelocity;
+        /*droneRigidBody.maxLinearVelocity = maxLinearVelocity;
+        droneRigidBody.maxAngularVelocity = maxAngularVelocity;*/
         
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
         droneRigidBody.position = defaultPosition;

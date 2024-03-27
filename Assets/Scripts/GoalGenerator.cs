@@ -40,7 +40,7 @@ public class GoalGenerator : MonoBehaviour
     private float friction = 0.04f;
     private float invFriction;
 
-    private float stopProbability = 0.5f;
+    private float stopProbability = 0.2f;
     private bool stop;
     public bool isMoving => !stop;
 
@@ -59,8 +59,8 @@ public class GoalGenerator : MonoBehaviour
     // Call this from another script's FixedUpdate to manage goal point updates
     public void ManagedUpdate(float deltaTime)
     {
-        currentStep++;
-        if (currentStep >= directionChangeSteps)
+        
+        if (currentStep++ >= directionChangeSteps)
         {
             ChangeDirection();
             currentStep = 0;
@@ -68,7 +68,7 @@ public class GoalGenerator : MonoBehaviour
         if (stop)
         {
             point.velocity *= 0.75f;
-        }
+        }   
         else
         {
             for (int i = 0; i < numAttractors; i++)
@@ -113,7 +113,7 @@ public class GoalGenerator : MonoBehaviour
             attractors[i].strength = Random.Range(minStrength, maxStrength);
         }
 
-        stop = Random.value < stopProbability;
+        // stop = Random.value < stopProbability;
     }
 
     public Vector3 GetGoalPosition()
@@ -138,7 +138,7 @@ public class GoalGenerator : MonoBehaviour
 
         // Draw the goal position
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(goalPosition, 0.05f); // Adjust the size as needed
+        Gizmos.DrawSphere(goalPosition, 0.5f); // Adjust the size as needed
 
         // Draw the velocity vector from the goal position
         Gizmos.color = Color.blue;

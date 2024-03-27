@@ -32,8 +32,12 @@ public class RotorControlAgent : BaseAgent
         SetDroneTarget(goalGenerator.worldVelocity, goalGenerator.worldLookDirection);
 
         // Length of 3+1 = 4 + 9 (base) = 13 observations
-        sensor.AddObservation(targetLocalVelocity);
+        // Debug.Log(targetDirectionAngle + " " + targetLocalVelocity);
         sensor.AddObservation(targetDirectionAngle);
+        sensor.AddObservation(HelperFunctions.Sigmoid(targetLocalVelocity, 0.5f));
+            
+        DefaultPhysicsObservations(sensor);
+
     }
 
     public override void Initialize()
@@ -64,32 +68,40 @@ public class RotorControlAgent : BaseAgent
 
     public override void AddRewards()
     {
+
         base.AddRewards();
-        velocityBuffer[velocityBufferIndex] = goalGenerator.worldVelocity;
-        // Circular buffer
-        velocityBufferIndex++;
-        velocityBufferIndex %= velocityBufferSize;
-
-        float velocityErrorMSQ = Mathf.Infinity;
-        Vector3 velocity = drone.worldVelocity;
-
-        for (int i = 0; i < velocityBufferSize; i++)
+        if (bounds.Contains(drone.droneRigidBody.position))
         {
-            velocityErrorMSQ = Mathf.Min(velocityErrorMSQ, (velocityBuffer[i] - velocity).sqrMagnitude);
+            velocityBuffer[velocityBufferIndex] = goalGenerator.worldVelocity;
+            // Circular buffer
+            velocityBufferIndex++;
+            velocityBufferIndex %= velocityBufferSize;
+
+            float velocityErrorMSQ = Mathf.Infinity;
+            Vector3 velocity = drone.worldVelocity;
+
+            for (int i = 0; i < velocityBufferSize; i++)
+            {
+                velocityErrorMSQ = Mathf.Min(velocityErrorMSQ, (velocityBuffer[i] - velocity).sqrMagnitude);
+            }
+
+            velocityError = Mathf.Sqrt(velocityErrorMSQ);
+            //Debug.Log("ve: " + velocityError);
+            float velocityCoefficient = goalGenerator.isMoving ? 1 : 10;
+            float velocityReward = HelperFunctions.Reward(velocityError, velocityCoefficient);
+
+            float orientationError = Mathf.Abs(localLookAngle);
+            float orientationReward = HelperFunctions.Reward(orientationError, 10.0f);
+
+            float stabilityError = drone.worldAngularVelocity.magnitude;
+            float stabilityReward = HelperFunctions.Reward(stabilityError, 2.0f);
+
+            AddReward(velocityReward * stabilityReward * orientationReward);
+        } 
+        else
+        {
+            EndEpisode();
         }
-
-        velocityError = Mathf.Sqrt(velocityErrorMSQ);
-        //Debug.Log("ve: " + velocityError);
-        float velocityCoefficient = goalGenerator.isMoving ? 1 : 10;
-        float velocityReward = HelperFunctions.Reward(velocityError, velocityCoefficient);
-
-        float orientationError = Mathf.Abs(localLookAngle);
-        float orientationReward = HelperFunctions.Reward(orientationError, 10.0f);
-
-        float stabilityError = drone.worldAngularVelocity.magnitude;
-        float stabilityReward = HelperFunctions.Reward(stabilityError, 2.0f);
-
-        AddReward(velocityReward * stabilityReward * orientationReward);
     }
 
 
