@@ -84,7 +84,6 @@ public class BaseAgent : Agent
     { 
         base.CollectObservations(sensor);
         DefaultPhysicsObservations(sensor);
-
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)

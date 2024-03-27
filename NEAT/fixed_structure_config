@@ -6,9 +6,9 @@ reset_on_extinction   = True
 
 [FixedStructureGenome]
 # node activation options
-activation_default      = tanh3
+activation_default      = swish
 activation_mutate_rate  = 0.00
-activation_options      = tanh3
+activation_options      = swish
 
 # node aggregation options
 aggregation_default     = sum

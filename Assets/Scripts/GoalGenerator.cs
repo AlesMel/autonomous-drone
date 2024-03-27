@@ -29,7 +29,7 @@ public class GoalGenerator : MonoBehaviour
     private float maxVelocity = 1f;
     private float maxVelocitySqr;
     // [SerializeField, Min(1), Tooltip("Direction change interval in steps")]
-    private int directionChangeSteps = 300;
+    private int directionChangeSteps = 500;
 
     private int currentStep = 0;
 
@@ -39,6 +39,10 @@ public class GoalGenerator : MonoBehaviour
     [SerializeField, Range(0f, 0.1f), Tooltip("Friction strength")]
     private float friction = 0.04f;
     private float invFriction;
+
+    private float stopProbability = 0.5f;
+    private bool stop;
+    public bool isMoving => !stop;
 
     public void Initialize()
     {
@@ -61,29 +65,34 @@ public class GoalGenerator : MonoBehaviour
             ChangeDirection();
             currentStep = 0;
         }
-
-        for (int i = 0; i < numAttractors; i++)
+        if (stop)
         {
-            Vector3 delta = attractors[i].position - point.position;
-            float sqrMag = delta.sqrMagnitude;
-            point.velocity += attractors[i].strength / sqrMag * delta;
-
-            if (sqrMag < 1)
-            {
-                ChangeDirection();
-                break;
-            }
-        }
-
-        if (point.velocity.sqrMagnitude > maxVelocitySqr)
-        {
-            point.velocity = point.velocity.normalized * maxVelocity;
+            point.velocity *= 0.75f;
         }
         else
         {
-            point.velocity *= invFriction;
-        }
+            for (int i = 0; i < numAttractors; i++)
+            {
+                Vector3 delta = attractors[i].position - point.position;
+                float sqrMag = delta.sqrMagnitude;
+                point.velocity += attractors[i].strength / sqrMag * delta;
 
+                if (sqrMag < 1)
+                {
+                    ChangeDirection();
+                    break;
+                }
+            }
+
+            if (point.velocity.sqrMagnitude > maxVelocitySqr)
+            {
+                point.velocity = point.velocity.normalized * maxVelocity;
+            }
+            else
+            {
+                point.velocity *= invFriction;
+            }
+        }
         // Update the goal point's position based on its velocity
         point.position += point.velocity * deltaTime; // Assuming ManagedUpdate is called in FixedUpdate
     }
@@ -103,6 +112,8 @@ public class GoalGenerator : MonoBehaviour
             attractors[i].position = Random.insideUnitSphere * radius;
             attractors[i].strength = Random.Range(minStrength, maxStrength);
         }
+
+        stop = Random.value < stopProbability;
     }
 
     public Vector3 GetGoalPosition()

@@ -12,6 +12,8 @@ public class AgentManager : MonoBehaviour
     AgentSideChannel agentSideChannel;
     [SerializeField] public string targetTag;
     [SerializeField] private bool enableSideChannel = true;
+    [SerializeField] public GoalGenerator goalGenerator;
+
     private bool firstMessage = false;
     public void Awake()
     {
@@ -31,11 +33,18 @@ public class AgentManager : MonoBehaviour
         dummyAgent.SetActive(false);*/
     }
 
+    private void FixedUpdate()
+    {
+        goalGenerator.ManagedUpdate(Time.fixedDeltaTime);
+    }
+
     public void Initialize()
     {
+        goalGenerator.Initialize();
         // Find and add all child GameObjects with the specified tag
         AddAllChildrenWithTag(transform);
         Logger.LogMessage($"Total agents in playground: {agents.Count}", true, true);
+        
     }
 
 
@@ -103,6 +112,7 @@ public class AgentManager : MonoBehaviour
                 }
             }
         }
+        goalGenerator.ResetGoal();
 
         // agentSideChannel.SendBoolToPython(true);
     }

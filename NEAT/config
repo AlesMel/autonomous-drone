@@ -67,7 +67,7 @@ weight_mutate_rate      = 1.0
 weight_replace_rate     = 0.1
 
 [DefaultSpeciesSet]
-compatibility_threshold = 3.0
+compatibility_threshold = 2.8
 
 [DefaultStagnation]
 species_fitness_func = max

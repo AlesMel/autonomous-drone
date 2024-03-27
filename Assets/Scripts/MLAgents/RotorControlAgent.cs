@@ -23,8 +23,7 @@ public class RotorControlAgent : BaseAgent
     protected override void Awake()
     {
         base.Awake();
-        goalGenerator = GetComponent<GoalGenerator>();
-        goalGenerator.Initialize();
+        goalGenerator = GetComponentInParent<GoalGenerator>();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -33,7 +32,6 @@ public class RotorControlAgent : BaseAgent
         SetDroneTarget(goalGenerator.worldVelocity, goalGenerator.worldLookDirection);
 
         // Length of 3+1 = 4 + 9 (base) = 13 observations
-        // Debug.Log($"{StepCount} + tlv: {targetLocalVelocity} + tda: {targetDirectionAngle}");
         sensor.AddObservation(targetLocalVelocity);
         sensor.AddObservation(targetDirectionAngle);
     }
@@ -53,7 +51,6 @@ public class RotorControlAgent : BaseAgent
             return;
         }
         base.OnActionReceived(actionBuffers);
-        goalGenerator.ManagedUpdate(Time.fixedDeltaTime);
 
         AddRewards();
     }
@@ -61,7 +58,6 @@ public class RotorControlAgent : BaseAgent
     public override void OnEpisodeBegin()
     {   
         base.OnEpisodeBegin();
-        goalGenerator.ResetGoal();
         Array.Clear(velocityBuffer, 0, velocityBufferSize);
         velocityBufferIndex = 0;
     }
@@ -84,7 +80,8 @@ public class RotorControlAgent : BaseAgent
 
         velocityError = Mathf.Sqrt(velocityErrorMSQ);
         //Debug.Log("ve: " + velocityError);
-        float velocityReward = HelperFunctions.Reward(velocityError, 1.0f);
+        float velocityCoefficient = goalGenerator.isMoving ? 1 : 10;
+        float velocityReward = HelperFunctions.Reward(velocityError, velocityCoefficient);
 
         float orientationError = Mathf.Abs(localLookAngle);
         float orientationReward = HelperFunctions.Reward(orientationError, 10.0f);
