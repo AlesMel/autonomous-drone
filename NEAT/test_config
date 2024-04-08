@@ -31,12 +31,12 @@ feed_forward            = True
 initial_connection      = partial_direct 0.5
 
 # node add/remove rates
-node_add_prob           = 0.2
-node_delete_prob        = 0.1
+node_add_prob           = 0.6
+node_delete_prob        = 0.4
 
 # network parameters
 num_hidden              = 1
-num_inputs              = 18
+num_inputs              = 13
 num_outputs             = 4
 
 # node response options
@@ -67,7 +67,7 @@ bias_mutate_rate        = 0.2
 bias_replace_rate       = 0.1
 
 [DefaultSpeciesSet]
-compatibility_threshold = 1.75
+compatibility_threshold = 2.5
 
 [DefaultStagnation]
 species_fitness_func = mean

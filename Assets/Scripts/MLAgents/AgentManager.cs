@@ -107,7 +107,10 @@ public class AgentManager : MonoBehaviour
         }
 
         // agentSideChannel.SendBoolToPython(true);
-        // goal.ResetGoal();
+        if (goal != null)
+        {
+            goal.ResetGoal();
+        }
     }
 
     void OnDestroy()

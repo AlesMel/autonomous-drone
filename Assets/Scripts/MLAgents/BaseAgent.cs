@@ -15,9 +15,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BaseAgent : Agent
 {
-    new private Rigidbody rigidbody;
     public DroneControl drone { get; private set; }
-    [SerializeField] public Goal goal;
+    public Goal[] goals;
 
     public int decisionInterval { get; set; }
     private const int numberOfActions = 4;
@@ -26,18 +25,18 @@ public class BaseAgent : Agent
     protected float lookAngle;
 
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
-    protected float crashedPenalty = 1.0f;
-    protected float tipOverPenalty = 10;
+    protected float crashedPenalty = 1.0f;  
+    protected float tipOverPenalty = 0;
     protected float leftEnviromentPenalty = 0;
-    protected float collisionPenalty = 100;
+    protected float collisionPenalty = 2000;
     protected float stepPenalty = 1.0f;
     protected float terminationPenalty = 100000000;
-    protected float touchedGoalReward = 1f;
-    protected float stayGoalReward = 0.1f;
+    protected float touchedGoalReward = 1.0f; // 500 good
+    protected float stayGoalReward = 10.0f; // 30 good
     protected float leftGoalPenalty = 0.0f;
     protected float thresholdDistance;
     // 
-    protected float maxCheckpointDistance = 69.282032f;
+    protected float maxCheckpointDistance = 16.0f;
     protected float localLookAngle;
     protected Vector3 localGoalVelocity;
     protected bool isFrozen = false;
@@ -49,18 +48,14 @@ public class BaseAgent : Agent
     protected int numReachedGoal = 0;
     protected Bounds bounds;
     protected float previousDistance = 0.0f;
+    protected int currentCheckpointIndex = 0;
+    private Coroutine delayCoroutine;
 
     private new void Awake()
     {
         drone = GetComponent<DroneControl>();
         decisionInterval = GetComponent<DecisionRequester>().DecisionPeriod;
         prevActions = new float[4];
-
-        if (goal == null)
-        {
-            Debug.LogError("Goal is NULL");
-        }
-        goal.ResetGoal();
 
         thresholdDistance = VectorToNextCheckpoint().magnitude;
         // Check if drone exists
@@ -69,13 +64,7 @@ public class BaseAgent : Agent
             Debug.LogError("Drone is NULL");
             return;
         }
-        bounds = new Bounds(transform.position, Vector3.one * 64);
-
-    }
-
-    public override void Initialize()
-    {
-
+        bounds = new Bounds(transform.position, Vector3.one * maxCheckpointDistance);
     }
 
     protected void EndCurrentEpisode(string message)
@@ -91,26 +80,43 @@ public class BaseAgent : Agent
         drone.BaseReset();
         Array.Clear(prevActions, 0, 4);
         reachedGoal = false;
+        previousDistance = thresholdDistance;
+        currentCheckpointIndex = 0;
     }
 
     public float AngleToGoal()
     {
-        float rotation = Vector3.Angle(Vector3.ProjectOnPlane(drone.transform.forward, Vector3.up), Vector3.ProjectOnPlane(VectorToNextCheckpoint(), Vector3.up));
-        return rotation / 180.0f;
+        /*float rotation = Vector3.Angle(Vector3.ProjectOnPlane(drone.transform.forward, Vector3.up), Vector3.ProjectOnPlane(VectorToNextCheckpoint(), Vector3.up));
+        return rotation / 180.0f;*/
+        var targetAngleVector = Vector3.ProjectOnPlane(-goals[currentCheckpointIndex].transform.position, Vector3.up).normalized;
+        var localVector = drone.WorldToLocal(targetAngleVector);
+        var angle = Vector3.SignedAngle(Vector3.forward, localVector, Vector3.up) / 180f;
+        return angle;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     { 
         base.CollectObservations(sensor);
 
+        // Debug.Log($"{transform.name} at {StepCount} {VectorToNextCheckpoint() / maxCheckpointDistance}");
+
+        //sensor.AddObservation(drone.WorldToLocal(goal.transform.forward));
+
         sensor.AddObservation(AngleToGoal());
-        //sensor.AddObservation(drone.localVelocity / drone.maxLinearVelocity);
-        //sensor.AddObservation(drone.localAngularVelocity / drone.maxAngularVelocity);
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.25f));
+        sensor.AddObservation(VectorToNextCheckpoint() / maxCheckpointDistance);// 
+
+/*        sensor.AddObservation(drone.localVelocity / drone.droneRigidBody.maxLinearVelocity);
+        sensor.AddObservation(drone.localAngularVelocity / drone.droneRigidBody.maxAngularVelocity);*/
+        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
         sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity));
-        sensor.AddObservation(HelperFunctions.Sigmoid(VectorToNextCheckpoint()));
-        // sensor.AddObservation(drone.inclination);
-        // sensor.AddObservation(drone.actions); // 4 actions (4 rotors)
+
+        sensor.AddObservation(drone.inclination);
+    }
+
+    private void OnTipOver()
+    {
+        AddReward(-tipOverPenalty);
+        EndEpisode();
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -136,30 +142,26 @@ public class BaseAgent : Agent
             }
         }
 
-
-        drone.ApplyActions(actions);
-
-        if (transform.up.y < drone.tipOverThreshold && !drone.isTippedOver) 
+        if (transform.up.y < drone.tipOverThreshold)
         {
-            drone.isTippedOver = true;
+            AddReward(-tipOverPenalty);
             EndCurrentEpisode("Ttipped over");
         }
+
+        drone.ApplyActions(actions);
     }
-
-    protected (Vector3 localDirectionToGoal, Vector3 orientation) VectorAndOrientationToNextCheckpoint()
+    protected Vector3 GlobalVectorToNextCheckpoint()
     {
-        Vector3 checkpointDirection = goal.transform.position - transform.position;
-
-        float angleToGoal = Vector3.Angle(Vector3.forward, checkpointDirection);
-        Vector3 crossProduct = Vector3.Cross(Vector3.forward, checkpointDirection);
-
-        return (checkpointDirection, crossProduct);
+        Vector3 checkpointDirection = goals[currentCheckpointIndex].transform.position - drone.worldPosition;
+        return checkpointDirection;
     }
 
     protected Vector3 VectorToNextCheckpoint()
     {
-        Vector3 checkpointDirection = goal.transform.position - transform.position;
-        return checkpointDirection;
+        Vector3 checkpointDirection = GlobalVectorToNextCheckpoint();
+        Vector3 localCheckpointDireciton = drone.transform.InverseTransformDirection(checkpointDirection);
+        return localCheckpointDireciton;
+        //return drone.WorldToLocal(checkpointDirection);
         //return drone.transform.InverseTransformPoint(goal.transform.position);
     }
 
@@ -174,16 +176,7 @@ public class BaseAgent : Agent
     }
 
     #region Collisions And Triggers
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            // AddTerminationPenalty(-collisionPenalty);
-            EndCurrentEpisode("Crashed!");
-            //isColliding = true;
 
-        }
-    }
 
     // Give penalty based on steps, after which the episode is ended
     private void AddTerminationPenalty(float penalty)
@@ -191,30 +184,17 @@ public class BaseAgent : Agent
         //AddReward(penalty); // * MaxStep / (StepCount + 1)
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Goal") && !reachedGoal)
-        {
-            AddReward(touchedGoalReward);
-            reachedGoal = true;
-        }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Goal"))
-        {
-            AddReward(stayGoalReward);
-           isInGoal = true;
-        }
 
-    }
+
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Goal"))
         {
             isInGoal = false;
+            if (delayCoroutine != null)
+                StopCoroutine(delayCoroutine);
         }
 
         if (other.CompareTag("Enviroment") && drone.isInEnviroment)
@@ -233,8 +213,18 @@ public class BaseAgent : Agent
         }
     }
 
+    private IEnumerator InGoalCoroutine()
+    {
+        reachedGoal = true;
+        yield return new WaitForSeconds(2f); // Wait for 2 seconds
+        currentCheckpointIndex++; // Increment the checkpoint index after 2 seconds
+        reachedGoal = false;
+    }
+
+
     public override void Heuristic(in ActionBuffers actionsOut)
     {
+        base.Heuristic(actionsOut);
         var actions = actionsOut.ContinuousActions;
 
         float thrust = drone.worldVelocity.y * -0.25f;
@@ -245,6 +235,7 @@ public class BaseAgent : Agent
         actions[1] = thrust - roll - pitch;
         actions[2] = thrust - roll + pitch;
         actions[3] = thrust + roll - pitch;
+        //actions[i] = (actions[i] + 1) * 0.5f;
     }
     #endregion
 

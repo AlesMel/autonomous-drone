@@ -34,6 +34,7 @@ public class Goal : MonoBehaviour
 
     private GameObject parentObject;
     protected Bounds bounds;
+    public List<Vector3> spawnPoints; // List of predefined spawn points
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class Goal : MonoBehaviour
                 {
                     Debug.LogError("Parent transform not found!");  
                 }*/
-        bounds = new Bounds(transform.position, Vector3.one * 10);
+        bounds = new Bounds(transform.position, Vector3.one * 5);
 
     }
 
@@ -61,17 +62,7 @@ public class Goal : MonoBehaviour
 
     private void FixedUpdate()
     {
-/*        if (isInTrigger)
-        {
-            if (Time.time - triggerEnterTime >= requiredSeconds / 2)
-            {
-                goalMesh.material = goalStayed;
-            }
-            if (Time.time - triggerEnterTime >= requiredSeconds)
-            {
-                ReachedGoalEvent.Invoke();
-            }
-        }*/
+
     }
 
     private Vector3 GetObjectSize(Transform transform)
@@ -91,14 +82,38 @@ public class Goal : MonoBehaviour
     {
         if (randomSpawn)
         {
-            // Calculate the spawn positions based on the bounds argument
-            float spawnX = Random.Range(bounds.center.x - bounds.extents.x + xOffset, bounds.center.x + bounds.extents.x - xOffset);
-            float spawnY = Random.Range( yOffset, bounds.center.y + bounds.extents.y - yOffset);
-            float spawnZ = Random.Range(bounds.center.z - bounds.extents.z + zOffset, bounds.center.z + bounds.extents.z - zOffset);
+            Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+/*            // Define the range for spawning positions on each axis
+            float xMin = bounds.center.x - bounds.extents.x + xOffset;
+            float xMax = bounds.center.x + bounds.extents.x - xOffset;
+            float yMin = bounds.center.y - bounds.extents.y + yOffset;
+            float yMax = bounds.center.y + bounds.extents.y - yOffset;
+            float zMin = bounds.center.z - bounds.extents.z + zOffset;
+            float zMax = bounds.center.z + bounds.extents.z - zOffset;
+
+            // Define the radius within which to exclude positions near the origin
+            float exclusionRadius = 2.0f; // Adjust as needed
+
+            // Ensure that spawn positions for x and y are not too close to the origin
+            float spawnX = Random.Range(xMin, xMax);
+            float spawnY = Random.Range(yMin, yMax);
+
+            // Check if the spawn positions are within the exclusion radius
+            while (Mathf.Abs(spawnX) < exclusionRadius && Mathf.Abs(spawnY) < exclusionRadius)
+            {
+                // Reselect spawn positions until they are outside the exclusion radius
+                spawnX = Random.Range(xMin, xMax);
+                spawnY = Random.Range(yMin, yMax);
+            }
+
+            // Randomly select spawn positions within the defined range for the z axis
+            float spawnZ = Random.Range(zMin, zMax);
+
 
             // Construct the spawn position vector
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-            // Set the transform's position to the calculated spawn position
+            // Set the transform's position to the calculated spawn position*/
             transform.position = spawnPosition;
         }
     }
@@ -131,7 +146,7 @@ public class Goal : MonoBehaviour
         {
             goalMesh.material = goalUnreached;
         }
-        // SpawnObject();
+        SpawnObject();
     }
 
 

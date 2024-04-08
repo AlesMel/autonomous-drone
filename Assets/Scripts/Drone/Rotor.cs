@@ -10,7 +10,7 @@ public class Rotor : MonoBehaviour
 
     public Vector3 localTorqueAxis { get; private set; }
 
-    //public Rigidbody rb;
+    public Rigidbody rb;
     public Transform propeller { get; private set; }
 
     public float currentAngle;
@@ -19,7 +19,7 @@ public class Rotor : MonoBehaviour
     {
         propeller = transform.Find("Blade");
         currentAngle = transform.rotation.eulerAngles.y;
-        // rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         localTorqueAxis = transform.parent.InverseTransformVector(-transform.up);
     }
 }

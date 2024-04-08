@@ -1,18 +1,18 @@
 [NEAT]
-fitness_criterion     = max
-fitness_threshold     = 1000000
-pop_size              = 50
-reset_on_extinction   = False
+fitness_criterion     = mean
+fitness_threshold     = 25000.16
+pop_size              = 100
+reset_on_extinction   = True
 
-[FixedStructureGenome]
+[DefaultGenome]
 # node activation options
 activation_default      = tanh
 activation_mutate_rate  = 0.00
-activation_options      = tanh
+activation_options      = tanh  
 
 # node aggregation options
 aggregation_default     = sum
-aggregation_mutate_rate = 0.0
+aggregation_mutate_rate = 0.00
 aggregation_options     = sum
 
 # genome compatibility options
@@ -20,32 +20,32 @@ compatibility_disjoint_coefficient = 1.0
 compatibility_weight_coefficient   = 0.5
 
 # connection add/remove rates
-conn_add_prob           = 0.0
-conn_delete_prob        = 0.0
+conn_add_prob           = 0.8
+conn_delete_prob        = 0.5
 
 # connection enable options
-enabled_default         = False
-enabled_mutate_rate     = 0.00
+enabled_default         = True
+enabled_mutate_rate     = 0.01
 
 feed_forward            = True
 initial_connection      = full_direct
 
 # node add/remove rates
-node_add_prob           = 0.0
-node_delete_prob        = 0.0
+node_add_prob           = 0.7
+node_delete_prob        = 0.3
 
 # network parameters
-num_hidden              = 20
+num_hidden              = 2
 num_inputs              = 13
 num_outputs             = 4
-num_hidden_layers       = 2
+
 # node response options
 response_init_mean      = 1.0
 response_init_stdev     = 0.0
 response_max_value      = 30.0
 response_min_value      = -30.0
-response_mutate_power   = 0.3
-response_mutate_rate    = 0.1
+response_mutate_power   = 0.0
+response_mutate_rate    = 0.0
 response_replace_rate   = 0.0
 
 # connection weight options
@@ -59,19 +59,19 @@ weight_replace_rate     = 0.02
 
 # node bias options
 bias_init_mean          = 0.0
-bias_init_stdev         = 0.0
+bias_init_stdev         = 1.0
 bias_max_value          = 30
 bias_min_value          = -30
-bias_mutate_power       = 0.4
-bias_mutate_rate        = 0.8   
-bias_replace_rate       = 0.02
+bias_mutate_power       = 0.3
+bias_mutate_rate        = 0.8  
+bias_replace_rate       = 0.1
 
 [DefaultSpeciesSet]
 compatibility_threshold = 2.5
 
 [DefaultStagnation]
-species_fitness_func = max
-max_stagnation       = 20
+species_fitness_func = mean
+max_stagnation       = 15
 species_elitism      = 2
 
 [DefaultReproduction]

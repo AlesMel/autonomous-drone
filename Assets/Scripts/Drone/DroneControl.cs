@@ -10,6 +10,8 @@ using UnityEngine.InputSystem;
 
 public class DroneControl : MonoBehaviour
 {
+    public event Action TipOverEvent;
+
     private Vector3 centerOfMass;
     public Rigidbody droneRigidBody;
 
@@ -32,10 +34,10 @@ public class DroneControl : MonoBehaviour
     // Drone's rotation around y-axis
     public Quaternion rotationY => Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-    public float thrustFactor { get; private set; } = 6.38f; // defaulted to: 6.38f;
-        
+    public float thrustFactor { get; private set; } = 25; // 6.38f; // defaulted to: 6.38f;
+
     // [SerializeField, Tooltip("Action multiplier")]
-    private float torqueFactor = 1.27f;  // defaulted to: 1.27f;
+    private float torqueFactor = 5; // 1.27f;  // defaulted to: 1.27f;
 
     [SerializeField, Tooltip("Action multiplier")]
     private float animSpeedFactor = 4000;
@@ -106,21 +108,35 @@ public class DroneControl : MonoBehaviour
     {
     }
 
-    public void ApplyActions(float[] current_actions)
+    private float[] ClampActions(float[] current_actions)
+    {
+        float[] act = current_actions;
+        act[0] = Mathf.Clamp(current_actions[0], -1, 1);
+        act[1] = Mathf.Clamp(current_actions[1], -1, 1);
+        act[2] = Mathf.Clamp(current_actions[2], -1, 1);
+        act[3] = Mathf.Clamp(current_actions[3], -1, 1);
+        return act;
+    }
+
+    public void ApplyActions(float[] actions)
     {
         // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
-        actions = current_actions;
+
+        Array.Copy(ClampActions(actions), actions, actions.Length);
+        
         for (int i = 0; i < rotors.Length; i++)
         {
             // 0.5 is precisely needed for drone to hover, since the thrust was calculated the way that it would
             // convert actions range: -1/+1 to 0/+1
-            // actions[i] = (current_actions[i] + 1) * 0.5f; // This is not needed in NEAT since we adjust output by activation
-            thrusts[i] = actions[i] * thrustFactor;
+            // actions[i] = (actions[i] + 1) * 0.5f; // This is not needed in NEAT since we adjust output by activation
+            this.actions[i] = actions[i];
+            var thrust = actions[i] * thrustFactor;
             // Thrust per rotor but applied to drone's centre of mass
-            Vector3 force = thrusts[i] * thrustAxis;
+            Vector3 force = thrust * thrustAxis;
             droneRigidBody.AddForceAtPosition(force, rotors[i].worldPosition);
+
             // Debug.DrawRay(rotors[i].worldPosition, force.normalized * 5, Color.green);
 
             // Flip direction for 2 of 4 rotors, torques need to cancel each other out.
@@ -131,6 +147,12 @@ public class DroneControl : MonoBehaviour
             // Buffer value for animation.
             animationSpeeds[i] = actionWithDirection;
         }
+
+        if (transform.up.y < tipOverThreshold)
+        {
+            // Debug.LogWarning("Drone has been tipped over");
+            TipOverEvent?.Invoke();
+        }
     }
 
     // Update is called once per frame
@@ -138,6 +160,8 @@ public class DroneControl : MonoBehaviour
     {
         PropellerAnimation();
         float[] daco = { 0, 0, 0, 0 };
+        //ApplyActions(this.actions);
+
         //ApplyActions(daco);
     }
 
@@ -151,8 +175,8 @@ public class DroneControl : MonoBehaviour
                 //Rotor rotor = rotors[i];
                 float speed = animationSpeeds[i] * maxSpeed;
                 rotors[i].propeller.Rotate(0, speed, 0);
-                /*
-                rotor.rb.transform.Rotate(Vector3.up, speed);*/
+
+                //rotors[i].rb.transform.Rotate(Vector3.up, speed);
             }
         }
     }
@@ -174,26 +198,23 @@ public class DroneControl : MonoBehaviour
 
     void SetRigidBodyMaximumVelocities()
     {
-        droneRigidBody.maxLinearVelocity = maxLinearVelocity;
+        // droneRigidBody.maxLinearVelocity = maxLinearVelocity;
         droneRigidBody.maxAngularVelocity = maxAngularVelocity;
     }
 
     void ResetPhysicalProperties()
     {
+        Array.Clear(actions, 0, actions.Length);
+
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
 
         SetRigidBodyMaximumVelocities();
-
         droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);
         droneRigidBody.position = defaultPosition;
 
         transform.position = defaultPosition;// Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
-
-        Array.Clear(actions, 0, actions.Length);
-        /*droneRigidBody.position = droneRigidBody.transform.parent.TransformPoint(defaultPosition);
-        droneRigidBody.rotation = Quaternion.Euler(0, 0, 0);*/
     }
 
     public void BaseReset()

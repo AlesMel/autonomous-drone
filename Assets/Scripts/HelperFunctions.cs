@@ -24,6 +24,12 @@ public static class HelperFunctions
         return Mathf.Min(1, -2 / (1 + Mathf.Exp(-error * coefficient)) + 2);
     }
 
+    /// Calculates a weighted reward falling off from 1 as error increases.
+    public static float WeightedReward(float error, float weight = 1, float coefficient = 1)
+    {
+        return 1 - weight + weight * Reward(error, coefficient);
+    }
+
     public static void LogMessage(bool isWarning, string message)
     {
         if (isWarning)
