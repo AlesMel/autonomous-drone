@@ -25,19 +25,10 @@ public class BaseAgent : Agent
     protected float lookAngle;
 
     // [SerializeField, Tooltip("Penalty is applied at collision enter")]
-    protected float crashedPenalty = 1.0f;  
-    protected float tipOverPenalty = 0;
-    protected float leftEnviromentPenalty = 0;
-    protected float collisionPenalty = 2000;
-    protected float stepPenalty = 1.0f;
-    protected float terminationPenalty = 100000000;
-    protected float touchedGoalReward = 1.0f; // 500 good
-    protected float stayGoalReward = 10.0f; // 30 good
-    protected float leftGoalPenalty = 0.0f;
     protected float thresholdDistance;
-    // 
-    protected float maxCheckpointDistance = 16.0f;
-    protected float localLookAngle;
+    protected float maxCheckpointDistance = 30.0f;
+
+    [SerializeField] float localLookAngle;
     protected Vector3 localGoalVelocity;
     protected bool isFrozen = false;
 
@@ -69,8 +60,8 @@ public class BaseAgent : Agent
 
     protected void EndCurrentEpisode(string message)
     {
-        // AddReward(-(MaxStep - StepCount));
         // AddReward(-terminationPenalty);
+        // AddReward(-1f * (MaxStep - (StepCount)));
         EndEpisode();
     }
 
@@ -80,18 +71,12 @@ public class BaseAgent : Agent
         drone.BaseReset();
         Array.Clear(prevActions, 0, 4);
         reachedGoal = false;
-        previousDistance = thresholdDistance;
         currentCheckpointIndex = 0;
     }
 
     public float AngleToGoal()
     {
-        /*float rotation = Vector3.Angle(Vector3.ProjectOnPlane(drone.transform.forward, Vector3.up), Vector3.ProjectOnPlane(VectorToNextCheckpoint(), Vector3.up));
-        return rotation / 180.0f;*/
-        var targetAngleVector = Vector3.ProjectOnPlane(-goals[currentCheckpointIndex].transform.position, Vector3.up).normalized;
-        var localVector = drone.WorldToLocal(targetAngleVector);
-        var angle = Vector3.SignedAngle(Vector3.forward, localVector, Vector3.up) / 180f;
-        return angle;
+        return Vector3.SignedAngle(Vector3.ProjectOnPlane(drone.transform.forward, Vector3.up), Vector3.ProjectOnPlane(VectorToNextCheckpoint(), Vector3.up), Vector3.up) / 180f;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -102,20 +87,26 @@ public class BaseAgent : Agent
 
         //sensor.AddObservation(drone.WorldToLocal(goal.transform.forward));
 
-        sensor.AddObservation(AngleToGoal());
+/*        sensor.AddObservation(AngleToGoal());
         sensor.AddObservation(VectorToNextCheckpoint() / maxCheckpointDistance);// 
 
-/*        sensor.AddObservation(drone.localVelocity / drone.droneRigidBody.maxLinearVelocity);
+        sensor.AddObservation(drone.localVelocity / drone.droneRigidBody.maxLinearVelocity);
         sensor.AddObservation(drone.localAngularVelocity / drone.droneRigidBody.maxAngularVelocity);*/
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
-        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity));
+        /*sensor.AddObservation(AngleToGoal());
+        sensor.AddObservation(VectorToNextCheckpoint() / maxCheckpointDistance);*/
+        // Debug.Log(VectorToNextCheckpoint() / maxCheckpointDistance);
 
-        sensor.AddObservation(drone.inclination);
+        /*sensor.AddObservation(drone.localVelocity / drone.droneRigidBody.maxLinearVelocity);
+        sensor.AddObservation(drone.localAngularVelocity / drone.droneRigidBody.maxAngularVelocity);
+        sensor.AddObservation(drone.inclination);*/
+        /*        sensor.AddObservation(HelperFunctions.Sigmoid(drone.localVelocity, 0.5f));
+                sensor.AddObservation(HelperFunctions.Sigmoid(drone.localAngularVelocity));*/
+
+        // DrawRays();
     }
 
     private void OnTipOver()
     {
-        AddReward(-tipOverPenalty);
         EndEpisode();
     }
 
@@ -142,26 +133,20 @@ public class BaseAgent : Agent
             }
         }
 
-        if (transform.up.y < drone.tipOverThreshold)
-        {
-            AddReward(-tipOverPenalty);
-            EndCurrentEpisode("Ttipped over");
-        }
-
         drone.ApplyActions(actions);
     }
     protected Vector3 GlobalVectorToNextCheckpoint()
     {
-        Vector3 checkpointDirection = goals[currentCheckpointIndex].transform.position - drone.worldPosition;
+        Vector3 checkpointDirection = goals[currentCheckpointIndex].transform.position - drone.transform.position;
         return checkpointDirection;
     }
 
     protected Vector3 VectorToNextCheckpoint()
     {
         Vector3 checkpointDirection = GlobalVectorToNextCheckpoint();
-        Vector3 localCheckpointDireciton = drone.transform.InverseTransformDirection(checkpointDirection);
-        return localCheckpointDireciton;
-        //return drone.WorldToLocal(checkpointDirection);
+        //Vector3 localCheckpointDireciton = drone.transform.InverseTransformDirection(checkpointDirection);
+        return checkpointDirection;
+        //  drone.WorldToLocal(checkpointDirection);
         //return drone.transform.InverseTransformPoint(goal.transform.position);
     }
 
@@ -183,10 +168,6 @@ public class BaseAgent : Agent
     {
         //AddReward(penalty); // * MaxStep / (StepCount + 1)
     }
-
-
-
-
 
     private void OnTriggerExit(Collider other)
     {

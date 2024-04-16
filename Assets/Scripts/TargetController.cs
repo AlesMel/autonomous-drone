@@ -45,12 +45,12 @@ namespace Unity.MLAgentsExamples
         public CollisionEvent onCollisionStayEvent = new CollisionEvent();
         public CollisionEvent onCollisionExitEvent = new CollisionEvent();
 
-        void OnEnable()
+       /* void OnEnable()
         {
             m_startingPos = transform.position;
             MoveTargetToRandomPosition();       
         }
-
+*/
 /*        void Update()
         {
             if (respawnIfFallsOffPlatform)
@@ -72,6 +72,11 @@ namespace Unity.MLAgentsExamples
             //newTargetPos.y = m_startingPos.y;
             newTargetPos.y = Mathf.Clamp(newTargetPos.y, 3, spawnRadius);
             transform.position = newTargetPos;
+        }
+
+        public void MoveTargetToPosition(Vector3 position)
+        {
+            transform.position = position;
         }
 
         private void OnCollisionEnter(Collision col)

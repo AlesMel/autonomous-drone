@@ -39,7 +39,15 @@ public class CrawlerInspo : Agent
     protected Bounds bounds;
     protected float maxCheckpointDistance = 30.0f;
     protected bool startCollision = true;
+    private bool checkpointActive = true;
+
+    private float reward => 5.0f;
     private float penalty => 1.0f; //+ (MaxStep-StepCount);
+    private Vector3 firstCheckpointPosition = new Vector3(5f, 3f, 5f);
+    private Vector3 secondCheckpointPosition = new Vector3(-3f, 4f, 2f);
+    private Vector3 thirdCheckpointPosition = new Vector3(-2f, 2f, -2f);
+    private Vector3[] checkpoints;
+    private int chptIndex = 0;
 
     private new void Awake()
     {
@@ -47,18 +55,24 @@ public class CrawlerInspo : Agent
         m_DirectionIndicator = GetComponentInChildren<DirectionIndicator>();
         m_DroneControl = GetComponent<DroneControl>();
         bounds = new Bounds(m_DroneControl.transform.position, Vector3.one * maxCheckpointDistance);
+        checkpoints = new Vector3[] { firstCheckpointPosition, secondCheckpointPosition, thirdCheckpointPosition };
     }
 
     public override void Initialize()
     {
         base.Initialize();
         SpawnTarget(TargetPrefab, transform.position);
+        m_Target.gameObject.GetComponent<TargetController>().MoveTargetToPosition(firstCheckpointPosition);
     }
 
     void SpawnTarget(Transform prefab, Vector3 pos)
     {
-        m_Target = Instantiate(prefab, pos, Quaternion.identity, transform.parent);
+        if (m_Target == null)
+        {
+            m_Target = Instantiate(prefab, pos, Quaternion.identity, transform.parent);
+        }
     }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -67,40 +81,26 @@ public class CrawlerInspo : Agent
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (transform.name == "DummyDrone")
-        {
-          Destroy(m_Target.gameObject);
-        }
+        Destroy(m_Target.gameObject);
+        m_Target = null;
+
     }
 
     public override void OnEpisodeBegin()
     {
         base.OnEpisodeBegin();
-        m_DroneControl.BaseReset();
-        UpdateOrientationObjects();
         CancelInvoke();
-        startCollision = true;
-        TargetWalkingSpeed = Random.Range(0.1f, m_maxFlyingSpeed);
-        m_Target.gameObject.GetComponent<TargetController>().MoveTargetToRandomPosition();
+        m_DroneControl.BaseReset();
+        chptIndex = 0;
+        m_Target.gameObject.GetComponent<TargetController>().MoveTargetToPosition(firstCheckpointPosition);
+        UpdateOrientationObjects();
+        TargetWalkingSpeed = 2; // Random.Range(0.1f, m_maxFlyingSpeed); 
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // linear is 1e+16, angular is max 7
         base.CollectObservations(sensor);
-        /*var cubeForward = m_OrientationCube.transform.forward;
-        var velocityGoal = cubeForward * TargetWalkingSpeed;
-        var currentVelocity = m_DroneControl.droneRigidBody.velocity;
-        var currentAngularVelocity = m_DroneControl.droneRigidBody.angularVelocity;
-        Quaternion rotation = Quaternion.FromToRotation(body.forward, cubeForward);
-        Vector3 normalizedRotation = rotation.eulerAngles / 180.0f - Vector3.one;  // [-1,1]
-
-        sensor.AddObservation(HelperFunctions.Sigmoid(Vector3.Distance(velocityGoal, currentVelocity), 0.5f));
-        sensor.AddObservation(HelperFunctions.Sigmoid(m_OrientationCube.transform.InverseTransformDirection(currentVelocity), 0.5f));
-        sensor.AddObservation(m_OrientationCube.transform.InverseTransformDirection(currentAngularVelocity) / m_DroneControl.droneRigidBody.maxAngularVelocity);
-        sensor.AddObservation(HelperFunctions.Sigmoid(m_OrientationCube.transform.InverseTransformDirection(velocityGoal), 0.5f));
-        sensor.AddObservation(normalizedRotation);
-        sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(m_Target.transform.position) / maxCheckpointDistance);*/
         var cubeForward = m_OrientationCube.transform.forward;
         var velocityGoal = cubeForward * TargetWalkingSpeed;
         Quaternion rotation = Quaternion.FromToRotation(body.forward, cubeForward);
@@ -143,26 +143,22 @@ public class CrawlerInspo : Agent
         var matchStabilityReward = HelperFunctions.Reward(m_DroneControl.droneRigidBody.angularVelocity.magnitude, 3f);
         var velocityReward = HelperFunctions.Reward(m_VelocityError, 10.0f);
         var lookAtTargetReward = (Vector3.Dot(cubeForward, body.forward) + 1) * .5F;
-
+        var positionReward = HelperFunctions.Reward(Vector3.Distance(m_Target.transform.position, m_OrientationCube.transform.position), 1.0f);
         int actionsNotHovering = 0;
-        float sumActions = 0f;
-        float sumSquaredDiffs = 0f;
 
-/*        for (int i = 0; i < m_DroneControl.actions.Length; i++)
+        for (int i = 0; i < m_DroneControl.actions.Length; i++)
         {
             // Only add reward if action[i] is not equal to 0.5
             if (m_DroneControl.actions[i] == 0.5f)
             {
                 actionsNotHovering++;
             }
-            sumActions += m_DroneControl.actions[i];
-
         }
-        if (actionsNotHovering < 4)
+
+        if (actionsNotHovering < 1)
         {
-            AddReward(velocityReward * lookAtTargetReward * matchStabilityReward);
-        }*/
-        AddReward(matchSpeedReward * lookAtTargetReward * matchStabilityReward);
+            AddReward(matchSpeedReward * lookAtTargetReward * matchStabilityReward * positionReward);
+        }
 
         // for NEAT only
         /* float meanActions = sumActions / m_DroneControl.actions.Length;
@@ -203,7 +199,10 @@ public class CrawlerInspo : Agent
     {
         var matchStabilityReward = HelperFunctions.Reward(m_DroneControl.droneRigidBody.angularVelocity.magnitude, 3f);
 
-        AddReward(1f * matchStabilityReward);
+        // AddReward(1f * matchStabilityReward);
+        chptIndex = (chptIndex+1) % checkpoints.Length;
+        m_Target.gameObject.GetComponent<TargetController>().MoveTargetToPosition(checkpoints[chptIndex]);
+        AddReward(reward * matchStabilityReward);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -226,29 +225,30 @@ public class CrawlerInspo : Agent
     {
         if (col.transform.CompareTag("Ground"))
         {
-/*            if (startCollision)
-            {
-                Invoke(nameof(NotifyTimeout), 1.0f);
-            }
-            else
-            {*/
-                AddReward(-penalty);
-                EndEpisode();
-            //}
+            AddReward(-penalty);
+            EndEpisode();
         }
     }
+
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject == m_Target.gameObject)
+        if (col.gameObject == m_Target.gameObject && checkpointActive)
         {
             TouchedTarget();
-            m_Target.gameObject.GetComponent<TargetController>().MoveTargetToRandomPosition();
+            checkpointActive = false;
         }
     }
     private void OnTriggerStay(Collider col)
     {
         if (col.gameObject == m_Target.gameObject)
         {
+        }
+    }
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject == m_Target.gameObject)
+        {
+            checkpointActive = true;
         }
     }
 

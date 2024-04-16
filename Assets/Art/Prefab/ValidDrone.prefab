@@ -494,8 +494,8 @@ GameObject:
   - component: {fileID: 2860949121111539620}
   - component: {fileID: 6225428171048127613}
   - component: {fileID: 1200913021587665193}
+  - component: {fileID: 3226845468043818981}
   - component: {fileID: 3893972430618829459}
-  - component: {fileID: 2368115680256956257}
   - component: {fileID: 8325104909461628310}
   m_Layer: 7
   m_Name: ValidDrone
@@ -503,7 +503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2860949121111539620
 Transform:
   m_ObjectHideFlags: 0
@@ -583,6 +583,25 @@ MonoBehaviour:
   isCrashed: 0
   m_ResetFlag: 0
   justEnabled: 0
+--- !u!114 &3226845468043818981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072290967890922067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6334d5107bba3440b1a1ffd739b0c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 4000
+  m_TargetFlyingSpeed: 8.85
+  TargetPrefab: {fileID: 3839136118347789758, guid: 17bb8b9968bb3c84b847c8753e2c33ed, type: 3}
+  body: {fileID: 4457957243316597847}
 --- !u!114 &3893972430618829459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,7 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 13
+    VectorObservationSize: 16
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 4
@@ -614,25 +633,6 @@ MonoBehaviour:
   m_UseChildActuators: 1
   m_DeterministicInference: 0
   m_ObservableAttributeHandling: 0
---- !u!114 &2368115680256956257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072290967890922067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1705f10569df92419c52c7d8048d451, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 750
-  goals:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &8325104909461628310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7138,7 +7138,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2591864625898824423, guid: b4cff768ef417174c9eba3c4163550ed, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2591864627249999504, guid: b4cff768ef417174c9eba3c4163550ed, type: 3}
       propertyPath: m_LocalScale.x
@@ -7218,6 +7218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirectionIndicator
       objectReference: {fileID: 0}
+    - target: {fileID: 4561961988867667266, guid: f8d74b36fe8857740b885e1e888c0a46, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6026464216722085689, guid: f8d74b36fe8857740b885e1e888c0a46, type: 3}
       propertyPath: updatedByAgent
       value: 1
@@ -7276,6 +7280,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6084207059270429360, guid: f8d74b36fe8857740b885e1e888c0a46, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062221030534616196, guid: f8d74b36fe8857740b885e1e888c0a46, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

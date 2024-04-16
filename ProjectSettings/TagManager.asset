@@ -13,6 +13,8 @@ TagManager:
   - Agent
   - Ground
   - DroneAgent
+  - target
+  - Cave
   layers:
   - Default
   - TransparentFX
