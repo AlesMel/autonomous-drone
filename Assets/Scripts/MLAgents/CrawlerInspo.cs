@@ -159,21 +159,6 @@ public class CrawlerInspo : Agent
         {
             AddReward(matchSpeedReward * lookAtTargetReward * matchStabilityReward * positionReward);
         }
-
-        // for NEAT only
-        /* float meanActions = sumActions / m_DroneControl.actions.Length;
-
-         for (int i = 0; i < m_DroneControl.actions.Length; i++)
-         {
-             sumSquaredDiffs += Mathf.Pow(m_DroneControl.actions[i] - meanActions, 2);
-         }
-         float variance = sumSquaredDiffs / m_DroneControl.actions.Length;
-
-         // Apply variance penalty
-         if (variance > 0.1f) // Adjust the threshold as necessary
-         {
-             AddReward(-variance);
-         }*/
     }
 
     public float GetMatchingVelocityReward(Vector3 velocityGoal, Vector3 actualVelocity, float target)

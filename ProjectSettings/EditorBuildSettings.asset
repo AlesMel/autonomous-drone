@@ -6,18 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/RotorTrainingFIeld.unity
+    path: Assets/Scenes/archive/RotorTrainingFIeld.unity
     guid: 1a2acd8a6b5bf2b46aa4326e47d52646
   - enabled: 0
-    path: Assets/Scenes/DroneCagePlayground.unity
+    path: Assets/Scenes/archive/DroneCagePlayground.unity
     guid: aa415554ffbed5846a0b4bc49554f38d
   - enabled: 0
-    path: Assets/Scenes/DroneCagePlayground_Test.unity
+    path: Assets/Scenes/archive/DroneCagePlayground_Test.unity
     guid: 35bea0437f13249499257e234e85bf18
   - enabled: 0
     path: Assets/Scenes/RotorControl.unity
     guid: 1b3f46ebe948cd046a27af49fce362d9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CrawlerInspoScene.unity
     guid: 096c0b724c7d74a48a35cde8f16c80e1
+  - enabled: 1
+    path: Assets/Scenes/ForestScene.unity
+    guid: 5d694aabb0357fc479849a1e229351c9
+  - enabled: 0
+    path: Assets/Scenes/WindScene.unity
+    guid: eb9e5bdb2d08de54f99390c554a42972
   m_configObjects: {}

@@ -9,8 +9,8 @@ num_inputs              = 16
 num_hidden              = 0
 num_outputs             = 4
 
-#initial_connection      = partial_direct 0.5
-initial_connection      = full_direct
+initial_connection      = partial_direct 0.5
+#initial_connection      = full_direct
 feed_forward            = False
 
 compatibility_disjoint_coefficient    = 1.0

@@ -1,0 +1,2 @@
+rychlost fixna = 2
+2000 krokov

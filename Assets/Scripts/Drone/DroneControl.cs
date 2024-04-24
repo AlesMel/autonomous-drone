@@ -16,8 +16,6 @@ public class DroneControl : MonoBehaviour
 
     public float tipOverThreshold = -0.5f;
     
-    private Vector3 defaultPosition;
-
     public Vector3 worldPosition => transform.TransformPoint(centerOfMass);
 
     // Velocities
@@ -61,7 +59,12 @@ public class DroneControl : MonoBehaviour
     public bool justEnabled;
 
     private float m_DefTilt;
+    private float m_DefaultRotation;
     private Vector3 centerOfMass;
+
+    [Header("Default spawn position")]
+    public Vector3 defaultPosition = Vector3.zero;
+    public float defaultYaw = 0.0f;
 
     private void Awake()
     {
@@ -72,8 +75,8 @@ public class DroneControl : MonoBehaviour
     {
         droneRigidBody = GetComponent<Rigidbody>();
 
-        defaultPosition = transform.localPosition;
-        m_DefTilt = transform.localEulerAngles.x;
+        m_DefTilt = 0.0f; // transform.localEulerAngles.x;
+
         foreach (Rotor rotor in rotors)
         {
             rotor.Initialize();
@@ -159,7 +162,6 @@ public class DroneControl : MonoBehaviour
     void FixedUpdate()
     {
         PropellerAnimation();
-        float[] daco = { 0, 0, 0, 0 };
         //ApplyActions(this.actions);
 
         //ApplyActions(daco);
@@ -209,11 +211,11 @@ public class DroneControl : MonoBehaviour
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
 
-        droneRigidBody.rotation = Quaternion.Euler(m_DefTilt, 0, 0);
+        droneRigidBody.rotation = Quaternion.Euler(m_DefTilt, defaultYaw, 0);
         droneRigidBody.position = defaultPosition;
 
         transform.position = defaultPosition;// Vector3.zero;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.rotation = Quaternion.Euler(m_DefTilt, defaultYaw, 0);
     }
 
     public void BaseReset()
