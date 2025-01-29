@@ -1,0 +1,920 @@
+{
+    "ForestControl": {
+        "checkpoints": [
+            {
+                "steps": 94499808,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-94499808.onnx",
+                "reward": 2743.0388997395835,
+                "creation_time": 1714109318.971772,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-94499808.pt"
+                ]
+            },
+            {
+                "steps": 94999443,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-94999443.onnx",
+                "reward": 2703.030283610026,
+                "creation_time": 1714109614.6760175,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-94999443.pt"
+                ]
+            },
+            {
+                "steps": 95499568,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-95499568.onnx",
+                "reward": 2851.629575289213,
+                "creation_time": 1714109913.3256805,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-95499568.pt"
+                ]
+            },
+            {
+                "steps": 95999968,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-95999968.onnx",
+                "reward": 314.76524570214485,
+                "creation_time": 1714110226.307556,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-95999968.pt"
+                ]
+            },
+            {
+                "steps": 96499865,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-96499865.onnx",
+                "reward": 526.0979431427277,
+                "creation_time": 1714110561.5392125,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-96499865.pt"
+                ]
+            },
+            {
+                "steps": 96999725,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-96999725.onnx",
+                "reward": 1538.4733581542969,
+                "creation_time": 1714110880.836893,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-96999725.pt"
+                ]
+            },
+            {
+                "steps": 97499936,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-97499936.onnx",
+                "reward": 1902.387060546875,
+                "creation_time": 1714111183.9207242,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-97499936.pt"
+                ]
+            },
+            {
+                "steps": 97999658,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-97999658.onnx",
+                "reward": 2907.3412000868057,
+                "creation_time": 1714111485.6648138,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-97999658.pt"
+                ]
+            },
+            {
+                "steps": 98499540,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-98499540.onnx",
+                "reward": 3145.031103515625,
+                "creation_time": 1714111785.0191607,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-98499540.pt"
+                ]
+            },
+            {
+                "steps": 98999686,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-98999686.onnx",
+                "reward": 3213.1915283203125,
+                "creation_time": 1714112082.6796346,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-98999686.pt"
+                ]
+            },
+            {
+                "steps": 99499516,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-99499516.onnx",
+                "reward": 1680.775691986084,
+                "creation_time": 1714112379.9110167,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-99499516.pt"
+                ]
+            },
+            {
+                "steps": 99999933,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-99999933.onnx",
+                "reward": 2445.63427734375,
+                "creation_time": 1714112677.672788,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-99999933.pt"
+                ]
+            },
+            {
+                "steps": 100499522,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-100499522.onnx",
+                "reward": null,
+                "creation_time": 1714112975.7773142,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-100499522.pt"
+                ]
+            },
+            {
+                "steps": 100999374,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-100999374.onnx",
+                "reward": 2859.0730195222077,
+                "creation_time": 1714113270.479507,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-100999374.pt"
+                ]
+            },
+            {
+                "steps": 101499836,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-101499836.onnx",
+                "reward": 3139.852773030599,
+                "creation_time": 1714113568.549718,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-101499836.pt"
+                ]
+            },
+            {
+                "steps": 101999684,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-101999684.onnx",
+                "reward": 2740.3608544921876,
+                "creation_time": 1714113864.0420725,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-101999684.pt"
+                ]
+            },
+            {
+                "steps": 102499890,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-102499890.onnx",
+                "reward": 2589.4169560185187,
+                "creation_time": 1714114158.0658674,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-102499890.pt"
+                ]
+            },
+            {
+                "steps": 102999671,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-102999671.onnx",
+                "reward": 2969.667635830966,
+                "creation_time": 1714114458.1220121,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-102999671.pt"
+                ]
+            },
+            {
+                "steps": 103499747,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-103499747.onnx",
+                "reward": 2844.818353132768,
+                "creation_time": 1714114755.2487624,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-103499747.pt"
+                ]
+            },
+            {
+                "steps": 103999523,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-103999523.onnx",
+                "reward": 3111.21047076057,
+                "creation_time": 1714115051.5168853,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-103999523.pt"
+                ]
+            },
+            {
+                "steps": 104499831,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-104499831.onnx",
+                "reward": 3165.1379917689733,
+                "creation_time": 1714115347.3267844,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-104499831.pt"
+                ]
+            },
+            {
+                "steps": 104999923,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-104999923.onnx",
+                "reward": 2878.251741536458,
+                "creation_time": 1714115646.2863667,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-104999923.pt"
+                ]
+            },
+            {
+                "steps": 105499964,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-105499964.onnx",
+                "reward": 3058.3320534446025,
+                "creation_time": 1714115943.7902427,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-105499964.pt"
+                ]
+            },
+            {
+                "steps": 105999981,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-105999981.onnx",
+                "reward": 3056.9492431640624,
+                "creation_time": 1714116238.3731747,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-105999981.pt"
+                ]
+            },
+            {
+                "steps": 106499914,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-106499914.onnx",
+                "reward": 3155.5074157714844,
+                "creation_time": 1714116536.1739197,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-106499914.pt"
+                ]
+            },
+            {
+                "steps": 106999853,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-106999853.onnx",
+                "reward": 3224.4638671875,
+                "creation_time": 1714116834.3005204,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-106999853.pt"
+                ]
+            },
+            {
+                "steps": 107499593,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-107499593.onnx",
+                "reward": null,
+                "creation_time": 1714117132.4585028,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-107499593.pt"
+                ]
+            },
+            {
+                "steps": 107999438,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-107999438.onnx",
+                "reward": null,
+                "creation_time": 1714117428.279063,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-107999438.pt"
+                ]
+            },
+            {
+                "steps": 108499425,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-108499425.onnx",
+                "reward": 3198.5701953125,
+                "creation_time": 1714117722.2635076,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-108499425.pt"
+                ]
+            },
+            {
+                "steps": 108999601,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-108999601.onnx",
+                "reward": 3094.2388720703125,
+                "creation_time": 1714118018.7797837,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-108999601.pt"
+                ]
+            },
+            {
+                "steps": 109499856,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-109499856.onnx",
+                "reward": 3135.3895556640623,
+                "creation_time": 1714118314.277225,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-109499856.pt"
+                ]
+            },
+            {
+                "steps": 109999642,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-109999642.onnx",
+                "reward": 2949.8923266601564,
+                "creation_time": 1714118612.5698457,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-109999642.pt"
+                ]
+            },
+            {
+                "steps": 110499745,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-110499745.onnx",
+                "reward": 2985.880401611328,
+                "creation_time": 1714118909.2375185,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-110499745.pt"
+                ]
+            },
+            {
+                "steps": 110999698,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-110999698.onnx",
+                "reward": 2924.069176413796,
+                "creation_time": 1714119206.5020332,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-110999698.pt"
+                ]
+            },
+            {
+                "steps": 111499540,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-111499540.onnx",
+                "reward": 3115.2818282277963,
+                "creation_time": 1714119505.1684802,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-111499540.pt"
+                ]
+            },
+            {
+                "steps": 111999398,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-111999398.onnx",
+                "reward": 3230.054538302951,
+                "creation_time": 1714119799.9470425,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-111999398.pt"
+                ]
+            },
+            {
+                "steps": 112499509,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-112499509.onnx",
+                "reward": 3051.1324935913085,
+                "creation_time": 1714120101.2166493,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-112499509.pt"
+                ]
+            },
+            {
+                "steps": 112999438,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-112999438.onnx",
+                "reward": 3256.86240234375,
+                "creation_time": 1714120398.3738217,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-112999438.pt"
+                ]
+            },
+            {
+                "steps": 113499888,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-113499888.onnx",
+                "reward": 2964.5859858194985,
+                "creation_time": 1714120694.2524972,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-113499888.pt"
+                ]
+            },
+            {
+                "steps": 113999872,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-113999872.onnx",
+                "reward": 3183.575732421875,
+                "creation_time": 1714120993.7855244,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-113999872.pt"
+                ]
+            },
+            {
+                "steps": 114499563,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-114499563.onnx",
+                "reward": 2819.4008585611978,
+                "creation_time": 1714121288.550137,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-114499563.pt"
+                ]
+            },
+            {
+                "steps": 114999473,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-114999473.onnx",
+                "reward": 3229.8294982910156,
+                "creation_time": 1714121584.9526663,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-114999473.pt"
+                ]
+            },
+            {
+                "steps": 115499539,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-115499539.onnx",
+                "reward": 2574.9094395107695,
+                "creation_time": 1714121885.1133602,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-115499539.pt"
+                ]
+            },
+            {
+                "steps": 115999909,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-115999909.onnx",
+                "reward": 3078.194392277644,
+                "creation_time": 1714122184.6464295,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-115999909.pt"
+                ]
+            },
+            {
+                "steps": 116499790,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-116499790.onnx",
+                "reward": 3252.0713704427085,
+                "creation_time": 1714122482.1759267,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-116499790.pt"
+                ]
+            },
+            {
+                "steps": 116999394,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-116999394.onnx",
+                "reward": 3234.236029730903,
+                "creation_time": 1714122781.8429992,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-116999394.pt"
+                ]
+            },
+            {
+                "steps": 117499602,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-117499602.onnx",
+                "reward": 3043.8718872070312,
+                "creation_time": 1714123079.8819003,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-117499602.pt"
+                ]
+            },
+            {
+                "steps": 117999750,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-117999750.onnx",
+                "reward": 2461.4688546316966,
+                "creation_time": 1714123378.895673,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-117999750.pt"
+                ]
+            },
+            {
+                "steps": 118499541,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-118499541.onnx",
+                "reward": 3048.57578125,
+                "creation_time": 1714123678.8942442,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-118499541.pt"
+                ]
+            },
+            {
+                "steps": 118999670,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-118999670.onnx",
+                "reward": 3257.22275390625,
+                "creation_time": 1714123976.4721904,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-118999670.pt"
+                ]
+            },
+            {
+                "steps": 119499388,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-119499388.onnx",
+                "reward": 3230.8441772460938,
+                "creation_time": 1714124274.8493748,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-119499388.pt"
+                ]
+            },
+            {
+                "steps": 119999214,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-119999214.onnx",
+                "reward": 3277.641357421875,
+                "creation_time": 1714124572.759539,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-119999214.pt"
+                ]
+            },
+            {
+                "steps": 120499819,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-120499819.onnx",
+                "reward": 863.3513826069079,
+                "creation_time": 1714124873.3534157,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-120499819.pt"
+                ]
+            },
+            {
+                "steps": 120999778,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-120999778.onnx",
+                "reward": 2656.7968241373696,
+                "creation_time": 1714125187.800157,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-120999778.pt"
+                ]
+            },
+            {
+                "steps": 121499368,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-121499368.onnx",
+                "reward": 2807.1413072858536,
+                "creation_time": 1714125488.2935843,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-121499368.pt"
+                ]
+            },
+            {
+                "steps": 121999342,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-121999342.onnx",
+                "reward": 3221.368896484375,
+                "creation_time": 1714125790.8171468,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-121999342.pt"
+                ]
+            },
+            {
+                "steps": 122499583,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-122499583.onnx",
+                "reward": 3057.4511108398438,
+                "creation_time": 1714126087.1872587,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-122499583.pt"
+                ]
+            },
+            {
+                "steps": 122999345,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-122999345.onnx",
+                "reward": 3149.8679480919473,
+                "creation_time": 1714126387.7431493,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-122999345.pt"
+                ]
+            },
+            {
+                "steps": 123499528,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-123499528.onnx",
+                "reward": 2856.0338315610534,
+                "creation_time": 1714126685.7612329,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-123499528.pt"
+                ]
+            },
+            {
+                "steps": 123999382,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-123999382.onnx",
+                "reward": 3105.915576171875,
+                "creation_time": 1714126982.0022418,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-123999382.pt"
+                ]
+            },
+            {
+                "steps": 124499997,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-124499997.onnx",
+                "reward": 2399.100014064623,
+                "creation_time": 1714127279.8583503,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-124499997.pt"
+                ]
+            },
+            {
+                "steps": 124999713,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-124999713.onnx",
+                "reward": 3100.528510199653,
+                "creation_time": 1714127581.7190952,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-124999713.pt"
+                ]
+            },
+            {
+                "steps": 125499760,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-125499760.onnx",
+                "reward": 2755.2151525160843,
+                "creation_time": 1714127878.021426,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-125499760.pt"
+                ]
+            },
+            {
+                "steps": 125999867,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-125999867.onnx",
+                "reward": 2848.2516043526784,
+                "creation_time": 1714128175.637023,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-125999867.pt"
+                ]
+            },
+            {
+                "steps": 126499569,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-126499569.onnx",
+                "reward": 3152.00859375,
+                "creation_time": 1714128473.1073158,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-126499569.pt"
+                ]
+            },
+            {
+                "steps": 126999482,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-126999482.onnx",
+                "reward": 2459.23488408869,
+                "creation_time": 1714128771.7992811,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-126999482.pt"
+                ]
+            },
+            {
+                "steps": 127499491,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-127499491.onnx",
+                "reward": 2916.818122016059,
+                "creation_time": 1714129069.5595875,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-127499491.pt"
+                ]
+            },
+            {
+                "steps": 127999958,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-127999958.onnx",
+                "reward": 3204.579803466797,
+                "creation_time": 1714129366.3031857,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-127999958.pt"
+                ]
+            },
+            {
+                "steps": 128499814,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-128499814.onnx",
+                "reward": 2946.9593811035156,
+                "creation_time": 1714129664.485712,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-128499814.pt"
+                ]
+            },
+            {
+                "steps": 128999223,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-128999223.onnx",
+                "reward": 2304.2643862637606,
+                "creation_time": 1714129964.085231,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-128999223.pt"
+                ]
+            },
+            {
+                "steps": 129499225,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-129499225.onnx",
+                "reward": 2647.7298177083335,
+                "creation_time": 1714130266.3537776,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-129499225.pt"
+                ]
+            },
+            {
+                "steps": 129999218,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-129999218.onnx",
+                "reward": 2860.980482313368,
+                "creation_time": 1714130566.530389,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-129999218.pt"
+                ]
+            },
+            {
+                "steps": 130499882,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-130499882.onnx",
+                "reward": 3028.3506103515624,
+                "creation_time": 1714130865.924809,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-130499882.pt"
+                ]
+            },
+            {
+                "steps": 130999334,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-130999334.onnx",
+                "reward": 3176.3739420572915,
+                "creation_time": 1714131162.5596907,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-130999334.pt"
+                ]
+            },
+            {
+                "steps": 131499305,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-131499305.onnx",
+                "reward": 2585.1537231445313,
+                "creation_time": 1714131465.4170861,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-131499305.pt"
+                ]
+            },
+            {
+                "steps": 131999513,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-131999513.onnx",
+                "reward": 3178.7046983506943,
+                "creation_time": 1714131765.810845,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-131999513.pt"
+                ]
+            },
+            {
+                "steps": 132499544,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-132499544.onnx",
+                "reward": 3225.6614685058594,
+                "creation_time": 1714132064.4091396,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-132499544.pt"
+                ]
+            },
+            {
+                "steps": 132999980,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-132999980.onnx",
+                "reward": 3213.72197265625,
+                "creation_time": 1714132365.0295596,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-132999980.pt"
+                ]
+            },
+            {
+                "steps": 133499422,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-133499422.onnx",
+                "reward": 2683.004852294922,
+                "creation_time": 1714132664.8530853,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-133499422.pt"
+                ]
+            },
+            {
+                "steps": 133999681,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-133999681.onnx",
+                "reward": 2209.3786010742188,
+                "creation_time": 1714132965.8715603,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-133999681.pt"
+                ]
+            },
+            {
+                "steps": 134499518,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-134499518.onnx",
+                "reward": 3225.3291015625,
+                "creation_time": 1714133265.1104493,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-134499518.pt"
+                ]
+            },
+            {
+                "steps": 134999776,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-134999776.onnx",
+                "reward": null,
+                "creation_time": 1714133563.9505923,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-134999776.pt"
+                ]
+            },
+            {
+                "steps": 135499844,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-135499844.onnx",
+                "reward": 3216.109619140625,
+                "creation_time": 1714133862.1485806,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-135499844.pt"
+                ]
+            },
+            {
+                "steps": 135999669,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-135999669.onnx",
+                "reward": 3208.8516796875,
+                "creation_time": 1714134155.159489,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-135999669.pt"
+                ]
+            },
+            {
+                "steps": 136499205,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-136499205.onnx",
+                "reward": null,
+                "creation_time": 1714134458.76392,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-136499205.pt"
+                ]
+            },
+            {
+                "steps": 136999890,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-136999890.onnx",
+                "reward": null,
+                "creation_time": 1714134754.8973737,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-136999890.pt"
+                ]
+            },
+            {
+                "steps": 137499651,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-137499651.onnx",
+                "reward": 3043.4676416015627,
+                "creation_time": 1714135052.0936987,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-137499651.pt"
+                ]
+            },
+            {
+                "steps": 137999237,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-137999237.onnx",
+                "reward": 3183.146378226902,
+                "creation_time": 1714135351.0710535,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-137999237.pt"
+                ]
+            },
+            {
+                "steps": 138499292,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-138499292.onnx",
+                "reward": 3175.887981912364,
+                "creation_time": 1714135649.2748518,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-138499292.pt"
+                ]
+            },
+            {
+                "steps": 138999779,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-138999779.onnx",
+                "reward": 3046.754490064538,
+                "creation_time": 1714135946.6753435,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-138999779.pt"
+                ]
+            },
+            {
+                "steps": 139499568,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-139499568.onnx",
+                "reward": 2941.5557029030538,
+                "creation_time": 1714136245.1774976,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-139499568.pt"
+                ]
+            },
+            {
+                "steps": 139999750,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-139999750.onnx",
+                "reward": 2951.3397327769885,
+                "creation_time": 1714136545.5026946,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-139999750.pt"
+                ]
+            },
+            {
+                "steps": 140499259,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-140499259.onnx",
+                "reward": 3313.0091857910156,
+                "creation_time": 1714136843.1500547,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-140499259.pt"
+                ]
+            },
+            {
+                "steps": 140999262,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-140999262.onnx",
+                "reward": 3014.272636413574,
+                "creation_time": 1714137141.5568457,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-140999262.pt"
+                ]
+            },
+            {
+                "steps": 141499213,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-141499213.onnx",
+                "reward": 3283.6665790264424,
+                "creation_time": 1714137440.666425,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-141499213.pt"
+                ]
+            },
+            {
+                "steps": 141999675,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-141999675.onnx",
+                "reward": 3037.132622612847,
+                "creation_time": 1714137742.8037817,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-141999675.pt"
+                ]
+            },
+            {
+                "steps": 142499775,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-142499775.onnx",
+                "reward": 2982.451863606771,
+                "creation_time": 1714138041.5071826,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-142499775.pt"
+                ]
+            },
+            {
+                "steps": 142999236,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-142999236.onnx",
+                "reward": 3287.65673828125,
+                "creation_time": 1714138340.960087,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-142999236.pt"
+                ]
+            },
+            {
+                "steps": 143499681,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-143499681.onnx",
+                "reward": 2850.4596557617188,
+                "creation_time": 1714138640.858831,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-143499681.pt"
+                ]
+            },
+            {
+                "steps": 143994393,
+                "file_path": "results/forest-ppo/ForestControl/ForestControl-143994393.onnx",
+                "reward": 3163.878943810096,
+                "creation_time": 1714138933.8523319,
+                "auxillary_file_paths": [
+                    "results/forest-ppo/ForestControl/ForestControl-143994393.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 143994393,
+            "file_path": "results/forest-ppo/ForestControl.onnx",
+            "reward": 3163.878943810096,
+            "creation_time": 1714138933.8523319,
+            "auxillary_file_paths": [
+                "results/forest-ppo/ForestControl/ForestControl-143994393.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.2.0+cu121"
+    }
+}

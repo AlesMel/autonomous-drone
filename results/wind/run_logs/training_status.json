@@ -1,0 +1,29 @@
+{
+    "WindControl": {
+        "checkpoints": [
+            {
+                "steps": 491832,
+                "file_path": "results\\wind\\WindControl\\WindControl-491832.onnx",
+                "reward": 0.04393302695066148,
+                "creation_time": 1713685338.806109,
+                "auxillary_file_paths": [
+                    "results\\wind\\WindControl\\WindControl-491832.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 491832,
+            "file_path": "results\\wind\\WindControl.onnx",
+            "reward": 0.04393302695066148,
+            "creation_time": 1713685338.806109,
+            "auxillary_file_paths": [
+                "results\\wind\\WindControl\\WindControl-491832.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

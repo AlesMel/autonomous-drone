@@ -43,10 +43,20 @@ public class CrawlerInspo : Agent
 
     private float reward => 5.0f;
     private float penalty => 1.0f; //+ (MaxStep-StepCount);
+
     private Vector3 firstCheckpointPosition = new Vector3(5f, 3f, 5f);
     private Vector3 secondCheckpointPosition = new Vector3(-3f, 4f, 2f);
     private Vector3 thirdCheckpointPosition = new Vector3(-2f, 2f, -2f);
+
+    private Vector3 firstTestCheckpointPosition = new Vector3(4f, 3f, 4f);
+    private Vector3 secondTestCheckpointPosition = new Vector3(-2f, 4f, 3f);
+    private Vector3 thirdTestCheckpointPosition = new Vector3(-3f, 2f, -2f);
+    private Vector3 fourthTestCheckpointPosition = new Vector3(4f, 5f, -3f);
+
     private Vector3[] checkpoints;
+    private Vector3[] trainingCheckpoints;
+    private Vector3[] testingCheckpoints;
+
     private int chptIndex = 0;
 
     private new void Awake()
@@ -55,7 +65,9 @@ public class CrawlerInspo : Agent
         m_DirectionIndicator = GetComponentInChildren<DirectionIndicator>();
         m_DroneControl = GetComponent<DroneControl>();
         bounds = new Bounds(m_DroneControl.transform.position, Vector3.one * maxCheckpointDistance);
-        checkpoints = new Vector3[] { firstCheckpointPosition, secondCheckpointPosition, thirdCheckpointPosition };
+        trainingCheckpoints = new Vector3[] { firstCheckpointPosition, secondCheckpointPosition, thirdCheckpointPosition };
+        testingCheckpoints = new Vector3[] { firstTestCheckpointPosition, secondTestCheckpointPosition, thirdTestCheckpointPosition, fourthTestCheckpointPosition };
+        checkpoints = trainingCheckpoints;
     }
 
     public override void Initialize()
@@ -78,6 +90,7 @@ public class CrawlerInspo : Agent
         base.OnEnable();
         // SpawnTarget(TargetPrefab, transform.position);
     }
+
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -143,13 +156,13 @@ public class CrawlerInspo : Agent
         var matchStabilityReward = HelperFunctions.Reward(m_DroneControl.droneRigidBody.angularVelocity.magnitude, 3f);
         var velocityReward = HelperFunctions.Reward(m_VelocityError, 10.0f);
         var lookAtTargetReward = (Vector3.Dot(cubeForward, body.forward) + 1) * .5F;
-        var positionReward = HelperFunctions.Reward(Vector3.Distance(m_Target.transform.position, m_OrientationCube.transform.position), 1.0f);
+        var positionReward = Mathf.Min(0.001f, HelperFunctions.Reward(Vector3.Distance(m_Target.transform.position, m_OrientationCube.transform.position), 0.5f));
         int actionsNotHovering = 0;
 
         for (int i = 0; i < m_DroneControl.actions.Length; i++)
         {
             // Only add reward if action[i] is not equal to 0.5
-            if (m_DroneControl.actions[i] == 0.5f)
+            if (m_DroneControl.actions[i] == 0.5f) 
             {
                 actionsNotHovering++;
             }
@@ -157,7 +170,7 @@ public class CrawlerInspo : Agent
 
         if (actionsNotHovering < 1)
         {
-            AddReward(matchSpeedReward * lookAtTargetReward * matchStabilityReward * positionReward);
+            AddReward(matchSpeedReward * lookAtTargetReward * matchStabilityReward * positionReward); // is this for neat? I forgot :D
         }
     }
 
@@ -185,6 +198,12 @@ public class CrawlerInspo : Agent
         var matchStabilityReward = HelperFunctions.Reward(m_DroneControl.droneRigidBody.angularVelocity.magnitude, 3f);
 
         // AddReward(1f * matchStabilityReward);
+        /*  if (chptIndex + 1 == checkpoints.Length)
+        {
+            AddReward(reward * matchStabilityReward);
+            EndEpisode();
+        }*/
+
         chptIndex = (chptIndex+1) % checkpoints.Length;
         m_Target.gameObject.GetComponent<TargetController>().MoveTargetToPosition(checkpoints[chptIndex]);
         AddReward(reward * matchStabilityReward);

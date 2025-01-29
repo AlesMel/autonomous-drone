@@ -12,7 +12,6 @@ public class WindAgent : Agent
     DroneControl m_DroneControl;
 
     private float penalty = 0.1f;
-    private float stepPenalty => MaxStep - StepCount;
 
     private float reward = 1f;
     [SerializeField]
@@ -20,7 +19,6 @@ public class WindAgent : Agent
 
     private Bounds bounds;
     private float maxDistance = 10.0f;
-    private bool isInTarget = false;
 
     private new void Awake()
     {
@@ -47,7 +45,6 @@ public class WindAgent : Agent
         base.OnEpisodeBegin();
         CancelInvoke();
         m_DroneControl.BaseReset();
-        isInTarget = true;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -104,11 +101,6 @@ public class WindAgent : Agent
         {
             AddReward(matchStabilityReward * positionReward);
         }
-
-  /*      if (!isInTarget)
-        {
-            AddReward(-penalty);
-        }*/
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -133,20 +125,9 @@ public class WindAgent : Agent
 
         if (other.CompareTag("target") && IsNotHovering())
         {
-            isInTarget = true;
-            Debug.Log(m_DroneControl.localVelocity);
-
             var matchStabilityReward = HelperFunctions.Reward(m_DroneControl.droneRigidBody.angularVelocity.magnitude, 5f);
             var bouncingVelocity = HelperFunctions.Reward(Mathf.Abs(m_DroneControl.localVelocity.y), 10f); // bouncing on y axis
             AddReward(reward * matchStabilityReward * bouncingVelocity);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("target"))
-        {
-            isInTarget = false;
         }
     }
 

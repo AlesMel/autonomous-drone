@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1476197556000984634
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_Name
+      value: CaveDrone
+      objectReference: {fileID: 0}
+    - target: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -29.357
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.765
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.081
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.75739413
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.65295804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 81.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860949121111539620, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226845468043818981, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      propertyPath: MaxStep
+      value: 1000
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3226845468043818981, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1726090330319355888}
+    - targetCorrespondingSourceObject: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5892860912936212404}
+    - targetCorrespondingSourceObject: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7669900955230523831}
+    - targetCorrespondingSourceObject: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8923867147175815112}
+    - targetCorrespondingSourceObject: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3181809963418911905}
+  m_SourcePrefab: {fileID: 100100000, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+--- !u!1 &1917701313412629609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1072290967890922067, guid: 11ef7836f1d3f2640b0729cccbc23c02, type: 3}
+  m_PrefabInstance: {fileID: 1476197556000984634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1726090330319355888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917701313412629609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543b5e4a85c9fa74caedb11f2497eff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  m_TargetFlyingSpeed: 15
+  m_Targets: []
+  body: {fileID: 0}
+--- !u!114 &5892860912936212404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917701313412629609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: Sensorxz
+  m_DetectableTags:
+  - Environment
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 59
+  m_SphereCastRadius: 0.1
+  m_RayLength: 8
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294966280
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 0
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0.15
+  m_EndVerticalOffset: 0
+--- !u!114 &7669900955230523831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917701313412629609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: SensorUp
+  m_DetectableTags:
+  - Environment
+  m_RaysPerDirection: 2
+  m_MaxRayDegrees: 117.5
+  m_SphereCastRadius: 0.1
+  m_RayLength: 2
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294966280
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 0
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0.15
+  m_EndVerticalOffset: 1.5
+--- !u!114 &8923867147175815112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917701313412629609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: SensorDown
+  m_DetectableTags:
+  - Environment
+  m_RaysPerDirection: 2
+  m_MaxRayDegrees: 117.5
+  m_SphereCastRadius: 0.1
+  m_RayLength: 1
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294966280
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 0
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0.15
+  m_EndVerticalOffset: -1.5
+--- !u!114 &3181809963418911905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917701313412629609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: SensorBack
+  m_DetectableTags:
+  - Environment
+  m_RaysPerDirection: 1
+  m_MaxRayDegrees: 180
+  m_SphereCastRadius: 0.1
+  m_RayLength: 1
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294966280
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 0
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0.15
+  m_EndVerticalOffset: 0.34
