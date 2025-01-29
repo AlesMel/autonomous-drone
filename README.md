@@ -1,4 +1,4 @@
-# README - Autonomous Drone Training using NEAT and PPO
+# Autonomous Drone Training using NEAT and PPO
 
 ## Requirements
 
