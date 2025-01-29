@@ -1,0 +1,83 @@
+{
+    "DroneControl": {
+        "checkpoints": [
+            {
+                "steps": 499968,
+                "file_path": "results\\3\\DroneControl\\DroneControl-499968.onnx",
+                "reward": -0.9959117018259489,
+                "creation_time": 1712916525.0145693,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-499968.pt"
+                ]
+            },
+            {
+                "steps": 999978,
+                "file_path": "results\\3\\DroneControl\\DroneControl-999978.onnx",
+                "reward": -0.29392088007091755,
+                "creation_time": 1712917017.21845,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-999978.pt"
+                ]
+            },
+            {
+                "steps": 1499846,
+                "file_path": "results\\3\\DroneControl\\DroneControl-1499846.onnx",
+                "reward": 5.702518189606601,
+                "creation_time": 1712917464.2343428,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-1499846.pt"
+                ]
+            },
+            {
+                "steps": 1999394,
+                "file_path": "results\\3\\DroneControl\\DroneControl-1999394.onnx",
+                "reward": 210.86622261795503,
+                "creation_time": 1712917905.200695,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-1999394.pt"
+                ]
+            },
+            {
+                "steps": 2499223,
+                "file_path": "results\\3\\DroneControl\\DroneControl-2499223.onnx",
+                "reward": 3167.1368519176135,
+                "creation_time": 1712918328.0354862,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-2499223.pt"
+                ]
+            },
+            {
+                "steps": 2999223,
+                "file_path": "results\\3\\DroneControl\\DroneControl-2999223.onnx",
+                "reward": 15899.391474184782,
+                "creation_time": 1712918762.1402981,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-2999223.pt"
+                ]
+            },
+            {
+                "steps": 3170423,
+                "file_path": "results\\3\\DroneControl\\DroneControl-3170423.onnx",
+                "reward": 18598.0,
+                "creation_time": 1712918931.8649526,
+                "auxillary_file_paths": [
+                    "results\\3\\DroneControl\\DroneControl-3170423.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3170423,
+            "file_path": "results\\3\\DroneControl.onnx",
+            "reward": 18598.0,
+            "creation_time": 1712918931.8649526,
+            "auxillary_file_paths": [
+                "results\\3\\DroneControl\\DroneControl-3170423.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

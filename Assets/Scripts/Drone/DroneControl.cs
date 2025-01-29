@@ -58,13 +58,12 @@ public class DroneControl : MonoBehaviour
     public bool m_ResetFlag;
     public bool justEnabled;
 
-    private float m_DefTilt;
-    private float m_DefaultRotation;
     private Vector3 centerOfMass;
 
     [Header("Default spawn position")]
     public Vector3 defaultPosition = Vector3.zero;
     public float defaultYaw = 0.0f;
+    private float defaultRoll = 0.0f;
 
     private void Awake()
     {
@@ -75,7 +74,7 @@ public class DroneControl : MonoBehaviour
     {
         droneRigidBody = GetComponent<Rigidbody>();
 
-        m_DefTilt = 0.0f; // transform.localEulerAngles.x;
+        defaultRoll = 0.0f; // transform.localEulerAngles.x;
 
         foreach (Rotor rotor in rotors)
         {
@@ -83,8 +82,7 @@ public class DroneControl : MonoBehaviour
             centerOfMass += transform.InverseTransformPoint(rotor.worldPosition);
         }
 
-
-        centerOfMass *= 0.25f;
+        centerOfMass *= 0.25f; // shift center of mass
         droneRigidBody.centerOfMass = centerOfMass;
         Academy.Instance.OnEnvironmentReset += EnvironmentReset;
     }
@@ -121,7 +119,6 @@ public class DroneControl : MonoBehaviour
             return;
         }
 
-        // For now, we'll use a simplified setup, all rotors are aligned with drone's y-axis.
         Vector3 thrustAxis = transform.up; // world
         Vector3 torqueAxis = Vector3.down; // local
 
@@ -211,11 +208,11 @@ public class DroneControl : MonoBehaviour
         droneRigidBody.velocity = Vector3.zero;
         droneRigidBody.angularVelocity = Vector3.zero;
 
-        droneRigidBody.rotation = Quaternion.Euler(m_DefTilt, defaultYaw, 0);
+        droneRigidBody.rotation = Quaternion.Euler(defaultRoll, defaultYaw, 0);
         droneRigidBody.position = defaultPosition;
 
         transform.position = defaultPosition;// Vector3.zero;
-        transform.rotation = Quaternion.Euler(m_DefTilt, defaultYaw, 0);
+        transform.rotation = Quaternion.Euler(defaultRoll, defaultYaw, 0);
     }
 
     public void BaseReset()

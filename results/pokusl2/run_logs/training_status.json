@@ -1,0 +1,29 @@
+{
+    "DroneControl": {
+        "checkpoints": [
+            {
+                "steps": 48670,
+                "file_path": "results\\pokusl2\\DroneControl\\DroneControl-48670.onnx",
+                "reward": -0.9999980522122031,
+                "creation_time": 1713394966.5099437,
+                "auxillary_file_paths": [
+                    "results\\pokusl2\\DroneControl\\DroneControl-48670.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 48670,
+            "file_path": "results\\pokusl2\\DroneControl.onnx",
+            "reward": -0.9999980522122031,
+            "creation_time": 1713394966.5099437,
+            "auxillary_file_paths": [
+                "results\\pokusl2\\DroneControl\\DroneControl-48670.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

@@ -1,0 +1,920 @@
+{
+    "DroneControl": {
+        "checkpoints": [
+            {
+                "steps": 38999778,
+                "file_path": "results/2/DroneControl/DroneControl-38999778.onnx",
+                "reward": 600.0171264648437,
+                "creation_time": 1713225546.5202367,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-38999778.pt"
+                ]
+            },
+            {
+                "steps": 39499845,
+                "file_path": "results/2/DroneControl/DroneControl-39499845.onnx",
+                "reward": 601.213020324707,
+                "creation_time": 1713225752.4320447,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-39499845.pt"
+                ]
+            },
+            {
+                "steps": 39999883,
+                "file_path": "results/2/DroneControl/DroneControl-39999883.onnx",
+                "reward": 706.3860244750977,
+                "creation_time": 1713225955.1810653,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-39999883.pt"
+                ]
+            },
+            {
+                "steps": 40499697,
+                "file_path": "results/2/DroneControl/DroneControl-40499697.onnx",
+                "reward": 630.6212569527004,
+                "creation_time": 1713226148.8931603,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-40499697.pt"
+                ]
+            },
+            {
+                "steps": 40999677,
+                "file_path": "results/2/DroneControl/DroneControl-40999677.onnx",
+                "reward": 652.8335894960346,
+                "creation_time": 1713226351.378591,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-40999677.pt"
+                ]
+            },
+            {
+                "steps": 41499677,
+                "file_path": "results/2/DroneControl/DroneControl-41499677.onnx",
+                "reward": 652.6420404343378,
+                "creation_time": 1713226547.5110304,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-41499677.pt"
+                ]
+            },
+            {
+                "steps": 41999837,
+                "file_path": "results/2/DroneControl/DroneControl-41999837.onnx",
+                "reward": 453.84139578683033,
+                "creation_time": 1713226745.3323393,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-41999837.pt"
+                ]
+            },
+            {
+                "steps": 42499627,
+                "file_path": "results/2/DroneControl/DroneControl-42499627.onnx",
+                "reward": 594.6837209065756,
+                "creation_time": 1713226943.7992609,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-42499627.pt"
+                ]
+            },
+            {
+                "steps": 42999627,
+                "file_path": "results/2/DroneControl/DroneControl-42999627.onnx",
+                "reward": 612.9887468891759,
+                "creation_time": 1713227141.5021858,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-42999627.pt"
+                ]
+            },
+            {
+                "steps": 43499938,
+                "file_path": "results/2/DroneControl/DroneControl-43499938.onnx",
+                "reward": 586.4615097045898,
+                "creation_time": 1713227342.5105114,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-43499938.pt"
+                ]
+            },
+            {
+                "steps": 43999880,
+                "file_path": "results/2/DroneControl/DroneControl-43999880.onnx",
+                "reward": 565.7755279541016,
+                "creation_time": 1713227540.311191,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-43999880.pt"
+                ]
+            },
+            {
+                "steps": 44499880,
+                "file_path": "results/2/DroneControl/DroneControl-44499880.onnx",
+                "reward": 613.8563627160114,
+                "creation_time": 1713227737.1687117,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-44499880.pt"
+                ]
+            },
+            {
+                "steps": 44999880,
+                "file_path": "results/2/DroneControl/DroneControl-44999880.onnx",
+                "reward": 639.4814310073853,
+                "creation_time": 1713227938.8087287,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-44999880.pt"
+                ]
+            },
+            {
+                "steps": 45499811,
+                "file_path": "results/2/DroneControl/DroneControl-45499811.onnx",
+                "reward": 560.252685546875,
+                "creation_time": 1713228138.5386522,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-45499811.pt"
+                ]
+            },
+            {
+                "steps": 45999811,
+                "file_path": "results/2/DroneControl/DroneControl-45999811.onnx",
+                "reward": 629.5599975585938,
+                "creation_time": 1713228338.79623,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-45999811.pt"
+                ]
+            },
+            {
+                "steps": 46499953,
+                "file_path": "results/2/DroneControl/DroneControl-46499953.onnx",
+                "reward": 583.8725440615699,
+                "creation_time": 1713228537.3503618,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-46499953.pt"
+                ]
+            },
+            {
+                "steps": 46999953,
+                "file_path": "results/2/DroneControl/DroneControl-46999953.onnx",
+                "reward": 744.8625967843192,
+                "creation_time": 1713228730.8873029,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-46999953.pt"
+                ]
+            },
+            {
+                "steps": 47499953,
+                "file_path": "results/2/DroneControl/DroneControl-47499953.onnx",
+                "reward": 593.3048640659878,
+                "creation_time": 1713228934.1603866,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-47499953.pt"
+                ]
+            },
+            {
+                "steps": 47999869,
+                "file_path": "results/2/DroneControl/DroneControl-47999869.onnx",
+                "reward": null,
+                "creation_time": 1713229133.4773748,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-47999869.pt"
+                ]
+            },
+            {
+                "steps": 48499869,
+                "file_path": "results/2/DroneControl/DroneControl-48499869.onnx",
+                "reward": 645.4171941656815,
+                "creation_time": 1713229328.9947782,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-48499869.pt"
+                ]
+            },
+            {
+                "steps": 48999869,
+                "file_path": "results/2/DroneControl/DroneControl-48999869.onnx",
+                "reward": 657.3474909464518,
+                "creation_time": 1713229529.3202524,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-48999869.pt"
+                ]
+            },
+            {
+                "steps": 49499869,
+                "file_path": "results/2/DroneControl/DroneControl-49499869.onnx",
+                "reward": 594.4989547114218,
+                "creation_time": 1713229725.9532244,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-49499869.pt"
+                ]
+            },
+            {
+                "steps": 49999869,
+                "file_path": "results/2/DroneControl/DroneControl-49999869.onnx",
+                "reward": 547.1028234343976,
+                "creation_time": 1713229927.06318,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-49999869.pt"
+                ]
+            },
+            {
+                "steps": 50499701,
+                "file_path": "results/2/DroneControl/DroneControl-50499701.onnx",
+                "reward": null,
+                "creation_time": 1713230127.4524012,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-50499701.pt"
+                ]
+            },
+            {
+                "steps": 50999614,
+                "file_path": "results/2/DroneControl/DroneControl-50999614.onnx",
+                "reward": 648.2229975650185,
+                "creation_time": 1713230322.4162977,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-50999614.pt"
+                ]
+            },
+            {
+                "steps": 51499614,
+                "file_path": "results/2/DroneControl/DroneControl-51499614.onnx",
+                "reward": 622.5918223063151,
+                "creation_time": 1713230526.455467,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-51499614.pt"
+                ]
+            },
+            {
+                "steps": 51999614,
+                "file_path": "results/2/DroneControl/DroneControl-51999614.onnx",
+                "reward": 673.2315734863281,
+                "creation_time": 1713230729.4066236,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-51999614.pt"
+                ]
+            },
+            {
+                "steps": 52499614,
+                "file_path": "results/2/DroneControl/DroneControl-52499614.onnx",
+                "reward": 595.3014049530029,
+                "creation_time": 1713230929.8936489,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-52499614.pt"
+                ]
+            },
+            {
+                "steps": 52999846,
+                "file_path": "results/2/DroneControl/DroneControl-52999846.onnx",
+                "reward": 666.9356968470983,
+                "creation_time": 1713231133.0460675,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-52999846.pt"
+                ]
+            },
+            {
+                "steps": 53499846,
+                "file_path": "results/2/DroneControl/DroneControl-53499846.onnx",
+                "reward": 643.9663914271763,
+                "creation_time": 1713231332.645671,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-53499846.pt"
+                ]
+            },
+            {
+                "steps": 53999846,
+                "file_path": "results/2/DroneControl/DroneControl-53999846.onnx",
+                "reward": 668.2072317940848,
+                "creation_time": 1713231534.2662196,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-53999846.pt"
+                ]
+            },
+            {
+                "steps": 54499761,
+                "file_path": "results/2/DroneControl/DroneControl-54499761.onnx",
+                "reward": 671.4371853298611,
+                "creation_time": 1713231732.4741755,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-54499761.pt"
+                ]
+            },
+            {
+                "steps": 54999997,
+                "file_path": "results/2/DroneControl/DroneControl-54999997.onnx",
+                "reward": 624.0054321289062,
+                "creation_time": 1713231925.6360705,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-54999997.pt"
+                ]
+            },
+            {
+                "steps": 55499997,
+                "file_path": "results/2/DroneControl/DroneControl-55499997.onnx",
+                "reward": 720.5140864054362,
+                "creation_time": 1713232128.6877482,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-55499997.pt"
+                ]
+            },
+            {
+                "steps": 55999997,
+                "file_path": "results/2/DroneControl/DroneControl-55999997.onnx",
+                "reward": 658.9177932739258,
+                "creation_time": 1713232329.862751,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-55999997.pt"
+                ]
+            },
+            {
+                "steps": 56499837,
+                "file_path": "results/2/DroneControl/DroneControl-56499837.onnx",
+                "reward": 665.4442974272229,
+                "creation_time": 1713232529.024958,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-56499837.pt"
+                ]
+            },
+            {
+                "steps": 56999805,
+                "file_path": "results/2/DroneControl/DroneControl-56999805.onnx",
+                "reward": 665.4768487338362,
+                "creation_time": 1713232726.308898,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-56999805.pt"
+                ]
+            },
+            {
+                "steps": 57499805,
+                "file_path": "results/2/DroneControl/DroneControl-57499805.onnx",
+                "reward": 573.2135830833798,
+                "creation_time": 1713232925.2982268,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-57499805.pt"
+                ]
+            },
+            {
+                "steps": 57999805,
+                "file_path": "results/2/DroneControl/DroneControl-57999805.onnx",
+                "reward": 622.1290471003606,
+                "creation_time": 1713233126.6615105,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-57999805.pt"
+                ]
+            },
+            {
+                "steps": 58499805,
+                "file_path": "results/2/DroneControl/DroneControl-58499805.onnx",
+                "reward": 802.8748168945312,
+                "creation_time": 1713233327.0049374,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-58499805.pt"
+                ]
+            },
+            {
+                "steps": 58999805,
+                "file_path": "results/2/DroneControl/DroneControl-58999805.onnx",
+                "reward": 629.4163665771484,
+                "creation_time": 1713233520.800855,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-58999805.pt"
+                ]
+            },
+            {
+                "steps": 59499805,
+                "file_path": "results/2/DroneControl/DroneControl-59499805.onnx",
+                "reward": 533.9751861572265,
+                "creation_time": 1713233722.2455654,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-59499805.pt"
+                ]
+            },
+            {
+                "steps": 59999805,
+                "file_path": "results/2/DroneControl/DroneControl-59999805.onnx",
+                "reward": 728.4738375345866,
+                "creation_time": 1713233920.5851347,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-59999805.pt"
+                ]
+            },
+            {
+                "steps": 60499803,
+                "file_path": "results/2/DroneControl/DroneControl-60499803.onnx",
+                "reward": 619.3999176025391,
+                "creation_time": 1713234118.9722276,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-60499803.pt"
+                ]
+            },
+            {
+                "steps": 60999803,
+                "file_path": "results/2/DroneControl/DroneControl-60999803.onnx",
+                "reward": 649.3515975387008,
+                "creation_time": 1713234317.5281472,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-60999803.pt"
+                ]
+            },
+            {
+                "steps": 61499803,
+                "file_path": "results/2/DroneControl/DroneControl-61499803.onnx",
+                "reward": 680.8674846448397,
+                "creation_time": 1713234513.9424922,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-61499803.pt"
+                ]
+            },
+            {
+                "steps": 61999803,
+                "file_path": "results/2/DroneControl/DroneControl-61999803.onnx",
+                "reward": 656.9270713112571,
+                "creation_time": 1713234712.9506912,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-61999803.pt"
+                ]
+            },
+            {
+                "steps": 62499803,
+                "file_path": "results/2/DroneControl/DroneControl-62499803.onnx",
+                "reward": 726.8613484700521,
+                "creation_time": 1713234910.533272,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-62499803.pt"
+                ]
+            },
+            {
+                "steps": 62999803,
+                "file_path": "results/2/DroneControl/DroneControl-62999803.onnx",
+                "reward": 631.0065366304838,
+                "creation_time": 1713235103.0604503,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-62999803.pt"
+                ]
+            },
+            {
+                "steps": 63499803,
+                "file_path": "results/2/DroneControl/DroneControl-63499803.onnx",
+                "reward": 538.7315923902723,
+                "creation_time": 1713235307.6009548,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-63499803.pt"
+                ]
+            },
+            {
+                "steps": 63999803,
+                "file_path": "results/2/DroneControl/DroneControl-63999803.onnx",
+                "reward": 691.8155303955078,
+                "creation_time": 1713235508.4025629,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-63999803.pt"
+                ]
+            },
+            {
+                "steps": 64499803,
+                "file_path": "results/2/DroneControl/DroneControl-64499803.onnx",
+                "reward": 729.6526184082031,
+                "creation_time": 1713235707.2895658,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-64499803.pt"
+                ]
+            },
+            {
+                "steps": 64999803,
+                "file_path": "results/2/DroneControl/DroneControl-64999803.onnx",
+                "reward": 671.98718527089,
+                "creation_time": 1713235906.065689,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-64999803.pt"
+                ]
+            },
+            {
+                "steps": 65499803,
+                "file_path": "results/2/DroneControl/DroneControl-65499803.onnx",
+                "reward": 711.2262357823989,
+                "creation_time": 1713236103.2501884,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-65499803.pt"
+                ]
+            },
+            {
+                "steps": 65999803,
+                "file_path": "results/2/DroneControl/DroneControl-65999803.onnx",
+                "reward": 702.9071485731337,
+                "creation_time": 1713236304.1114435,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-65999803.pt"
+                ]
+            },
+            {
+                "steps": 66499803,
+                "file_path": "results/2/DroneControl/DroneControl-66499803.onnx",
+                "reward": 307.7076416015625,
+                "creation_time": 1713236500.0050814,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-66499803.pt"
+                ]
+            },
+            {
+                "steps": 66999803,
+                "file_path": "results/2/DroneControl/DroneControl-66999803.onnx",
+                "reward": 629.2633884006076,
+                "creation_time": 1713236693.4215915,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-66999803.pt"
+                ]
+            },
+            {
+                "steps": 67499797,
+                "file_path": "results/2/DroneControl/DroneControl-67499797.onnx",
+                "reward": 689.4588871002197,
+                "creation_time": 1713236895.5939746,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-67499797.pt"
+                ]
+            },
+            {
+                "steps": 67999797,
+                "file_path": "results/2/DroneControl/DroneControl-67999797.onnx",
+                "reward": 618.4029159545898,
+                "creation_time": 1713237095.386087,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-67999797.pt"
+                ]
+            },
+            {
+                "steps": 68499797,
+                "file_path": "results/2/DroneControl/DroneControl-68499797.onnx",
+                "reward": null,
+                "creation_time": 1713237294.5997012,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-68499797.pt"
+                ]
+            },
+            {
+                "steps": 68999797,
+                "file_path": "results/2/DroneControl/DroneControl-68999797.onnx",
+                "reward": 625.0227692343972,
+                "creation_time": 1713237492.145628,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-68999797.pt"
+                ]
+            },
+            {
+                "steps": 69499797,
+                "file_path": "results/2/DroneControl/DroneControl-69499797.onnx",
+                "reward": 644.2410369417561,
+                "creation_time": 1713237687.805729,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-69499797.pt"
+                ]
+            },
+            {
+                "steps": 69999797,
+                "file_path": "results/2/DroneControl/DroneControl-69999797.onnx",
+                "reward": 784.5982840401786,
+                "creation_time": 1713237888.3386831,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-69999797.pt"
+                ]
+            },
+            {
+                "steps": 70499797,
+                "file_path": "results/2/DroneControl/DroneControl-70499797.onnx",
+                "reward": 611.3957758884804,
+                "creation_time": 1713238085.4274387,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-70499797.pt"
+                ]
+            },
+            {
+                "steps": 70999797,
+                "file_path": "results/2/DroneControl/DroneControl-70999797.onnx",
+                "reward": 630.4128567008084,
+                "creation_time": 1713238279.4681282,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-70999797.pt"
+                ]
+            },
+            {
+                "steps": 71499936,
+                "file_path": "results/2/DroneControl/DroneControl-71499936.onnx",
+                "reward": 677.544982486301,
+                "creation_time": 1713238480.4272397,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-71499936.pt"
+                ]
+            },
+            {
+                "steps": 71999936,
+                "file_path": "results/2/DroneControl/DroneControl-71999936.onnx",
+                "reward": 595.9674421037946,
+                "creation_time": 1713238677.312453,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-71999936.pt"
+                ]
+            },
+            {
+                "steps": 72499936,
+                "file_path": "results/2/DroneControl/DroneControl-72499936.onnx",
+                "reward": 582.9761825262332,
+                "creation_time": 1713238872.8159978,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-72499936.pt"
+                ]
+            },
+            {
+                "steps": 72999936,
+                "file_path": "results/2/DroneControl/DroneControl-72999936.onnx",
+                "reward": 714.91591413631,
+                "creation_time": 1713239071.1608427,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-72999936.pt"
+                ]
+            },
+            {
+                "steps": 73499975,
+                "file_path": "results/2/DroneControl/DroneControl-73499975.onnx",
+                "reward": 701.6258814599779,
+                "creation_time": 1713239266.0631802,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-73499975.pt"
+                ]
+            },
+            {
+                "steps": 73999975,
+                "file_path": "results/2/DroneControl/DroneControl-73999975.onnx",
+                "reward": 666.9803771972656,
+                "creation_time": 1713239467.162061,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-73999975.pt"
+                ]
+            },
+            {
+                "steps": 74499795,
+                "file_path": "results/2/DroneControl/DroneControl-74499795.onnx",
+                "reward": 668.3006637573242,
+                "creation_time": 1713239665.7510853,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-74499795.pt"
+                ]
+            },
+            {
+                "steps": 74999615,
+                "file_path": "results/2/DroneControl/DroneControl-74999615.onnx",
+                "reward": 561.6207360916194,
+                "creation_time": 1713239858.0235116,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-74999615.pt"
+                ]
+            },
+            {
+                "steps": 75499615,
+                "file_path": "results/2/DroneControl/DroneControl-75499615.onnx",
+                "reward": 651.9617713479435,
+                "creation_time": 1713240058.1129684,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-75499615.pt"
+                ]
+            },
+            {
+                "steps": 75999651,
+                "file_path": "results/2/DroneControl/DroneControl-75999651.onnx",
+                "reward": 659.9182664302357,
+                "creation_time": 1713240252.5369625,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-75999651.pt"
+                ]
+            },
+            {
+                "steps": 76499651,
+                "file_path": "results/2/DroneControl/DroneControl-76499651.onnx",
+                "reward": 663.0164362589518,
+                "creation_time": 1713240450.2636642,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-76499651.pt"
+                ]
+            },
+            {
+                "steps": 76999651,
+                "file_path": "results/2/DroneControl/DroneControl-76999651.onnx",
+                "reward": 659.2196778088081,
+                "creation_time": 1713240648.2068183,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-76999651.pt"
+                ]
+            },
+            {
+                "steps": 77499651,
+                "file_path": "results/2/DroneControl/DroneControl-77499651.onnx",
+                "reward": 616.8869661273378,
+                "creation_time": 1713240843.486692,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-77499651.pt"
+                ]
+            },
+            {
+                "steps": 77999651,
+                "file_path": "results/2/DroneControl/DroneControl-77999651.onnx",
+                "reward": 653.6202502441406,
+                "creation_time": 1713241043.9759989,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-77999651.pt"
+                ]
+            },
+            {
+                "steps": 78499651,
+                "file_path": "results/2/DroneControl/DroneControl-78499651.onnx",
+                "reward": 692.1807760685048,
+                "creation_time": 1713241243.5412838,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-78499651.pt"
+                ]
+            },
+            {
+                "steps": 78999872,
+                "file_path": "results/2/DroneControl/DroneControl-78999872.onnx",
+                "reward": 642.3646642173209,
+                "creation_time": 1713241438.592683,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-78999872.pt"
+                ]
+            },
+            {
+                "steps": 79499872,
+                "file_path": "results/2/DroneControl/DroneControl-79499872.onnx",
+                "reward": 650.9857251716383,
+                "creation_time": 1713241638.3903544,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-79499872.pt"
+                ]
+            },
+            {
+                "steps": 79999858,
+                "file_path": "results/2/DroneControl/DroneControl-79999858.onnx",
+                "reward": 673.0765783691406,
+                "creation_time": 1713241838.0465577,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-79999858.pt"
+                ]
+            },
+            {
+                "steps": 80499858,
+                "file_path": "results/2/DroneControl/DroneControl-80499858.onnx",
+                "reward": 627.8621287244431,
+                "creation_time": 1713242034.1224973,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-80499858.pt"
+                ]
+            },
+            {
+                "steps": 80999858,
+                "file_path": "results/2/DroneControl/DroneControl-80999858.onnx",
+                "reward": 628.0027710352189,
+                "creation_time": 1713242234.2235978,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-80999858.pt"
+                ]
+            },
+            {
+                "steps": 81499858,
+                "file_path": "results/2/DroneControl/DroneControl-81499858.onnx",
+                "reward": 690.301251411438,
+                "creation_time": 1713242430.9487057,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-81499858.pt"
+                ]
+            },
+            {
+                "steps": 81999858,
+                "file_path": "results/2/DroneControl/DroneControl-81999858.onnx",
+                "reward": 610.2129300435384,
+                "creation_time": 1713242631.2628298,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-81999858.pt"
+                ]
+            },
+            {
+                "steps": 82499858,
+                "file_path": "results/2/DroneControl/DroneControl-82499858.onnx",
+                "reward": 661.5257760752802,
+                "creation_time": 1713242827.6269577,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-82499858.pt"
+                ]
+            },
+            {
+                "steps": 82999810,
+                "file_path": "results/2/DroneControl/DroneControl-82999810.onnx",
+                "reward": 689.4449265128687,
+                "creation_time": 1713243020.9964325,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-82999810.pt"
+                ]
+            },
+            {
+                "steps": 83499810,
+                "file_path": "results/2/DroneControl/DroneControl-83499810.onnx",
+                "reward": 581.3941802978516,
+                "creation_time": 1713243215.726535,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-83499810.pt"
+                ]
+            },
+            {
+                "steps": 83999691,
+                "file_path": "results/2/DroneControl/DroneControl-83999691.onnx",
+                "reward": 582.2009153012876,
+                "creation_time": 1713243411.5128305,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-83999691.pt"
+                ]
+            },
+            {
+                "steps": 84499830,
+                "file_path": "results/2/DroneControl/DroneControl-84499830.onnx",
+                "reward": 602.6913146972656,
+                "creation_time": 1713243608.3282473,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-84499830.pt"
+                ]
+            },
+            {
+                "steps": 84999830,
+                "file_path": "results/2/DroneControl/DroneControl-84999830.onnx",
+                "reward": null,
+                "creation_time": 1713243805.9667923,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-84999830.pt"
+                ]
+            },
+            {
+                "steps": 85499918,
+                "file_path": "results/2/DroneControl/DroneControl-85499918.onnx",
+                "reward": 616.0363487830529,
+                "creation_time": 1713243999.2905269,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-85499918.pt"
+                ]
+            },
+            {
+                "steps": 85999796,
+                "file_path": "results/2/DroneControl/DroneControl-85999796.onnx",
+                "reward": 682.1852722167969,
+                "creation_time": 1713244197.1403742,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-85999796.pt"
+                ]
+            },
+            {
+                "steps": 86499935,
+                "file_path": "results/2/DroneControl/DroneControl-86499935.onnx",
+                "reward": 622.20265625,
+                "creation_time": 1713244394.9432726,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-86499935.pt"
+                ]
+            },
+            {
+                "steps": 86999875,
+                "file_path": "results/2/DroneControl/DroneControl-86999875.onnx",
+                "reward": 949.299560546875,
+                "creation_time": 1713244591.9116914,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-86999875.pt"
+                ]
+            },
+            {
+                "steps": 87499765,
+                "file_path": "results/2/DroneControl/DroneControl-87499765.onnx",
+                "reward": 655.1996468680245,
+                "creation_time": 1713244784.8659554,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-87499765.pt"
+                ]
+            },
+            {
+                "steps": 87999675,
+                "file_path": "results/2/DroneControl/DroneControl-87999675.onnx",
+                "reward": 685.26533203125,
+                "creation_time": 1713244981.6661105,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-87999675.pt"
+                ]
+            },
+            {
+                "steps": 88090475,
+                "file_path": "results/2/DroneControl/DroneControl-88090475.onnx",
+                "reward": 654.8690445843865,
+                "creation_time": 1713245017.961457,
+                "auxillary_file_paths": [
+                    "results/2/DroneControl/DroneControl-88090475.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 88090475,
+            "file_path": "results/2/DroneControl.onnx",
+            "reward": 654.8690445843865,
+            "creation_time": 1713245017.961457,
+            "auxillary_file_paths": [
+                "results/2/DroneControl/DroneControl-88090475.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.2.0+cu121"
+    }
+}

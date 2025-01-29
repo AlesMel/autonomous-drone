@@ -25,15 +25,21 @@ default_settings:
   max_steps: 50000000
     
 behaviors:
+  ForestControl:
+    network_settings:
+      hidden_units: 256
+      num_layers: 3
+    max_steps: 500000000
 
   DroneControl:
     network_settings:
       hidden_units: 32
-      num_layers: 3
+      num_layers: 2
     max_steps: 100000000
+
   WindControl:
-      network_settings:
-        hidden_units: 32
-        num_layers: 2
-      max_steps: 100000000
+    network_settings:
+      hidden_units: 32
+      num_layers: 2
+    max_steps: 100000000
 

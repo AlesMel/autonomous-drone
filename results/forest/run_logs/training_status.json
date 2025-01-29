@@ -1,0 +1,29 @@
+{
+    "ForestControl": {
+        "checkpoints": [
+            {
+                "steps": 65555,
+                "file_path": "results\\forest\\ForestControl\\ForestControl-65555.onnx",
+                "reward": -0.9851908591148015,
+                "creation_time": 1713510262.8768804,
+                "auxillary_file_paths": [
+                    "results\\forest\\ForestControl\\ForestControl-65555.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 65555,
+            "file_path": "results\\forest\\ForestControl.onnx",
+            "reward": -0.9851908591148015,
+            "creation_time": 1713510262.8768804,
+            "auxillary_file_paths": [
+                "results\\forest\\ForestControl\\ForestControl-65555.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

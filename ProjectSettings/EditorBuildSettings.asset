@@ -17,13 +17,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RotorControl.unity
     guid: 1b3f46ebe948cd046a27af49fce362d9
-  - enabled: 0
-    path: Assets/Scenes/CrawlerInspoScene.unity
-    guid: 096c0b724c7d74a48a35cde8f16c80e1
   - enabled: 1
+    path: Assets/Scenes/GoalCatchingScene.unity
+    guid: 096c0b724c7d74a48a35cde8f16c80e1
+  - enabled: 0
     path: Assets/Scenes/ForestScene.unity
     guid: 5d694aabb0357fc479849a1e229351c9
   - enabled: 0
     path: Assets/Scenes/WindScene.unity
     guid: eb9e5bdb2d08de54f99390c554a42972
+  - enabled: 0
+    path: Assets/Scenes/TreeScene.unity
+    guid: 4b82088db4e9e3c49908e07b441ac12f
   m_configObjects: {}

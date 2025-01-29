@@ -1,0 +1,2 @@
+reward = 10 and not 100 as in 01  version
+RayCastSensors + vector of 19 size which includes position 
