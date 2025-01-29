@@ -18,15 +18,12 @@ public class Goal : MonoBehaviour
     private Transform parentTransform;
     private Vector3 parentSize;
 
-    private float triggerEnterTime;
-    private bool isInTrigger = false;
-
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
     [SerializeField] private float zOffset;
     //[SerializeField] 
     private string collisionTag = "DronePart";
-    [SerializeField] private bool randomSpawn = false;
+    private bool randomSpawn = true;
 
     [Header("Settings for agent reward system")]
     [SerializeField] private float requiredSeconds;
@@ -36,38 +33,36 @@ public class Goal : MonoBehaviour
     -transform.position, Vector3.up).normalized;
 
     private GameObject parentObject;
+    protected Bounds bounds;
+    public List<Vector3> spawnPoints; // List of predefined spawn points
 
-    private void Start()
+    private void Awake()
+    {
+        Initialize();
+        /*        if (parentTransform != null)
+                {
+                    //parentSize = GetObjectSize(parentTransform);
+                    parentSize = GetParentSize(transform.parent.gameObject);
+                    SpawnObjectInSphere();
+                }
+                else
+                {
+                    Debug.LogError("Parent transform not found!");  
+                }*/
+        bounds = new Bounds(transform.position, Vector3.one * 5);
+
+    }
+
+    public void Initialize()
     {
         goalMesh = GetComponent<MeshRenderer>();
         parentTransform = transform.parent;
         parentObject = transform.parent.gameObject;
-/*        if (parentTransform != null)
-        {
-            //parentSize = GetObjectSize(parentTransform);
-            parentSize = GetParentSize(transform.parent.gameObject);
-            SpawnObjectInSphere();
-        }
-        else
-        {
-            Debug.LogError("Parent transform not found!");  
-        }*/
     }
 
     private void FixedUpdate()
     {
-        if (isInTrigger)
-        {
-            if (Time.time - triggerEnterTime >= requiredSeconds/2)
-            {
-                goalMesh.material = goalStayed;
-            }
-            if (Time.time - triggerEnterTime >= requiredSeconds) 
-            {
-                ReachedGoalEvent.Invoke();
 
-            }
-        } 
     }
 
     private Vector3 GetObjectSize(Transform transform)
@@ -83,23 +78,42 @@ public class Goal : MonoBehaviour
         }
     }
 
-    private void ResetPositionControlParameters()
-    {
-        isInTrigger= false;
-    }
-
     public void SpawnObject()
     {
-
         if (randomSpawn)
         {
-            ResetPositionControlParameters();
-            Debug.Log("Parent size: " + parentSize.ToString());
-            float spawnX = Random.Range(-parentSize.x / 2 + xOffset, parentSize.x / 2 - xOffset);
-            float spawnY = Random.Range(0 + yOffset, parentSize.y / 2 - yOffset);
-            float spawnZ = Random.Range(-parentSize.z / 2 + zOffset, parentSize.z / 2 - zOffset);
+            Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+/*            // Define the range for spawning positions on each axis
+            float xMin = bounds.center.x - bounds.extents.x + xOffset;
+            float xMax = bounds.center.x + bounds.extents.x - xOffset;
+            float yMin = bounds.center.y - bounds.extents.y + yOffset;
+            float yMax = bounds.center.y + bounds.extents.y - yOffset;
+            float zMin = bounds.center.z - bounds.extents.z + zOffset;
+            float zMax = bounds.center.z + bounds.extents.z - zOffset;
+
+            // Define the radius within which to exclude positions near the origin
+            float exclusionRadius = 2.0f; // Adjust as needed
+
+            // Ensure that spawn positions for x and y are not too close to the origin
+            float spawnX = Random.Range(xMin, xMax);
+            float spawnY = Random.Range(yMin, yMax);
+
+            // Check if the spawn positions are within the exclusion radius
+            while (Mathf.Abs(spawnX) < exclusionRadius && Mathf.Abs(spawnY) < exclusionRadius)
+            {
+                // Reselect spawn positions until they are outside the exclusion radius
+                spawnX = Random.Range(xMin, xMax);
+                spawnY = Random.Range(yMin, yMax);
+            }
+
+            // Randomly select spawn positions within the defined range for the z axis
+            float spawnZ = Random.Range(zMin, zMax);
+
+
+            // Construct the spawn position vector
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-            Debug.Log("Spawning position " + spawnPosition.ToString());
+            // Set the transform's position to the calculated spawn position*/
             transform.position = spawnPosition;
         }
     }
@@ -108,13 +122,11 @@ public class Goal : MonoBehaviour
     {
         GameObject collisionObject = other.gameObject;
         Logger.LogMessage("Triggered by tag: " + collisionObject.tag);
-        GoalTouchedEvent?.Invoke();
         if (collisionObject.tag == collisionTag)
         {
+            //GoalTouchedEvent?.Invoke();
             Logger.LogMessage("Triggered!" + collisionObject.tag);
             goalMesh.material = goalReached;
-            triggerEnterTime = Time.time;
-            isInTrigger = true;
         }
     }
 
@@ -123,17 +135,22 @@ public class Goal : MonoBehaviour
         GameObject collisionObject = other.gameObject;
         if (collisionObject.tag == collisionTag)
         {
+            CancelInvoke();
             goalMesh.material = goalUnreached;
-            isInTrigger = false;
         }
     }
 
     public void ResetGoal()
     {
-        goalMesh.material = goalUnreached;
-        isInTrigger = false;
+        if (goalMesh!= null)
+        {
+            goalMesh.material = goalUnreached;
+        }
+        SpawnObject();
     }
 
+
+    #region (Crosses) Spehere spawning
     public Vector3 GetParentSize(GameObject parentObject)
     {
         Renderer parentRenderer = parentObject.GetComponent<Renderer>();
@@ -154,8 +171,6 @@ public class Goal : MonoBehaviour
             return Vector3.one; // Default size, you may handle this case differently.
         }
     }
-
-    #region (Crosses) Spehere spawning
 
     public float GetSphereDiameter(GameObject sphereObject)
     {

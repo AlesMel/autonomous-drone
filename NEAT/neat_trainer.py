@@ -22,7 +22,7 @@ save_nn_destination = 'NEAT/result/best.pkl'
 engine_config_channel = EngineConfigurationChannel()
 engine_config_channel.set_configuration_parameters(time_scale=10)
 
-env = UnityEnvironment(file_name=env_path, seed=0, no_graphics=True, side_channels=[engine_config_channel])
+env = UnityEnvironment(file_name=None, seed=0, no_graphics=True, side_channels=[engine_config_channel])
 env.reset()
 
 num_actions = 4

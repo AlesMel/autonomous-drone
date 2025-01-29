@@ -1,0 +1,3 @@
+2   = random rychlost, 2000 krokov
+2v2 = random rychlost, 2000 krokov
+7   = random rychlost, random pozicia checkpointu, 4000 krokov

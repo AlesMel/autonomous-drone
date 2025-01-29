@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7903331243567738383}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4872519910443825700}
   - component: {fileID: 5661752039202941493}
   - component: {fileID: 5294219015725944756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6365527002036200927}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 3848938277132397679}
   - component: {fileID: 1232494149634350790}
   - component: {fileID: 5501774511321756980}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3044372911656311547}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 778562325122141700}
   - component: {fileID: 2183890041399164248}
   - component: {fileID: 8699436254014005843}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 5241450433290610733}
   - component: {fileID: 1564071522244255231}
   - component: {fileID: 2038005427053460295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Fan_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 4465031278195536368}
   - component: {fileID: 6894246876207061546}
   - component: {fileID: 4036776191782039950}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 2415511342171335588}
   - component: {fileID: 2642973010063852696}
   - component: {fileID: 1888075987544572530}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 449341412048456854}
   - component: {fileID: 2647474292427864090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FR
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 4183706021234464554}
   - component: {fileID: 7013147555184467177}
   - component: {fileID: 1653208863902079936}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 2118381762868140129}
   - component: {fileID: 7218822767206298689}
   - component: {fileID: 7068950122166849628}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -853,7 +853,7 @@ GameObject:
   - component: {fileID: 6211592761988864091}
   - component: {fileID: 1032989764072098982}
   - component: {fileID: 6806727619769415713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 5375389436807536380}
   - component: {fileID: 6074507730395119480}
   - component: {fileID: 4380727230173604463}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1019,7 +1019,7 @@ GameObject:
   - component: {fileID: 814528404258972918}
   - component: {fileID: 3447993125064354629}
   - component: {fileID: 8796046871883966566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1102,7 +1102,7 @@ GameObject:
   - component: {fileID: 4775973838592607059}
   - component: {fileID: 3259177299203039984}
   - component: {fileID: 2624512180270692777}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1185,7 +1185,7 @@ GameObject:
   - component: {fileID: 4071132134350030057}
   - component: {fileID: 8749185383760144913}
   - component: {fileID: 2135725890565434352}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_43
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1268,7 +1268,7 @@ GameObject:
   - component: {fileID: 7739871255734117803}
   - component: {fileID: 8477765397234610878}
   - component: {fileID: 636689849687683591}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1351,9 +1351,12 @@ GameObject:
   - component: {fileID: 2410836526782535402}
   - component: {fileID: 6130190654615948325}
   - component: {fileID: 8821691786905180682}
-  m_Layer: 0
+  - component: {fileID: 6822610942989687717}
+  - component: {fileID: 8999962191484986969}
+  - component: {fileID: 5740560057785856086}
+  m_Layer: 7
   m_Name: Drone
-  m_TagString: Drone
+  m_TagString: DroneAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1368,7 +1371,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 578642092435158040}
@@ -1388,8 +1391,8 @@ Rigidbody:
   m_GameObject: {fileID: 2883033016525516991}
   serializedVersion: 4
   m_Mass: 1.3
-  m_Drag: 0.2
-  m_AngularDrag: 0.25
+  m_Drag: 0
+  m_AngularDrag: 0.06
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1399,13 +1402,13 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &8821691786905180682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1418,7 +1421,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151e11d1e1f673044b8f1e547f0201ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torqueFactor: 0
+  droneRigidBody: {fileID: 6130190654615948325}
+  tipOverThreshold: -0.5
+  maxLinearVelocity: 16
+  maxAngularVelocity: 2.26
   animSpeedFactor: 4000
   animateRotors: 1
   actions:
@@ -1426,8 +1432,73 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  velocityArray: []
-  smoothTime: 0.3
+  isInGoal: 0
+  isInEnviroment: 1
+  isTippedOver: 0
+  isCrashed: 0
+--- !u!114 &6822610942989687717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2883033016525516991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 12
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 4
+      BranchSizes: 
+    VectorActionSize: 04000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: RotorControl
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_DeterministicInference: 0
+  m_ObservableAttributeHandling: 0
+--- !u!114 &8999962191484986969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2883033016525516991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1705f10569df92419c52c7d8048d451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 3000
+  goal: {fileID: 0}
+--- !u!114 &5740560057785856086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2883033016525516991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  DecisionStep: 0
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &2896967113499158397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,7 +1510,7 @@ GameObject:
   - component: {fileID: 6543296358217949497}
   - component: {fileID: 4273127158795913817}
   - component: {fileID: 7338389099165544043}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1521,7 +1592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2505539987480135274}
   - component: {fileID: 8739752097735245696}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FL
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -1577,7 +1648,7 @@ GameObject:
   - component: {fileID: 8604280034238826912}
   - component: {fileID: 5949223704351289710}
   - component: {fileID: 6931691054033621606}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1660,7 +1731,7 @@ GameObject:
   - component: {fileID: 5740351214909717310}
   - component: {fileID: 9218698241722404191}
   - component: {fileID: 4922723581611831739}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1741,7 +1812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374699403039807839}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Other
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1775,7 +1846,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3677766443705222090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1808,7 +1879,7 @@ GameObject:
   m_Component:
   - component: {fileID: 847438404266074743}
   - component: {fileID: 7531026494341173543}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FR
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -1862,7 +1933,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5020017665179457575}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1895,7 +1966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4874181978398801455}
   - component: {fileID: 6072915867302418584}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RR
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -1951,7 +2022,7 @@ GameObject:
   - component: {fileID: 7928527576358990401}
   - component: {fileID: 3548453121094033669}
   - component: {fileID: 8716352674646579190}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2032,7 +2103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4636479281443313340}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rotors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2067,7 +2138,7 @@ GameObject:
   - component: {fileID: 4501328536268274369}
   - component: {fileID: 8305602580867995461}
   - component: {fileID: 6318840247510642940}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Back_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2148,7 +2219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049622093874282544}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RearLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2182,7 +2253,7 @@ GameObject:
   - component: {fileID: 3740128732274944216}
   - component: {fileID: 5988663979030753120}
   - component: {fileID: 5979850352655248537}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Logo_bass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2265,7 +2336,7 @@ GameObject:
   - component: {fileID: 630085493366673772}
   - component: {fileID: 2576075407756286123}
   - component: {fileID: 3834717428932355284}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2348,7 +2419,7 @@ GameObject:
   - component: {fileID: 6676865259995167672}
   - component: {fileID: 2598053610818707161}
   - component: {fileID: 8005721837113657976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Light_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2429,7 +2500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4860704714027739846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Propellers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2466,7 +2537,7 @@ GameObject:
   - component: {fileID: 9134052397376505601}
   - component: {fileID: 4562954949745300009}
   - component: {fileID: 173058604115237408}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2549,7 +2620,7 @@ GameObject:
   - component: {fileID: 5843662041630465048}
   - component: {fileID: 1552290330137098366}
   - component: {fileID: 2542881072551790897}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2632,7 +2703,7 @@ GameObject:
   - component: {fileID: 6177020951491831853}
   - component: {fileID: 1260198919573834511}
   - component: {fileID: 1107015914755582301}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Moter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2714,7 +2785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5994337038064158963}
   - component: {fileID: 3247904958904976773}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -2755,7 +2826,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.3030182, z: 0.9999998}
+  m_Size: {x: 1, y: 1.353018, z: 0.9999998}
   m_Center: {x: 1.9754831e-11, y: -0.15150881, z: -4.867607e-11}
 --- !u!1 &5563200378404603843
 GameObject:
@@ -2768,7 +2839,7 @@ GameObject:
   - component: {fileID: 6794973665459010296}
   - component: {fileID: 5593951855880089083}
   - component: {fileID: 1651932678221620891}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Shockabsorber4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2851,7 +2922,7 @@ GameObject:
   - component: {fileID: 5548193783498959326}
   - component: {fileID: 3180364482119526147}
   - component: {fileID: 6371713410325245916}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2934,7 +3005,7 @@ GameObject:
   - component: {fileID: 7222444813781269184}
   - component: {fileID: 6194606726648858169}
   - component: {fileID: 7429139761708691481}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_117
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3017,7 +3088,7 @@ GameObject:
   - component: {fileID: 3213590619330204285}
   - component: {fileID: 7320031435143271450}
   - component: {fileID: 8621778529710057175}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Moter_Coil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3099,7 +3170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6986023020714490618}
   - component: {fileID: 2384499294630374947}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RL
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -3155,7 +3226,7 @@ GameObject:
   - component: {fileID: 578642092435158040}
   - component: {fileID: 4389916493464126727}
   - component: {fileID: 8593934973292163031}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3238,7 +3309,7 @@ GameObject:
   - component: {fileID: 4505351870777379820}
   - component: {fileID: 3041172337990212717}
   - component: {fileID: 7341654228710322276}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3320,7 +3391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9051912437951302701}
   - component: {fileID: 8236710167473218038}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RL
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -3374,7 +3445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7662082591544569163}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RearRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3407,7 +3478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7791184275643272693}
   - component: {fileID: 5978952043265399012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RR
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -3463,7 +3534,7 @@ GameObject:
   - component: {fileID: 683841676935174588}
   - component: {fileID: 8819342246770788930}
   - component: {fileID: 662784777707310685}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Top_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3546,7 +3617,7 @@ GameObject:
   - component: {fileID: 3252309044433701085}
   - component: {fileID: 4815442013885813730}
   - component: {fileID: 3139721677494921652}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_118
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3627,7 +3698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3436807062927722590}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Colliders
   m_TagString: Drone
   m_Icon: {fileID: 0}
@@ -3669,7 +3740,7 @@ GameObject:
   - component: {fileID: 4091190482917102629}
   - component: {fileID: 2627245363664029892}
   - component: {fileID: 41855481423074781}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3752,7 +3823,7 @@ GameObject:
   - component: {fileID: 6524176322090664380}
   - component: {fileID: 6233420122506809651}
   - component: {fileID: 5183655409368515842}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3835,7 +3906,7 @@ GameObject:
   - component: {fileID: 6771645777530231049}
   - component: {fileID: 1460876725873271879}
   - component: {fileID: 8221807023321897078}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Drone_Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3917,7 +3988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4550530806342570971}
   - component: {fileID: 8706550886329112929}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FL
   m_TagString: DronePart
   m_Icon: {fileID: 0}
@@ -3971,7 +4042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6285858096306718816}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Other
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4008,7 +4079,7 @@ GameObject:
   - component: {fileID: 7506991906840610608}
   - component: {fileID: 5601344307288279338}
   - component: {fileID: 9056308103327166142}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CGAXR_MC_Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4098,7 +4169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.31303024
+      value: -0.3130312
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4130,19 +4201,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: -0.15653336
+      value: -0.07826668
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.04678685
+      value: 0.023393424
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: -0.15651512
+      value: -0.07825756
       objectReference: {fileID: 0}
     - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_Name
       value: propeller
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4164,7 +4239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.31306684
+      value: 0.3130667
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4172,7 +4247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.31303072
+      value: 0.3130312
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4204,19 +4279,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.15653342
+      value: 0.07826671
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.04678685
+      value: 0.023393424
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 0.15651536
+      value: 0.07825768
       objectReference: {fileID: 0}
     - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_Name
       value: propeller
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4238,7 +4317,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.3130659
+      value: -0.3130667
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4246,23 +4325,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.31303215
+      value: 0.3130312
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.81157404
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5842497
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4270,27 +4349,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -71.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -0.15653294
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.04678685
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.15651608
-      objectReference: {fileID: 0}
     - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_Name
       value: propeller
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4312,7 +4383,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.313066
+      value: 0.3130667
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4324,19 +4395,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9868416
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.16168995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4344,7 +4415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 18.61
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 503446292877777907, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4352,19 +4423,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.156533
+      value: 0.0782665
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.04678685
+      value: 0.023393424
       objectReference: {fileID: 0}
     - target: {fileID: 6452553793367575766, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: -0.1565156
+      value: -0.0782578
       objectReference: {fileID: 0}
     - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
       propertyPath: m_Name
       value: propeller
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269931736874909752, guid: 902f5d4dcd6d2a14c886c00d37cd803b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

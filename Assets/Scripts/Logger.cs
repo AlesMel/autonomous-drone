@@ -7,10 +7,13 @@ public static class Logger
 {
 
     private static readonly bool shouldLog = false;
-
-    public static void LogMessage(string message, bool isWarning = false)
+    static string PadRight(string str, int totalWidth)
     {
-        if (shouldLog)
+        return str.PadRight(totalWidth);
+    }
+    public static void LogMessage(string message, bool isWarning = false, bool forceMessage = false)
+    {
+        if (shouldLog || forceMessage)
         {
             if (isWarning)
             {

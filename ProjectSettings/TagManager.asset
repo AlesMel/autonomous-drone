@@ -9,6 +9,13 @@ TagManager:
   - Goal
   - DronePart
   - Enviroment
+  - TrainingField
+  - Agent
+  - Ground
+  - DroneAgent
+  - target
+  - Cave
+  - Environment
   layers:
   - Default
   - TransparentFX
@@ -17,10 +24,10 @@ TagManager:
   - Water
   - UI
   - Platform
-  - 
-  - 
-  - 
-  - 
+  - Drone
+  - Cave
+  - Target
+  - Environment
   - 
   - 
   - 
