@@ -39,6 +39,7 @@ Follow these steps to install the necessary dependencies:
    pip install notebook
    ```
 5. Download **Visual Studio 2022**: [Visual Studio Download](https://visualstudio.microsoft.com/vs/) *(valid as of 10.05.2024)*
+6. Download **ML-Agents Toolkit**: [Installation Guide](https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md) *(valid as of 01.04.2025)*
 
 ## Running the Project
 
